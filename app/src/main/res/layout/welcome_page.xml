@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blanccassé">
+
+
+    <TextView
+        android:id="@+id/persons_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:fontFamily="@font/poiret_one"
+        android:textSize="30sp"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/persons_face"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/persons_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="33dp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/persons_face"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="33dp" />
+
+    <TextView
+        android:id="@+id/invitation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="350dp"
+        android:fontFamily="@font/poiret_one"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="25dp"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/boutonquizz"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:text="Commencer le Quizz"
+        android:fontFamily="@font/poiret_one"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="#Fefee2"
+        android:layout_margin="5dp"/>
+
+
+</RelativeLayout>

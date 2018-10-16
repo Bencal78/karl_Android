@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "297765357589",
+    "firebase_url": "https://karl-216915.firebaseio.com",
+    "project_id": "karl-216915",
+    "storage_bucket": "karl-216915.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:297765357589:android:c7ad1a8c8b2d5cfd",
+        "android_client_info": {
+          "package_name": "com.example.karl.karl"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "297765357589-73uoc4oa9h6n6gu4ut90iug7f25in6ha.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBGt5iMxNtEjpxo3UMBRv13C0XiVjUSk8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
