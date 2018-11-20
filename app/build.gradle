@@ -14,6 +14,7 @@ android {
                 cppFlags ""
             }
         }
+        useLibrary 'org.apache.http.legacy'
     }
     buildTypes {
         release {
@@ -38,7 +39,5 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:15.0.1'
     implementation 'com.android.support:support-annotations:27.1.1'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
-    implementation 'com.squareup.okhttp:okhttp:2.3.0'
-    implementation 'com.android.support:design:26.1.0'
 }
 apply plugin: 'com.google.gms.google-services'

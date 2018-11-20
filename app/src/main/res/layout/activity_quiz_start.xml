@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context="com.example.karl.karl.QuizStart">
 
+    <ImageView
+        android:id="@+id/sample_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
     <TextView
         android:id="@+id/sample_text"
         android:layout_width="wrap_content"
@@ -15,7 +21,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
         <Button
         android:id="@+id/sample_button"
