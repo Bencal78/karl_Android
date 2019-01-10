@@ -1,27 +1,35 @@
 {
   "project_info": {
-    "project_number": "297765357589",
-    "firebase_url": "https://karl-216915.firebaseio.com",
-    "project_id": "karl-216915",
-    "storage_bucket": "karl-216915.appspot.com"
+    "project_number": "995511954301",
+    "firebase_url": "https://karlapp-5b30e.firebaseio.com",
+    "project_id": "karlapp-5b30e",
+    "storage_bucket": "karlapp-5b30e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:297765357589:android:c7ad1a8c8b2d5cfd",
+        "mobilesdk_app_id": "1:995511954301:android:c7ad1a8c8b2d5cfd",
         "android_client_info": {
           "package_name": "com.example.karl.karl"
         }
       },
       "oauth_client": [
         {
-          "client_id": "297765357589-73uoc4oa9h6n6gu4ut90iug7f25in6ha.apps.googleusercontent.com",
+          "client_id": "995511954301-3b1usi7jk1jbbk13084oe7n2bu7hic98.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.karl.karl",
+            "certificate_hash": "1bc4003a50d4f198f221c76fb10219dacacf37b1"
+          }
+        },
+        {
+          "client_id": "995511954301-i27fh2a8kngnjplf5tpgdurv1qc6666l.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBBGt5iMxNtEjpxo3UMBRv13C0XiVjUSk8"
+          "current_key": "AIzaSyAUNmSdTL5xgbf6XzVohMvNS-fJQbLhszI"
         }
       ],
       "services": {
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "995511954301-tlecvtlajmna3pl8ftfb3dev58hn3lpr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

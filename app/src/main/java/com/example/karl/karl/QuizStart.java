@@ -62,7 +62,7 @@ public class QuizStart extends AppCompatActivity {
 
             }
         };
-        String url= "http://18.184.156.66:8000/api/clothes?_id=5a37db5af128eb034baa558c";
+        String url= "http://18.184.156.66:8000/api/clothes?";
         //JSONObject postData = new JSONObject();
         //try {
         //    postData.put("bodyparts",1);
