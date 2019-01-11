@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/persons_name"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="33dp" />
+        android:layout_marginTop="33dp"/>
 
     <ProgressBar
         android:id="@+id/progressBar1"
