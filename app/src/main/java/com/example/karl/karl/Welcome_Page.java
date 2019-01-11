@@ -2,6 +2,7 @@ package com.example.karl.karl;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -61,9 +62,14 @@ public class Welcome_Page extends AppCompatActivity{
             tv2.setText("Nous allons commencer par un petit quizz pour que j'apprenne à mieux te connaitre." +
                     " Indique moi si les tenues te plaisent");
 
-
-            new DownloadImageFromInternet(imageView,spinner)
-                    .execute(personPhoto);
+            if(personPhoto != "null"){
+                new DownloadImageFromInternet(imageView,spinner)
+                        .execute(personPhoto);
+            }
+            else{
+                imageView.setImageDrawable(getResources().getDrawable(R.drawable.avatar_circle_blue_120dp));
+                spinner.setVisibility(View.INVISIBLE);
+            }
         }
 
     }
