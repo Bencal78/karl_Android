@@ -54,7 +54,7 @@ public class Welcome_Page extends AppCompatActivity{
             String personFamilyName = acct.getFamilyName();
             String personEmail = acct.getEmail();
             String personId = acct.getId();
-            String personPhoto = acct.getPhotoUrl().toString();
+            String personPhoto = String.valueOf(acct.getPhotoUrl());
             CircleImageView imageView = findViewById(R.id.persons_face);
 
             tv.setText("Bonjour " + personGivenName);
