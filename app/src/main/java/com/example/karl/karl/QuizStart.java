@@ -1,36 +1,35 @@
 package com.example.karl.karl;
 
-import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.*;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
 public class QuizStart extends AppCompatActivity {
+    String BASE_URL = "http://18.184.156.66:8000/";
+    String url;
+    RequestQueue requestQueue;  // This is our requests queue to process our HTTP requests.
     public QuizStart() throws IOException {
     }
 
@@ -46,40 +45,47 @@ public class QuizStart extends AppCompatActivity {
         tv = findViewById(R.id.sample_text);
         iv = findViewById(R.id.sample_image);
 
-        final CallBack callback = new CallBack() {
-            @Override
-            public void onProgress() {
+        String url= "api/clothes";
+        requestQueue = Volley.newRequestQueue(this);  // This setups up a new request queue which we will need to make HTTP requests.
+        getClothes(url);
 
-            }
-
-            @Override
-            public void onResult(String result) {
-
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-        };
-        String url= "http://18.184.156.66:8000/api/clothes?";
-        //JSONObject postData = new JSONObject();
-        //try {
-        //    postData.put("bodyparts",1);
-        //} catch (JSONException e) {
-        //    e.printStackTrace();
-        //}
-        //HTTPAsyncTask asyncTaskPOST = new HTTPAsyncTask(mContext,callback, null, postData, "POST");
-       // asyncTaskPOST.execute(url);
-        HTTPAsyncTask asyncTaskGET = new HTTPAsyncTask(mContext,callback, null, null, "GET");
-        AsyncTask<String, Void, String> result = asyncTaskGET.execute(url);
-        try {
-            tv.setText(result.get());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
     }
+    private void getClothes(String route) {
+        // First, we insert the username into the repo url.
+        // The repo url is defined in GitHubs API docs (https://developer.github.com/v3/repos/).
+        this.url = this.BASE_URL + route;
+        Log.e("url ", url);
 
+        // Next, we create a new JsonArrayRequest. This will use Volley to make a HTTP request
+        // that expects a JSON Array Response.
+        // To fully understand this, I'd recommend readng the office docs: https://developer.android.com/training/volley/index.html
+        JsonArrayRequest arrReq = new JsonArrayRequest(Request.Method.GET, url,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        // Check the length of our response (to see if the user has any repos)
+                        try {
+                            String clothe1_id= response.getJSONObject(0).getString("_id");
+                            tv.setText("response :" + clothe1_id);
+                            String image_url = BASE_URL + "api/uploads/" + clothe1_id + ".png";
+                            new DownLoadImageTask(iv).execute(image_url);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // If there a HTTP error then add a note to our repo list.
+                        tv.setText("Error while calling REST API");
+                        Log.e("Volley", error.toString());
+                    }
+                }
+        );
+        // Add the request we just defined to our request queue.
+        // The request queue will automatically handle the request as soon as it can.
+        requestQueue.add(arrReq);
+    }
 }
