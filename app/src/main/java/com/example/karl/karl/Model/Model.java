@@ -1,4 +1,4 @@
-package com.example.karl.karl.Model;
+package com.example.karl.karl.model;
 
 /**
  * Created by Lisa on 14/01/2019.
