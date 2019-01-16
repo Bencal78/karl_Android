@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.karl.karl.activity.MainActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
@@ -37,7 +38,7 @@ public class Welcome_Page extends AppCompatActivity{
         buttonquiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(Welcome_Page.this, QuizStart.class);
+                Intent myIntent = new Intent(Welcome_Page.this, MainActivity.class);
                 startActivity(myIntent);
             }
         });
