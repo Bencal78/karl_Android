@@ -1,5 +1,7 @@
 package com.example.karl.karl.model;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONException;
@@ -17,9 +19,9 @@ public class Clothe {
     @SerializedName("category")
     private String category;
     @SerializedName("bodyparts")
-    private ArrayList<Integer> bodyparts;
+    private ArrayList<Integer> bodyparts = new ArrayList<>();
     @SerializedName("colors")
-    private ArrayList<String> colors;
+    private ArrayList<String> colors = new ArrayList<>();
     @SerializedName("fabrics")
     private String fabrics;
     @SerializedName("pattern")
@@ -48,12 +50,12 @@ public class Clothe {
         this.id = null;
         this.name = null;
         this.category = null;
-        this.colors = null;
+        this.colors = new ArrayList<>();
         this.fabrics = null;
         this.pattern = null;
         this.temperature = null;
         this.layer = null;
-        this.bodyparts = null;
+        this.bodyparts = new ArrayList<>();
         this.rl_score = null;
     }
 
@@ -71,6 +73,7 @@ public class Clothe {
             if (obj.getJSONArray("bodyparts") != null) {
                 int len = obj.getJSONArray("bodyparts").length();
                 for (int i=0;i<len;i++){
+                    int tmp = parseInt(obj.getJSONArray("bodyparts").get(i).toString());
                     this.bodyparts.add(parseInt(obj.getJSONArray("bodyparts").get(i).toString()));
                 }
             }

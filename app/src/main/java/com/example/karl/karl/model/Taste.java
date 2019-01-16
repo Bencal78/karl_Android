@@ -15,12 +15,12 @@ public class Taste {
     @SerializedName("decision")
     private String decision;
     @SerializedName("clothes")
-    private ArrayList<Clothe> clothes;
+    private ArrayList<Clothe> clothes = new ArrayList<>();
 
     public Taste(){
         this.id = null;
         this.decision = null;
-        this.clothes = null;
+        this.clothes = new ArrayList<>();
     }
 
     public Taste(String id, String decision, ArrayList<Clothe> clothes){

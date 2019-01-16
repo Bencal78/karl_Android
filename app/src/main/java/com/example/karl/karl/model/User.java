@@ -24,9 +24,9 @@ public class User {
     @SerializedName("genre")
     private String genre;
     @SerializedName("tastes")
-    private ArrayList<Taste> tastes;
+    private ArrayList<Taste> tastes = new ArrayList<>();
     @SerializedName("clothes")
-    private ArrayList<Clothe> clothes;
+    private ArrayList<Clothe> clothes = new ArrayList<>();
 
     public User(){
         this.id = null;
@@ -36,8 +36,8 @@ public class User {
         this.givenName = null;
         this.email = null;
         this.genre = null;
-        this.tastes = null;
-        this.clothes = null;
+        this.tastes = new ArrayList<>();
+        this.clothes = new ArrayList<>();
     }
 
     public User(String id, String idGoogle, String firstName, String lastName, String givenName, String email, String genre, ArrayList<Taste> tastes, ArrayList<Clothe> clothes){
