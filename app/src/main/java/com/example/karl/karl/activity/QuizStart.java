@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ public class QuizStart extends AppCompatActivity{
     String BASE_URL = "http://18.184.156.66:8000/";
     String url;
     RequestQueue requestQueue;  // This is our requests queue to process our HTTP requests.
+    Button button;
     private SwipeCardsView swipeCardsView;
     List<Model> modelList = new ArrayList<>();
 
@@ -37,6 +39,7 @@ public class QuizStart extends AppCompatActivity{
 
     ImageView iv;
     TextView tv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +99,8 @@ public class QuizStart extends AppCompatActivity{
     private void getClothes(String route) {
         // First, we insert the username into the repo url.
         // The repo url is defined in GitHubs API docs (https://developer.github.com/v3/repos/).
+        Intent myIntent = new Intent(QuizStart.this, ootd.class);
+        startActivity(myIntent);
         this.url = this.BASE_URL + route;
         Log.e("url ", url);
 
