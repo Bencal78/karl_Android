@@ -5,6 +5,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 
 public class User {
     @SerializedName("_id")
@@ -22,9 +24,9 @@ public class User {
     @SerializedName("genre")
     private String genre;
     @SerializedName("tastes")
-    private JSONArray tastes;
+    private ArrayList<Taste> tastes;
     @SerializedName("clothes")
-    private JSONArray clothes;
+    private ArrayList<Clothe> clothes;
 
     public User(){
         this.id = null;
@@ -38,7 +40,7 @@ public class User {
         this.clothes = null;
     }
 
-    public User(String id, String idGoogle, String firstName, String lastName, String givenName, String email, String genre, JSONArray tastes, JSONArray clothes){
+    public User(String id, String idGoogle, String firstName, String lastName, String givenName, String email, String genre, ArrayList<Taste> tastes, ArrayList<Clothe> clothes){
         this.id = id;
         this.idGoogle = idGoogle;
         this.firstName = firstName;
@@ -62,10 +64,16 @@ public class User {
                 this.firstName = obj.getString("firstName");
             }
             if (obj.getJSONArray("tastes") != null) {
-                this.tastes = obj.getJSONArray("tastes");
+                int len = obj.getJSONArray("tastes").length();
+                for (int i=0;i<len;i++){
+                    this.tastes.add(new Taste(obj.getJSONArray("tastes").get(i)));
+                }
             }
             if (obj.getJSONArray("clothes") != null) {
-                this.clothes = obj.getJSONArray("clothes");
+                int len = obj.getJSONArray("clothes").length();
+                for (int i=0;i<len;i++){
+                    this.clothes.add(new Clothe(obj.getJSONArray("clothes").get(i)));
+                }
             }
             if(obj.getString("lastName") != null){
                 this.lastName = obj.getString("lastName");
@@ -80,6 +88,18 @@ public class User {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public User(Object obj){
+        User object = User.class.cast(obj) ;
+        if(object.getId() != null) {this.id = object.getId();}
+        if(object.getIdGoogle() != null) {this.idGoogle= object.getIdGoogle();}
+        if(object.getFirstName() != null) {this.firstName = object.getFirstName();}
+        if(object.getGivenName() != null) {this.givenName = object.getGivenName();}
+        if(object.getEmail() != null) {this.email = object.getEmail();}
+        if(object.getGenre() != null) {this.genre = object.getGenre();}
+        if(object.getTastes() != null) {this.tastes = object.getTastes();}
+        if(object.getClothes() != null) {this.clothes = object.getClothes();}
     }
 
 
@@ -139,19 +159,19 @@ public class User {
         this.genre = genre;
     }
 
-    public JSONArray getTastes() {
+    public ArrayList<Taste> getTastes() {
         return tastes;
     }
 
-    public void setTastes(JSONArray tastes) {
+    public void setTastes(ArrayList<Taste> tastes) {
         this.tastes = tastes;
     }
 
-    public JSONArray getClothes() {
+    public ArrayList<Clothe> getClothes() {
         return clothes;
     }
 
-    public void setClothes(JSONArray clothes) {
+    public void setClothes(ArrayList<Clothe> clothes) {
         this.clothes = clothes;
     }
 }

@@ -95,7 +95,18 @@ public class Clothe {
 
     }
 
-
+    public Clothe(Object obj){
+        Clothe object = Clothe.class.cast(obj) ;
+        if(object.getId() != null) {this.id = object.getId();}
+        if(object.getName() != null) {this.name = object.getName();}
+        if(object.getCategory() != null) {this.category = object.getCategory();}
+        if(object.getColors() != null) {this.colors = object.getColors();}
+        if(object.getFabrics() != null) {this.fabrics = object.getFabrics();}
+        if(object.getPattern() != null) {this.pattern = object.getPattern();}
+        if(object.getTemperature() != null) {this.temperature = object.getTemperature();}
+        if(object.getLayer() != null) {this.layer = object.getLayer();}
+        if(object.getBodyparts() != null) {this.bodyparts = object.getBodyparts();}
+    }
 
     public String getId() {
         return id;
