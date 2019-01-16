@@ -1,4 +1,4 @@
-package com.example.karl.karl;
+package com.example.karl.karl.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -8,9 +8,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.example.karl.karl.DownLoadImageTask;
+import com.example.karl.karl.R;
+
 import java.util.List;
 
-public class GridAdapter extends BaseAdapter {
+public class OotdAdapter extends BaseAdapter {
 
     Context context;
     private final String [] images;
@@ -19,7 +22,7 @@ public class GridAdapter extends BaseAdapter {
     View view;
 
 
-    public GridAdapter(Context context, List<Integer> values, List<String> images) {
+    public OotdAdapter(Context context, List<Integer> values, List<String> images) {
         this.context = context;
         this.images = images.toArray(new String[0]);
         this.values = values;

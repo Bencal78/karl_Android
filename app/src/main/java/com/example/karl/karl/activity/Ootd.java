@@ -1,4 +1,4 @@
-package com.example.karl.karl;
+package com.example.karl.karl.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +14,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.karl.karl.R;
+import com.example.karl.karl.adapter.OotdAdapter;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
@@ -22,7 +24,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ import java.util.List;
  * Created by Edouard on 20/09/2018.
  */
 
-public class ootd extends AppCompatActivity {
+public class Ootd extends AppCompatActivity {
     private static String UserId = null;
     private static String Id =null ;
     String BASE_URL = "http://18.184.156.66:8000/";
@@ -40,7 +41,7 @@ public class ootd extends AppCompatActivity {
     TextView tv2;
     GridView gridView;
 
-    public ootd() throws IOException {
+    public Ootd() throws IOException {
     }
 
     ImageView iv;
@@ -55,7 +56,7 @@ public class ootd extends AppCompatActivity {
         List<String> images = new ArrayList<String>();
         List<Integer> values  = new ArrayList<Integer>();
 
-        GridAdapter gridAdapter = new GridAdapter(this,values,images);
+        OotdAdapter gridAdapter = new OotdAdapter(this,values,images);
         gridView.setAdapter(gridAdapter);
         requestQueue = Volley.newRequestQueue(this);  // This setups up a new request queue which we will need to make HTTP requests.
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());

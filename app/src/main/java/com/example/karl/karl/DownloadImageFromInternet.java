@@ -18,10 +18,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Edouard on 20/09/2018.
  */
 
-class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
+public class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
     CircleImageView imageView;
     ProgressBar spinner;
-    DownloadImageFromInternet(CircleImageView imageView,ProgressBar spinner) {
+    public DownloadImageFromInternet(CircleImageView imageView, ProgressBar spinner) {
         this.imageView = imageView;
         this.spinner = spinner;
     }
