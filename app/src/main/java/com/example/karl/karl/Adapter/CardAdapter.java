@@ -1,11 +1,11 @@
-package com.example.karl.karl.Adapter;
+package com.example.karl.karl.adapter;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.karl.karl.Model.Model;
+import com.example.karl.karl.model.Model;
 import com.example.karl.karl.R;
 import com.huxq17.swipecardsview.BaseCardAdapter;
 import com.squareup.picasso.Picasso;

@@ -20,8 +20,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.karl.karl.Adapter.CardAdapter;
-import com.example.karl.karl.Model.Model;
+import com.example.karl.karl.adapter.CardAdapter;
+import com.example.karl.karl.model.Model;
 import com.huxq17.swipecardsview.SwipeCardsView;
 
 
