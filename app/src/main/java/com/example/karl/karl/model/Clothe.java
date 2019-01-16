@@ -28,8 +28,10 @@ public class Clothe {
     private Number temperature;
     @SerializedName("layer")
     private Number layer;
+    @SerializedName("rl_score")
+    private Number rl_score;
 
-    public Clothe(String id, String name, String category, ArrayList<String> colors, String fabrics, String pattern, Number temperature, Number layer, ArrayList<Integer> bodyparts){
+    public Clothe(String id, String name, String category, ArrayList<String> colors, String fabrics, String pattern, Number temperature, Number layer, ArrayList<Integer> bodyparts, Number rl_score){
         this.id = id;
         this.name = name;
         this.category = category;
@@ -39,6 +41,7 @@ public class Clothe {
         this.temperature = temperature;
         this.layer = layer;
         this.bodyparts = bodyparts;
+        this.rl_score = rl_score;
     }
 
     public Clothe(){
@@ -51,6 +54,7 @@ public class Clothe {
         this.temperature = null;
         this.layer = null;
         this.bodyparts = null;
+        this.rl_score = null;
     }
 
     public Clothe(JSONObject obj){
@@ -88,7 +92,9 @@ public class Clothe {
             if(String.valueOf(obj.getInt("layer")) != null){
                 this.layer = obj.getInt("layer");
             }
-
+            if(String.valueOf(obj.getInt("rl_score")) != null){
+                this.rl_score = obj.getInt("rl_score");
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -105,6 +111,7 @@ public class Clothe {
         if(object.getPattern() != null) {this.pattern = object.getPattern();}
         if(object.getTemperature() != null) {this.temperature = object.getTemperature();}
         if(object.getLayer() != null) {this.layer = object.getLayer();}
+        if(object.getRl_score() != null) {this.rl_score = object.getRl_score();}
         if(object.getBodyparts() != null) {this.bodyparts = object.getBodyparts();}
     }
 
@@ -166,6 +173,14 @@ public class Clothe {
 
     public void setLayer(Number layer) {
         this.layer = layer;
+    }
+
+    public Number getRl_score() {
+        return rl_score;
+    }
+
+    public void setRl_score(Number rl_score) {
+        this.rl_score = rl_score;
     }
 
     public ArrayList<Integer> getBodyparts() {
