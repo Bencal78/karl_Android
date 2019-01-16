@@ -1,4 +1,4 @@
-package com.example.karl.karl;
+package com.example.karl.karl.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -9,7 +9,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.karl.karl.activity.QuizStart;
+import com.example.karl.karl.DownloadImageFromInternet;
+import com.example.karl.karl.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 

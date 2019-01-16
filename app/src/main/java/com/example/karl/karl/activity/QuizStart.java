@@ -99,7 +99,7 @@ public class QuizStart extends AppCompatActivity{
     private void getClothes(String route) {
         // First, we insert the username into the repo url.
         // The repo url is defined in GitHubs API docs (https://developer.github.com/v3/repos/).
-        Intent myIntent = new Intent(QuizStart.this, ootd.class);
+        Intent myIntent = new Intent(QuizStart.this, Ootd.class);
         startActivity(myIntent);
         this.url = this.BASE_URL + route;
         Log.e("url ", url);
