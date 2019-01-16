@@ -1,12 +1,14 @@
 package com.example.karl.karl;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,12 +32,14 @@ public class QuizStart extends AppCompatActivity {
     String BASE_URL = "http://18.184.156.66:8000/";
     String url;
     RequestQueue requestQueue;  // This is our requests queue to process our HTTP requests.
+    Button button;
     public QuizStart() throws IOException {
     }
 
 
     ImageView iv;
     TextView tv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +48,7 @@ public class QuizStart extends AppCompatActivity {
         // Example of a call to a native method
         tv = findViewById(R.id.sample_text);
         iv = findViewById(R.id.sample_image);
-
+        button = findViewById(R.id.sample_button);
         String url= "api/clothes";
         requestQueue = Volley.newRequestQueue(this);  // This setups up a new request queue which we will need to make HTTP requests.
         getClothes(url);
@@ -53,6 +57,8 @@ public class QuizStart extends AppCompatActivity {
     private void getClothes(String route) {
         // First, we insert the username into the repo url.
         // The repo url is defined in GitHubs API docs (https://developer.github.com/v3/repos/).
+        Intent myIntent = new Intent(QuizStart.this, ootd.class);
+        startActivity(myIntent);
         this.url = this.BASE_URL + route;
         Log.e("url ", url);
 
