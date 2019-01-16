@@ -1,4 +1,4 @@
-package com.example.karl.karl;
+package com.example.karl.karl.activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,13 +9,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
+import com.example.karl.karl.R;
 import com.example.karl.karl.adapter.CardAdapter;
 import com.example.karl.karl.model.Clothe;
 import com.example.karl.karl.model.Model;
 import com.example.karl.karl.my_interface.GetClotheDataService;
 import com.example.karl.karl.network.RetrofitInstance;
 import com.huxq17.swipecardsview.SwipeCardsView;
-
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 
-public class QuizStart extends AppCompatActivity {
+public class QuizStart extends AppCompatActivity{
     String BASE_URL = "http://18.184.156.66:8000/";
     String url;
     RequestQueue requestQueue;  // This is our requests queue to process our HTTP requests.
