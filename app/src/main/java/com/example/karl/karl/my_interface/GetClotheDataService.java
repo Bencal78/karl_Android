@@ -25,6 +25,9 @@ public interface GetClotheDataService {
     @GET("clothes")
     Call<ArrayList<Clothe>> getClothe();
 
+    @GET("uploads/{id}")
+    Call<String> getImageClothe(@Path("id") String id);
+
     /**
      * URL MANIPULATION
      * @since Not used, Just to know how to use @query to get JSONObject

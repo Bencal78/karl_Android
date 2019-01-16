@@ -1,40 +1,31 @@
-package com.example.karl.karl;
+package com.example.karl.karl.activity;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
-import android.view.Display;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import org.json.*;
-
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.example.karl.karl.R;
 import com.example.karl.karl.adapter.CardAdapter;
+import com.example.karl.karl.model.Clothe;
 import com.example.karl.karl.model.Model;
+import com.example.karl.karl.my_interface.GetClotheDataService;
+import com.example.karl.karl.network.RetrofitInstance;
 import com.huxq17.swipecardsview.SwipeCardsView;
 
-
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
-public class QuizStart extends AppCompatActivity {
+import retrofit2.Call;
+import retrofit2.Callback;
+
+public class QuizStart extends AppCompatActivity{
     String BASE_URL = "http://18.184.156.66:8000/";
     String url;
     RequestQueue requestQueue;  // This is our requests queue to process our HTTP requests.
@@ -60,9 +51,43 @@ public class QuizStart extends AppCompatActivity {
         swipeCardsView.retainLastCard(false);
         swipeCardsView.enableSwipe(true);
 
+        /** Create handle for the RetrofitInstance interface*/
+        GetClotheDataService service = RetrofitInstance.getRetrofitInstance().create(GetClotheDataService.class);
+        Call<ArrayList<Clothe>> call = service.getClothe();
+
+        /**Log the URL called*/
+        Log.wtf("URL Called", call.request().url() + "");
+
+        call.enqueue(new Callback<ArrayList<Clothe>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Clothe>> call, retrofit2.Response<ArrayList<Clothe>> response) {
+                Log.e("size", String.valueOf(response.body().size()));
+                Log.e("response", response.body().get(0).getName());
+                // recupere les 10 id qu tu souhaites afficher
+                //add dynamiquement a Modellist les url avec l'id recupéré
+                for(int id = 0; id < 10; id++){
+                    String clothe1_id= response.body().get(id).getId();
+                    String image_url = BASE_URL + "api/uploads/" + clothe1_id + ".png";
+                    modelList.add(new Model("", image_url));
+
+                }
+
+                CardAdapter cardAdapter = getCardAdapter();
+                swipeCardsView.setAdapter(cardAdapter);
+                //generateClotheList(response.body().getClotheArrayList());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Clothe>> call, Throwable t) {
+                Log.e("Something went wrong", t.getMessage());
+                Toast.makeText(QuizStart.this, "Something went wrong...Error message: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        /*
         String url= "api/clothes";
         requestQueue = Volley.newRequestQueue(this);  // This setups up a new request queue which we will need to make HTTP requests.
-        getClothes(url);
+        */
+        //getClothes(url);
     }
 
     private CardAdapter getCardAdapter() {
@@ -70,6 +95,7 @@ public class QuizStart extends AppCompatActivity {
         return cardAdapter;
     }
 
+    /*
     private void getClothes(String route) {
         // First, we insert the username into the repo url.
         // The repo url is defined in GitHubs API docs (https://developer.github.com/v3/repos/).
@@ -122,4 +148,5 @@ public class QuizStart extends AppCompatActivity {
         // The request queue will automatically handle the request as soon as it can.
         requestQueue.add(arrReq);
     }
+    */
 }

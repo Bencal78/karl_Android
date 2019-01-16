@@ -2,7 +2,6 @@ package com.example.karl.karl;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,7 +9,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.karl.karl.activity.MainActivity;
+import com.example.karl.karl.activity.QuizStart;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
@@ -38,7 +37,7 @@ public class Welcome_Page extends AppCompatActivity{
         buttonquiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(Welcome_Page.this, MainActivity.class);
+                Intent myIntent = new Intent(Welcome_Page.this, QuizStart.class);
                 startActivity(myIntent);
             }
         });
