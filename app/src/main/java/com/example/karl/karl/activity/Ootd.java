@@ -56,14 +56,13 @@ public class Ootd extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ootd);
         iv = findViewById(R.id.logo);
-        tv3 = findViewById(R.id.textView);
+        tv3 = findViewById(R.id.TextNothing);
         //tv2 = findViewById(R.id.texttest2);
         gridView = (GridView) findViewById(R.id.gridview);
         List<String> images = new ArrayList<String>();
         List<Integer> values  = new ArrayList<Integer>();
 
-        OotdAdapter gridAdapter = new OotdAdapter(this,values,images);
-        gridView.setAdapter(gridAdapter);
+
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         assert acct != null;
         String GoogleId = String.valueOf(acct.getId());
@@ -86,25 +85,39 @@ public class Ootd extends AppCompatActivity {
             public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
                 String clothe_1id = null;
                 try {
+
                     Log.e("ddd", response.body().toString());
                     ArrayList<Clothe> clothes = new ArrayList<>();
+                    ArrayList<String> clothesid = new ArrayList<>();
                     if (response.body().getAsJsonObject().get("outfit").getAsJsonArray() != null) {
                         int len = response.body().getAsJsonObject().get("outfit").getAsJsonArray().size();
                         for (int i=0;i<len;i++){
                             clothes.add(new Clothe(new JSONObject(response.body().getAsJsonObject().get("outfit").getAsJsonArray().get(i).toString())));
+                            Log.e("Clothes", String.valueOf(clothes.get(i).getId()));
+                            clothesid.add("http://18.184.156.66:8000/api/uploads/"+clothes.get(i).getId()+".png");
                         }
                     }
+
+                    OotdAdapter gridAdapter = new OotdAdapter(getApplicationContext(),clothesid);
+                    gridView.setAdapter(gridAdapter);
                     Log.e("clothes", clothes.toString());
+                    tv3.setText("This is your Outfit of the Day !");
+
+
+
                     //clothe_1id = response.body().getString(0);
-                } catch (Exception e) {
+                } catch (Exception e ) {
                     e.printStackTrace();
+                    tv3.setText("You have no outfits");
                 }
-                //tv3.setText(clothe_1id);
+
+
             }
 
             @Override
             public void onFailure(Call<JsonElement> call, Throwable t) {
                 Log.e("getOotd error", t.toString());
+
             }
 
 
@@ -119,13 +132,21 @@ public class Ootd extends AppCompatActivity {
         call.enqueue(new Callback<ArrayList<User>>() {
             @Override
             public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
-                assert response.body() != null;
+            try {
                 UserId = response.body().get(0).getId();
-                getOotd(UserId);
+                //getOotd(UserId);
+                getOotd("5c35d55fcba93d1c8d350204");
+
+            }
+            catch (Exception e) {
+                tv3.setText("You have an issue with your user : Lisa par default");
+                getOotd("5c35d55fcba93d1c8d350204");
+            }
             }
             @Override
             public void onFailure(Call<ArrayList<User>> call, Throwable t) {
                 Log.e("googleIdToId error", t.toString());
+
             }
         });
     }

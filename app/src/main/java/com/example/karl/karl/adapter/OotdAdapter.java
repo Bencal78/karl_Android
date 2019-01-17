@@ -11,21 +11,20 @@ import android.widget.ImageView;
 import com.example.karl.karl.DownLoadImageTask;
 import com.example.karl.karl.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OotdAdapter extends BaseAdapter {
 
     Context context;
-    private final String [] images;
-    private final List<Integer> values;
-    LayoutInflater layoutInflater;
+    private final String[] images;
+    private LayoutInflater layoutInflater;
     View view;
 
 
-    public OotdAdapter(Context context, List<Integer> values, List<String> images) {
+    public OotdAdapter(Context context, ArrayList<String> images) {
         this.context = context;
         this.images = images.toArray(new String[0]);
-        this.values = values;
     }
 
     @Override
