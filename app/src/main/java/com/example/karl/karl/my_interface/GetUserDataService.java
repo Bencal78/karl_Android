@@ -25,6 +25,8 @@ public interface GetUserDataService {
     @GET("users")
     Call<ArrayList<User>> getUserById(@Query("_id") String id);
 
+    @GET("users")
+    Call<ArrayList<User>> getUserByGoogleId(@Query("idGoogle") String id);
 
     /**
      * URL MANIPULATION
