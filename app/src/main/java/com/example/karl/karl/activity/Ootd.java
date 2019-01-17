@@ -8,16 +8,19 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.example.karl.karl.R;
 import com.example.karl.karl.adapter.OotdAdapter;
+import com.example.karl.karl.model.Clothe;
 import com.example.karl.karl.model.User;
 import com.example.karl.karl.my_interface.GetPyreqDataService;
 import com.example.karl.karl.my_interface.GetUserDataService;
 import com.example.karl.karl.network.RetrofitInstance;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,6 +32,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Edouard on 20/09/2018.
@@ -79,40 +83,50 @@ public class Ootd extends AppCompatActivity {
 
         call.enqueue(new Callback<JsonElement>() {
             @Override
-            public void onResponse(@NonNull Call<JsonElement> call, @NonNull retrofit2.Response<JsonElement> response) {
+            public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
                 String clothe_1id = null;
-                if (response.body() != null) {
-                    Log.e("ddd", response.body().getAsJsonArray("outfit").get(0).getAsString("_id"));
+                try {
+                    Log.e("ddd", response.body().toString());
+                    ArrayList<Clothe> clothes = new ArrayList<>();
+                    if (response.body().getAsJsonObject().get("outfit").getAsJsonArray() != null) {
+                        int len = response.body().getAsJsonObject().get("outfit").getAsJsonArray().size();
+                        for (int i=0;i<len;i++){
+                            clothes.add(new Clothe(new JSONObject(response.body().getAsJsonObject().get("outfit").getAsJsonArray().get(i).toString())));
+                        }
+                    }
+                    Log.e("clothes", clothes.toString());
+                    //clothe_1id = response.body().getString(0);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                assert response.body() != null;
-                clothe_1id = String.valueOf(response.body().getAsJsonObject().get("_id"));
-                tv3.setText(clothe_1id);
+                //tv3.setText(clothe_1id);
             }
 
             @Override
             public void onFailure(Call<JsonElement> call, Throwable t) {
-
+                Log.e("getOotd error", t.toString());
             }
-        });
 
+
+        });
 
     }
     private void GoogleIdToId(String GoogleId){
 
         GetUserDataService service = RetrofitInstance.getRetrofitInstance().create(GetUserDataService.class);
-        retrofit2.Call<ArrayList<User>> call = service.getUserByGoogleId(GoogleId);
+        Call<ArrayList<User>> call = service.getUserByGoogleId(GoogleId);
 
         call.enqueue(new Callback<ArrayList<User>>() {
             @Override
-            public void onResponse(retrofit2.Call<ArrayList<User>> call, retrofit2.Response<ArrayList<User>> response) {
+            public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
                 assert response.body() != null;
                 UserId = response.body().get(0).getId();
                 getOotd(UserId);
             }
             @Override
-            public void onFailure(retrofit2.Call<ArrayList<User>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<User>> call, Throwable t) {
+                Log.e("googleIdToId error", t.toString());
             }
         });
     }
 }
-
