@@ -1,7 +1,9 @@
 package com.example.karl.karl.network;
 
+import com.example.karl.karl.R;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
 
 public class RetrofitInstance {
     private static Retrofit retrofit;

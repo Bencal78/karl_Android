@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.karl.karl.R;
 import com.example.karl.karl.adapter.OotdAdapter;
 import com.example.karl.karl.model.Clothe;
+import com.example.karl.karl.model.Outfit;
 import com.example.karl.karl.model.User;
 import com.example.karl.karl.my_interface.GetPyreqDataService;
 import com.example.karl.karl.my_interface.GetUserDataService;
@@ -41,7 +42,6 @@ import retrofit2.Response;
 public class Ootd extends AppCompatActivity {
     private static String UserId = null;
     private static String Id =null ;
-    String BASE_URL = "http://18.184.156.66:8000/";
     String url;
     TextView tv3;
     TextView tv2;
@@ -77,55 +77,41 @@ public class Ootd extends AppCompatActivity {
         // First, we insert the username into the repo url.
         // The repo url is defined in GitHubs API docs (https://developer.github.com/v3/repos/).
         GetPyreqDataService service = RetrofitInstance.getRetrofitInstance().create(GetPyreqDataService.class);
-        Call<JsonElement> call = service.getPyreq("return_outfit",id);
+        Call<Outfit> call = service.getPyreq("return_outfit",id);
         Log.e("url", call.request().url() + "");
 
-        call.enqueue(new Callback<JsonElement>() {
+        call.enqueue(new Callback<Outfit>() {
             @Override
-            public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+            public void onResponse(Call<Outfit> call, Response<Outfit> response) {
                 String clothe_1id = null;
                 try {
-
                     Log.e("ddd", response.body().toString());
-                    ArrayList<Clothe> clothes = new ArrayList<>();
                     ArrayList<String> clothesid = new ArrayList<>();
-                    if (response.body().getAsJsonObject().get("outfit").getAsJsonArray() != null) {
-                        int len = response.body().getAsJsonObject().get("outfit").getAsJsonArray().size();
+                    if (response.body() != null) {
+                        int len = response.body().getOutfit().size();
                         for (int i=0;i<len;i++){
-                            clothes.add(new Clothe(new JSONObject(response.body().getAsJsonObject().get("outfit").getAsJsonArray().get(i).toString())));
-                            Log.e("Clothes", String.valueOf(clothes.get(i).getId()));
-                            clothesid.add("http://18.184.156.66:8000/api/uploads/"+clothes.get(i).getId()+".png");
+                            clothesid.add(getString(R.string.base_url)+"uploads/"+response.body().getOutfit().get(i).getId()+".png");
                         }
                     }
-
                     OotdAdapter gridAdapter = new OotdAdapter(getApplicationContext(),clothesid);
                     gridView.setAdapter(gridAdapter);
-                    Log.e("clothes", clothes.toString());
                     tv3.setText("This is your Outfit of the Day !");
-
-
-
-                    //clothe_1id = response.body().getString(0);
                 } catch (Exception e ) {
                     e.printStackTrace();
                     tv3.setText("You have no outfits");
                 }
-
-
             }
 
             @Override
-            public void onFailure(Call<JsonElement> call, Throwable t) {
+            public void onFailure(Call<Outfit> call, Throwable t) {
                 Log.e("getOotd error", t.toString());
 
             }
 
 
         });
-
     }
     private void GoogleIdToId(String GoogleId){
-
         GetUserDataService service = RetrofitInstance.getRetrofitInstance().create(GetUserDataService.class);
         Call<ArrayList<User>> call = service.getUserByGoogleId(GoogleId);
 
