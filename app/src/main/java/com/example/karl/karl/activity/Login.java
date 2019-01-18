@@ -65,7 +65,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         //demande de l'email a l'utilisateur
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestScopes(new Scope(Scopes.PLUS_ME))
-                .requestServerAuthCode("995511954301-tlecvtlajmna3pl8ftfb3dev58hn3lpr.apps.googleusercontent.com")
+                .requestServerAuthCode(getString(R.string.google_client_id))
                 .requestEmail()
                 .build();
 
@@ -136,7 +136,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void checkNewUser(final GoogleSignInAccount account){
-        String url = "http://18.184.156.66:8000/api/users?idGoogle="+account.getId();
+        String url = getString(R.string.base_url)+"users?idGoogle="+account.getId();
         // Next, we create a new JsonArrayRequest. This will use Volley to make a HTTP request
         // that expects a JSON Array Response.
         JsonArrayRequest arrReq = new JsonArrayRequest(Request.Method.GET, url,
@@ -169,7 +169,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void createUser(final JSONObject info, final GoogleSignInAccount account){
-        String url = "http://18.184.156.66:8000/api/users";
+        String url = getString(R.string.base_url)+"users";
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>()
                 {

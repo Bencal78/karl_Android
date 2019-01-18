@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Karl</string>
+    <string name="base_url">http://18.184.156.66:8000/api/</string>
+    <string name="google_client_id">995511954301-tlecvtlajmna3pl8ftfb3dev58hn3lpr.apps.googleusercontent.com</string>
 </resources>
