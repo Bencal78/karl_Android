@@ -6,6 +6,8 @@
     android:layout_height="wrap_content"
     android:background="@color/blanccassé">
 
+
+
     <TextView
         android:id="@+id/TextNothing"
         android:layout_width="match_parent"
@@ -31,6 +33,11 @@
         android:columnWidth="150dp"
         android:gravity="center"
         android:numColumns="auto_fit" />
+    <Button
+        android:id="@+id/nextpage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         />
 
 
 </RelativeLayout>
