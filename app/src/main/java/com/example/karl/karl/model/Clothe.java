@@ -61,41 +61,41 @@ public class Clothe {
 
     public Clothe(JSONObject obj){
         try {
-            if(obj.getString("_id") != null){
+            if(obj.has("_id")){
                 this.id = obj.getString("_id");
             }
-            if(obj.getString("name") != null){
+            if(obj.has("name")){
                 this.name = obj.getString("name");
             }
-            if(obj.getString("category") != null){
+            if(obj.has("category")){
                 this.category = obj.getString("category");
             }
-            if (obj.getJSONArray("bodyparts") != null) {
+            if (obj.has("bodyparts")) {
                 int len = obj.getJSONArray("bodyparts").length();
                 for (int i=0;i<len;i++){
                     int tmp = parseInt(obj.getJSONArray("bodyparts").get(i).toString());
                     this.bodyparts.add(parseInt(obj.getJSONArray("bodyparts").get(i).toString()));
                 }
             }
-            if (obj.getJSONArray("colors") != null) {
+            if (obj.has("colors")) {
                 int len = obj.getJSONArray("colors").length();
                 for (int i=0;i<len;i++){
                     this.colors.add(obj.getJSONArray("colors").get(i).toString());
                 }
             }
-            if(obj.getString("fabrics") != null){
+            if(obj.has("fabrics")){
                 this.fabrics = obj.getString("fabrics");
             }
-            if(obj.getString("pattern") != null){
+            if(obj.has("pattern")){
                 this.pattern = obj.getString("pattern");
             }
-            if(String.valueOf(obj.getInt("temperature")) != null){
+            if(obj.has("temperature")){
                 this.temperature = obj.getInt("temperature");
             }
-            if(String.valueOf(obj.getInt("layer")) != null){
+            if(obj.has("layer")){
                 this.layer = obj.getInt("layer");
             }
-            if(String.valueOf(obj.getInt("rl_score")) != null){
+            if(obj.has("rl_score")){
                 this.rl_score = obj.getInt("rl_score");
             }
         } catch (JSONException e) {

@@ -31,13 +31,13 @@ public class Taste {
 
     public Taste(JSONObject obj){
         try {
-            if(obj.getString("_id") != null){
+            if(obj.has("_id")){
                 this.id = obj.getString("_id");
             }
-            if(obj.getString("decision") != null){
+            if(obj.has("decision")){
                 this.decision = obj.getString("decision");
             }
-            if (obj.getJSONArray("clothes") != null) {
+            if (obj.has("clothes")) {
                 int len = obj.getJSONArray("bodyparts").length();
                 for (int i=0;i<len;i++){
                     this.clothes.add(new Clothe(obj.getJSONArray("clothes").get(i)));

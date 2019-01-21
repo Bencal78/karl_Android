@@ -10,14 +10,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.karl.karl.R;
 import com.example.karl.karl.adapter.CardAdapter;
 import com.example.karl.karl.model.Clothe;
@@ -60,7 +52,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     GoogleSignInClient mGoogleSignInClient;
     Animation animation;
     ImageView logokarl;
-    RequestQueue requestQueue;  // This is our requests queue to process our HTTP requests.
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,7 +59,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         //String serverClientId = getResources().getString(R.string.google_server_client_id);
 
         setContentView(R.layout.login);
-        requestQueue = Volley.newRequestQueue(this);  // This setups up a new request queue which we will need to make HTTP requests.
 
         //creation du bouton google+
 
@@ -217,6 +207,5 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             }
         });
     }
-
 
 }
