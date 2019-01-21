@@ -1,4 +1,6 @@
 package com.example.karl.karl.model;
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONArray;
@@ -54,34 +56,37 @@ public class User {
 
     public User(JSONObject obj){
         try {
-            if(obj.getString("_id") != null){
+            if(obj.has("_id")){
                 this.id = obj.getString("_id");
             }
-            if(obj.getString("idGoogle") != null){
+            if(obj.has("idGoogle")){
                 this.idGoogle = obj.getString("idGoogle");
             }
-            if(obj.getString("firstName") != null){
+            if(obj.has("firstName")){
                 this.firstName = obj.getString("firstName");
             }
-            if (obj.getJSONArray("tastes") != null) {
+            if(obj.has("email")){
+                this.email = obj.getString("email");
+            }
+            if (obj.has("tastes")) {
                 int len = obj.getJSONArray("tastes").length();
                 for (int i=0;i<len;i++){
                     this.tastes.add(new Taste(obj.getJSONArray("tastes").get(i)));
                 }
             }
-            if (obj.getJSONArray("clothes") != null) {
+            if (obj.has("clothes")) {
                 int len = obj.getJSONArray("clothes").length();
                 for (int i=0;i<len;i++){
                     this.clothes.add(new Clothe(obj.getJSONArray("clothes").get(i)));
                 }
             }
-            if(obj.getString("lastName") != null){
+            if(obj.has("lastName")){
                 this.lastName = obj.getString("lastName");
             }
-            if(obj.getString("givenName") != null){
+            if(obj.has("givenName")){
                 this.givenName = obj.getString("givenName");
             }
-            if(obj.getString("genre") != null){
+            if(obj.has("genre")){
                 this.genre = obj.getString("genre");
             }
 
