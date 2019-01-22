@@ -42,7 +42,7 @@ public interface GetUserDataService {
      * Parts are declared using the @Part annotation.
      * */
     @PUT("users")
-    Call<User> updateUser (@Body RequestBody body);
+    Call<JsonElement> updateUser (@Body User body);
 
     @PUT("users/addTaste")
     Call<User> updateTaste(@Body RequestBody body);
