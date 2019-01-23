@@ -38,7 +38,7 @@ public class Welcome_Page extends AppCompatActivity{
         buttonquiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(Welcome_Page.this, QuizStart.class);
+                Intent myIntent = new Intent(Welcome_Page.this, QuizStart1.class);
                 startActivity(myIntent);
             }
         });
