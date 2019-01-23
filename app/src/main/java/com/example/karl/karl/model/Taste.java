@@ -13,7 +13,7 @@ public class Taste {
     @SerializedName("_id")
     private String id;
     @SerializedName("decision")
-    private String decision;
+    private Boolean decision;
     @SerializedName("clothes")
     private ArrayList<Clothe> clothes = new ArrayList<>();
 
@@ -23,7 +23,7 @@ public class Taste {
         this.clothes = new ArrayList<>();
     }
 
-    public Taste(String id, String decision, ArrayList<Clothe> clothes){
+    public Taste(String id, Boolean decision, ArrayList<Clothe> clothes){
         this.id = id;
         this.decision = decision;
         this.clothes = clothes;
@@ -35,7 +35,7 @@ public class Taste {
                 this.id = obj.getString("_id");
             }
             if(obj.has("decision")){
-                this.decision = obj.getString("decision");
+                this.decision = Boolean.valueOf(obj.getString("decision"));
             }
             if (obj.has("clothes")) {
                 int len = obj.getJSONArray("bodyparts").length();
@@ -65,11 +65,11 @@ public class Taste {
         this.clothes = clothes;
     }
 
-    public String getDecision(){
+    public Boolean getDecision(){
         return this.decision;
     }
 
-    public void setDecision(String decision) {
+    public void setDecision(Boolean decision) {
         this.decision = decision;
     }
 

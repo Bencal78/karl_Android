@@ -3,6 +3,8 @@ package com.example.karl.karl.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -69,7 +71,6 @@ public class QuizStart extends AppCompatActivity{
 
                 CardAdapter cardAdapter = getCardAdapter();
                 swipeCardsView.setAdapter(cardAdapter);
-                //generateClotheList(response.body().getClotheArrayList());
             }
 
             @Override
