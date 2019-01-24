@@ -2,4 +2,7 @@
     <string name="app_name">Karl</string>
     <string name="base_url">http://18.184.156.66:8000/api/</string>
     <string name="google_client_id">995511954301-tlecvtlajmna3pl8ftfb3dev58hn3lpr.apps.googleusercontent.com</string>
+    <string name="google_api_keys">AIzaSyCGOqBmhp9olvWjaAUP_ML5hdszEEeMDi0</string>
+    <string name="server_client_id">995511954301-i27fh2a8kngnjplf5tpgdurv1qc6666l.apps.googleusercontent.com</string>
+    <string name="server_secret_id">WQ3kS00kuUjdpxdCckZyTX4T</string>
 </resources>

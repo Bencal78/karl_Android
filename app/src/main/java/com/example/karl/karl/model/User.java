@@ -1,7 +1,7 @@
 package com.example.karl.karl.model;
+
 import com.google.gson.annotations.SerializedName;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,6 +27,8 @@ public class User {
     private ArrayList<Taste> tastes = new ArrayList<>();
     @SerializedName("clothes")
     private ArrayList<Clothe> clothes = new ArrayList<>();
+    @SerializedName("rl_cat_score")
+    private JSONObject rl_cat_score;
 
     public User(){
         this.id = null;
@@ -40,7 +42,7 @@ public class User {
         this.clothes = new ArrayList<>();
     }
 
-    public User(String id, String idGoogle, String firstName, String lastName, String givenName, String email, String genre, ArrayList<Taste> tastes, ArrayList<Clothe> clothes){
+    public User(String id, String idGoogle, String firstName, String lastName, String givenName, String email, String genre, ArrayList<Taste> tastes, ArrayList<Clothe> clothes, JSONObject rl_cat_score){
         this.id = id;
         this.idGoogle = idGoogle;
         this.firstName = firstName;
@@ -50,39 +52,46 @@ public class User {
         this.genre = genre;
         this.tastes = tastes;
         this.clothes = clothes;
+        this.rl_cat_score = rl_cat_score;
     }
 
     public User(JSONObject obj){
         try {
-            if(obj.getString("_id") != null){
+            if(obj.has("_id")){
                 this.id = obj.getString("_id");
             }
-            if(obj.getString("idGoogle") != null){
+            if(obj.has("idGoogle")){
                 this.idGoogle = obj.getString("idGoogle");
             }
-            if(obj.getString("firstName") != null){
+            if(obj.has("firstName")){
                 this.firstName = obj.getString("firstName");
             }
-            if (obj.getJSONArray("tastes") != null) {
+            if(obj.has("email")){
+                this.email = obj.getString("email");
+            }
+            if (obj.has("tastes")) {
                 int len = obj.getJSONArray("tastes").length();
                 for (int i=0;i<len;i++){
                     this.tastes.add(new Taste(obj.getJSONArray("tastes").get(i)));
                 }
             }
-            if (obj.getJSONArray("clothes") != null) {
+            if (obj.has("clothes")) {
                 int len = obj.getJSONArray("clothes").length();
                 for (int i=0;i<len;i++){
                     this.clothes.add(new Clothe(obj.getJSONArray("clothes").get(i)));
                 }
             }
-            if(obj.getString("lastName") != null){
+            if(obj.has("lastName")){
                 this.lastName = obj.getString("lastName");
             }
-            if(obj.getString("givenName") != null){
+            if(obj.has("givenName")){
                 this.givenName = obj.getString("givenName");
             }
-            if(obj.getString("genre") != null){
+            if(obj.has("genre")){
                 this.genre = obj.getString("genre");
+            }
+            if(obj.has("rl_cat_score")){
+                this.rl_cat_score = obj.getJSONObject("rl_cat_score");
             }
 
         } catch (JSONException e) {
@@ -100,6 +109,7 @@ public class User {
         if(object.getGenre() != null) {this.genre = object.getGenre();}
         if(object.getTastes() != null) {this.tastes = object.getTastes();}
         if(object.getClothes() != null) {this.clothes = object.getClothes();}
+        if(object.getRl_cat_score() != null) {this.rl_cat_score = object.getRl_cat_score();}
     }
 
 
@@ -173,5 +183,11 @@ public class User {
 
     public void setClothes(ArrayList<Clothe> clothes) {
         this.clothes = clothes;
+    }
+
+    public JSONObject getRl_cat_score(){return rl_cat_score;}
+
+    public void setRl_cat_score(JSONObject rl_cat_score) {
+        this.rl_cat_score = rl_cat_score;
     }
 }

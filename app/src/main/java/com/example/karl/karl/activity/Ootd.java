@@ -1,5 +1,6 @@
 package com.example.karl.karl.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import com.example.karl.karl.R;
 import com.example.karl.karl.adapter.OotdAdapter;
 import com.example.karl.karl.model.Clothe;
 import com.example.karl.karl.model.Outfit;
+import com.example.karl.karl.model.Taste;
 import com.example.karl.karl.model.User;
 import com.example.karl.karl.my_interface.GetPyreqDataService;
 import com.example.karl.karl.my_interface.GetUserDataService;
@@ -22,6 +24,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.mindorks.placeholderview.SwipeDecor;
+import com.mindorks.placeholderview.SwipePlaceHolderView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,17 +43,19 @@ import retrofit2.Response;
  * Created by Edouard on 20/09/2018.
  */
 
+
 public class Ootd extends AppCompatActivity {
     private static String UserId = null;
     private static String Id =null ;
+    private SwipePlaceHolderView mSwipeView;
+    private Context mContext;
     String url;
     TextView tv3;
     TextView tv2;
     GridView gridView;
     ImageView imagesoleil;
     ImageView imagecal;
-    ImageView imagedislike;
-    ImageView imagelike;
+
 
 
     public Ootd() throws IOException {
@@ -64,17 +70,26 @@ public class Ootd extends AppCompatActivity {
         tv3 = findViewById(R.id.TextNothing);
         imagesoleil = findViewById(R.id.imgsoleil);
         imagecal = findViewById(R.id.imgcal);
-        imagelike = findViewById(R.id.imgpouceyes);
-        imagedislike = findViewById(R.id.imgpouceno);
+
+
+        mSwipeView = findViewById(R.id.swipeView);
+        mContext = getApplicationContext();
+
+        mSwipeView.getBuilder()
+                .setDisplayViewCount(3)
+                .setSwipeDecor(new SwipeDecor()
+                        .setPaddingTop(20)
+                        .setRelativeScale(0.01f)
+                        .setSwipeInMsgLayoutId(R.layout.tinder_swipe_in_msg_view)
+                        .setSwipeOutMsgLayoutId(R.layout.tinder_swipe_out_msg_view));
+
 
         //tv2 = findViewById(R.id.texttest2);
-        gridView = (GridView) findViewById(R.id.gridview);
         List<String> images = new ArrayList<String>();
         List<Integer> values  = new ArrayList<Integer>();
         imagesoleil.setImageDrawable(getResources().getDrawable(R.drawable.lesoleil));
         imagecal.setImageDrawable(getResources().getDrawable(R.drawable.calendrier));
-        imagelike.setImageDrawable(getResources().getDrawable(R.drawable.ic_like));
-        imagedislike.setImageDrawable(getResources().getDrawable(R.drawable.ic_dislike));
+
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         assert acct != null;
@@ -99,15 +114,18 @@ public class Ootd extends AppCompatActivity {
                 String clothe_1id = null;
                 try {
                     Log.e("ddd", response.body().toString());
-                    ArrayList<String> clothesid = new ArrayList<>();
+                    ArrayList<Clothe> Clothes = new ArrayList<Clothe>();
+                    Taste taste;
                     if (response.body() != null) {
                         int len = response.body().getOutfit().size();
                         for (int i=0;i<len;i++){
-                            clothesid.add(getString(R.string.base_url)+"uploads/"+response.body().getOutfit().get(i).getId()+".png");
+
+                            Clothes.add(new Clothe(response.body().getOutfit().get(i)));
                         }
+                        taste = new Taste(null,null,Clothes);
+                        mSwipeView.addView(new TinderCard(mContext, taste, mSwipeView));
                     }
-                    OotdAdapter gridAdapter = new OotdAdapter(getApplicationContext(),clothesid);
-                    gridView.setAdapter(gridAdapter);
+
                     tv3.setText("Outfit of the Day !");
                 } catch (Exception e ) {
                     e.printStackTrace();

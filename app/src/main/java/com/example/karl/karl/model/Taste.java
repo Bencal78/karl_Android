@@ -13,7 +13,7 @@ public class Taste {
     @SerializedName("_id")
     private String id;
     @SerializedName("decision")
-    private String decision;
+    private Boolean decision;
     @SerializedName("clothes")
     private ArrayList<Clothe> clothes = new ArrayList<>();
 
@@ -23,7 +23,7 @@ public class Taste {
         this.clothes = new ArrayList<>();
     }
 
-    public Taste(String id, String decision, ArrayList<Clothe> clothes){
+    public Taste(String id, Boolean decision, ArrayList<Clothe> clothes){
         this.id = id;
         this.decision = decision;
         this.clothes = clothes;
@@ -31,13 +31,13 @@ public class Taste {
 
     public Taste(JSONObject obj){
         try {
-            if(obj.getString("_id") != null){
+            if(obj.has("_id")){
                 this.id = obj.getString("_id");
             }
-            if(obj.getString("decision") != null){
-                this.decision = obj.getString("decision");
+            if(obj.has("decision")){
+                this.decision = Boolean.valueOf(obj.getString("decision"));
             }
-            if (obj.getJSONArray("clothes") != null) {
+            if (obj.has("clothes")) {
                 int len = obj.getJSONArray("bodyparts").length();
                 for (int i=0;i<len;i++){
                     this.clothes.add(new Clothe(obj.getJSONArray("clothes").get(i)));
@@ -65,11 +65,11 @@ public class Taste {
         this.clothes = clothes;
     }
 
-    public String getDecision(){
+    public Boolean getDecision(){
         return this.decision;
     }
 
-    public void setDecision(String decision) {
+    public void setDecision(Boolean decision) {
         this.decision = decision;
     }
 

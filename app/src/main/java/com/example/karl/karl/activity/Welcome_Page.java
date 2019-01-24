@@ -38,7 +38,7 @@ public class Welcome_Page extends AppCompatActivity{
         buttonquiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(Welcome_Page.this, QuizStart.class);
+                Intent myIntent = new Intent(Welcome_Page.this, QuizStart1.class);
                 startActivity(myIntent);
             }
         });
@@ -48,7 +48,6 @@ public class Welcome_Page extends AppCompatActivity{
         // Example of a call to a native method
         TextView tv = (TextView) findViewById(R.id.persons_name);
         TextView tv2 = (TextView) findViewById(R.id.invitation);
-
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         if (acct != null) {
             String personName = acct.getDisplayName();

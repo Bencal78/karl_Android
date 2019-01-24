@@ -2,6 +2,7 @@ package com.example.karl.karl.my_interface;
 
 import com.example.karl.karl.model.Clothe;
 import com.example.karl.karl.model.User;
+import com.google.gson.JsonElement;
 
 import java.util.ArrayList;
 
@@ -32,7 +33,7 @@ public interface GetUserDataService {
      * HTTP request body with the @Body annotation
      */
     @POST("users")
-    Call<Clothe> createUser(@Body RequestBody body);
+    Call<JsonElement> createUser(@Body User body);
 
 
     /**
@@ -41,7 +42,7 @@ public interface GetUserDataService {
      * Parts are declared using the @Part annotation.
      * */
     @PUT("users")
-    Call<User> updateUser (@Body RequestBody body);
+    Call<JsonElement> updateUser (@Body User body);
 
     @PUT("users/addTaste")
     Call<User> updateTaste(@Body RequestBody body);

@@ -22,6 +22,7 @@
             "certificate_hash": "1bc4003a50d4f198f221c76fb10219dacacf37b1"
           }
         },
+        /*
         {
           "client_id": "995511954301-12e595553fs0n5f6ua02174besq9ek09.apps.googleusercontent.com",
           "client_type": 1,
@@ -30,6 +31,7 @@
             "certificate_hash": "fc20505bdd0f090bae13e97d88d3ce1692b57960"
           }
         },
+        */
       ],
       "api_key": [
         {
