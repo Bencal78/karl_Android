@@ -46,6 +46,11 @@ public class Ootd extends AppCompatActivity {
     TextView tv3;
     TextView tv2;
     GridView gridView;
+    ImageView imagesoleil;
+    ImageView imagecal;
+    ImageView imagedislike;
+    ImageView imagelike;
+
 
     public Ootd() throws IOException {
     }
@@ -57,11 +62,19 @@ public class Ootd extends AppCompatActivity {
         setContentView(R.layout.ootd);
         iv = findViewById(R.id.logo);
         tv3 = findViewById(R.id.TextNothing);
+        imagesoleil = findViewById(R.id.imgsoleil);
+        imagecal = findViewById(R.id.imgcal);
+        imagelike = findViewById(R.id.imgpouceyes);
+        imagedislike = findViewById(R.id.imgpouceno);
+
         //tv2 = findViewById(R.id.texttest2);
         gridView = (GridView) findViewById(R.id.gridview);
         List<String> images = new ArrayList<String>();
         List<Integer> values  = new ArrayList<Integer>();
-
+        imagesoleil.setImageDrawable(getResources().getDrawable(R.drawable.lesoleil));
+        imagecal.setImageDrawable(getResources().getDrawable(R.drawable.calendrier));
+        imagelike.setImageDrawable(getResources().getDrawable(R.drawable.ic_like));
+        imagedislike.setImageDrawable(getResources().getDrawable(R.drawable.ic_dislike));
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         assert acct != null;
@@ -95,7 +108,7 @@ public class Ootd extends AppCompatActivity {
                     }
                     OotdAdapter gridAdapter = new OotdAdapter(getApplicationContext(),clothesid);
                     gridView.setAdapter(gridAdapter);
-                    tv3.setText("This is your Outfit of the Day !");
+                    tv3.setText("Outfit of the Day !");
                 } catch (Exception e ) {
                     e.printStackTrace();
                     tv3.setText("You have no outfits");
