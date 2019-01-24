@@ -7,9 +7,13 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.karl.karl.R;
+import com.example.karl.karl.adapter.OotdAdapter;
 import com.example.karl.karl.model.Clothe;
+import com.example.karl.karl.model.Outfit;
+import com.example.karl.karl.model.Taste;
 import com.example.karl.karl.model.User;
 import com.example.karl.karl.my_interface.GetClotheDataService;
+import com.example.karl.karl.my_interface.GetPyreqDataService;
 import com.example.karl.karl.my_interface.GetUserDataService;
 import com.example.karl.karl.network.RetrofitInstance;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -62,6 +66,8 @@ public class QuizStart1 extends AppCompatActivity {
                 mSwipeView.doSwipe(true);
             }
         });
+
+        Log.e("swipe resolver size", String.valueOf(mSwipeView.getAllResolvers().size()));
     }
 
     private void getUser(String googleId) {
@@ -73,9 +79,7 @@ public class QuizStart1 extends AppCompatActivity {
             public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
                 try {
                     User usr = response.body().get(0);
-                    for(int i=0; i<usr.getTastes().size(); i++){
-                        mSwipeView.addView(new TinderCard(mContext, usr.getTastes().get(i), mSwipeView));
-                    }
+                    generateOutfits(usr);
                 }
                 catch (Exception e) {
                     Log.e("exception in getUser", e.toString());
@@ -87,5 +91,37 @@ public class QuizStart1 extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void generateOutfits(final User usr) {
+        // First, we insert the username into the repo url.
+        // The repo url is defined in GitHubs API docs (https://developer.github.com/v3/repos/).
+        GetPyreqDataService service = RetrofitInstance.getRetrofitInstance().create(GetPyreqDataService.class);
+        for(int i=0; i<10; i++){
+            Call<Outfit> call = service.getPyreq("return_outfit",usr.getId());
+            Log.e("url", call.request().url() + "");
+
+            call.enqueue(new Callback<Outfit>() {
+                @Override
+                public void onResponse(Call<Outfit> call, Response<Outfit> response) {
+                    try {
+                        if (response.body() != null) {
+                            Taste taste = new Taste(null, null, response.body().getOutfit());
+                            mSwipeView.addView(new TinderCard(mContext, taste, mSwipeView, usr.getId()));
+                        }
+
+                    } catch (Exception e ) {
+                        e.printStackTrace();
+                        Log.e("e generateOutfits", e.toString());
+                    }
+                }
+                @Override
+                public void onFailure(Call<Outfit> call, Throwable t) {
+                    Log.e("generateOutfits error", t.toString());
+                }
+            });
+        }
+
+
     }
 }
