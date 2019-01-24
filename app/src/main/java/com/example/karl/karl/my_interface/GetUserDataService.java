@@ -2,6 +2,7 @@ package com.example.karl.karl.my_interface;
 
 import com.example.karl.karl.model.Clothe;
 import com.example.karl.karl.model.User;
+import com.example.karl.karl.model.UserTaste;
 import com.google.gson.JsonElement;
 
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public interface GetUserDataService {
     Call<JsonElement> updateUser (@Body User body);
 
     @PUT("users/addTaste")
-    Call<User> updateTaste(@Body RequestBody body);
+    Call<JsonElement> updateTaste(@Body UserTaste body);
 
     @PUT("users/addClothe")
     Call<User> updateClothe(@Body RequestBody body);
