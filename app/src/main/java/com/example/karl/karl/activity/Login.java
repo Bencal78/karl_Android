@@ -123,8 +123,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 signIn();
                 break;
         }
-
-
     }
     @Override
     public void onStart() {
@@ -137,8 +135,38 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private void updateUI(GoogleSignInAccount account) {
         if (account!=null)
         {
-            Intent myIntent = new Intent(Login.this, Welcome_Page.class);
-            startActivity(myIntent);
+            GetUserDataService service = RetrofitInstance.getRetrofitInstance().create(GetUserDataService.class);
+            Call<ArrayList<User>> call = service.getUserByGoogleId(account.getId());
+            call.enqueue(new Callback<ArrayList<User>>() {
+                @Override
+                public void onResponse(Call<ArrayList<User>> call, retrofit2.Response<ArrayList<User>> response) {
+                    try {
+                        if(response.body().size() == 0){
+                            Intent myIntent = new Intent(Login.this, Welcome_Page.class);
+                            startActivity(myIntent);
+                            Log.e("ok3", "ok3");
+                        }
+                        if(response.body().size() == 1 && response.body().get(0).getTastes().size() > 0){
+                            Intent myIntent = new Intent(Login.this, Ootd.class);
+                            startActivity(myIntent);
+                            Log.e("ok2", "ok2");
+                        }
+                        else{
+                            Intent myIntent = new Intent(Login.this, Welcome_Page.class);
+                            startActivity(myIntent);
+                            Log.e("ok1", "ok1");
+                        }
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                @Override
+                public void onFailure(Call<ArrayList<User>> call, Throwable t) {
+                    Log.e("error", t.toString());
+
+                }
+            });
         }
     }
 
