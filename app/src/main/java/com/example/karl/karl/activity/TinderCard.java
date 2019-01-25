@@ -1,5 +1,8 @@
 package com.example.karl.karl.activity;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -33,7 +36,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 @Layout(R.layout.tinder_card_view)
-public class TinderCard {
+public class TinderCard{
 
     @View(R.id.Clothe1ImageView)
     private ImageView clothe1ImageView;
@@ -87,12 +90,13 @@ public class TinderCard {
     private void onSwipedOut(){
         Log.d("EVENT", "onSwipedOut");
         moutfit.setDecision(false);
-        if(mSwipeView.getAllResolvers().size() == 1){
+        if((mSwipeView.getAllResolvers().size() == 1) && ( mContext instanceof QuizStart1)){
             Intent i = new Intent(mContext, Ootd.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.getApplicationContext().startActivity(i);
         }
         saveTaste();
+
         //mSwipeView.addView(this);
     }
 
@@ -105,12 +109,13 @@ public class TinderCard {
     private void onSwipeIn(){
         Log.d("EVENT", "onSwipedIn");
         moutfit.setDecision(true);
-        if(mSwipeView.getAllResolvers().size() == 1){
+        if((mSwipeView.getAllResolvers().size() == 1) && ( mContext instanceof QuizStart1)){
             Intent i = new Intent(mContext, Ootd.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.getApplicationContext().startActivity(i);
         }
         saveTaste();
+
     }
 
     private void saveTaste() {

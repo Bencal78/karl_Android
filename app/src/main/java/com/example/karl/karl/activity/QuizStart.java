@@ -1,11 +1,13 @@
 package com.example.karl.karl.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,6 +46,7 @@ public class QuizStart extends AppCompatActivity{
         Context mContext = getApplicationContext();
         // Example of a call to a native method
 
+        button = findViewById(R.id.sample_button);
         swipeCardsView = (SwipeCardsView)findViewById(R.id.swipeCardsView);
         swipeCardsView.retainLastCard(false);
         swipeCardsView.enableSwipe(true);
@@ -79,6 +82,14 @@ public class QuizStart extends AppCompatActivity{
                 Toast.makeText(QuizStart.this, "Something went wrong...Error message: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(QuizStart.this, Ootd.class);
+                startActivity(myIntent);
+            }
+        });
+
     }
 
     private CardAdapter getCardAdapter() {
