@@ -2,9 +2,11 @@ package com.example.karl.karl.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -53,7 +55,8 @@ public class ClotheAdapter extends RecyclerView.Adapter {
         //Create file to load with Picasso lib
         //File imageViewThoumb = new File(currentItem.imageUri);
         //cast holder with gallery holder
-        GalleryItemHolder galleryItemHolder = (GalleryItemHolder) holder;
+        final GalleryItemHolder galleryItemHolder = (GalleryItemHolder) holder;
+        galleryItems.get(position).checkBox = galleryItemHolder.chkBox;
         //Load with Picasso
         Picasso.with(context)
                 .load(currentItem.imageUri)
@@ -70,6 +73,13 @@ public class ClotheAdapter extends RecyclerView.Adapter {
                 mAdapterCallBacks.onItemSelected(position);
             }
         });
+        galleryItemHolder.chkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //call onItemSelected method and pass the position and let activity decide what to do when item selected
+                mAdapterCallBacks.onItemSelected(position);
+            }
+        });
 
     }
 
@@ -79,6 +89,7 @@ public class ClotheAdapter extends RecyclerView.Adapter {
     }
 
     public class GalleryItemHolder extends RecyclerView.ViewHolder {
+        public CheckBox chkBox;
         ImageView imageViewThumbnail;
         TextView textViewImageName;
 
@@ -86,7 +97,9 @@ public class ClotheAdapter extends RecyclerView.Adapter {
             super(itemView);
             imageViewThumbnail = itemView.findViewById(R.id.imageViewThumbnail);
             textViewImageName = itemView.findViewById(R.id.textViewImageName);
-
+            chkBox = itemView.findViewById(R.id.chkBox);
+            //chkBox.setEnabled(false);
+            Log.e("appel", "ici");
         }
     }
 
