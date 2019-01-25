@@ -53,11 +53,14 @@
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimaryDark"
         app:itemBackground="@color/colorPrimary" />
+
     <com.mindorks.placeholderview.SwipePlaceHolderView
         android:id="@+id/swipeView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/listofitems"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:background="@color/blanccassé"
+        />
 
 </RelativeLayout>

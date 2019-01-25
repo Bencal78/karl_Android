@@ -1,5 +1,6 @@
 package com.example.karl.karl.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -63,6 +64,7 @@ public class Ootd extends AppCompatActivity {
 
     ImageView iv;
 
+    @SuppressLint("ResourceAsColor")
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ootd);
@@ -109,6 +111,7 @@ public class Ootd extends AppCompatActivity {
         Log.e("url", call.request().url() + "");
 
         call.enqueue(new Callback<Outfit>() {
+            @SuppressLint("ResourceAsColor")
             @Override
             public void onResponse(Call<Outfit> call, Response<Outfit> response) {
                 String clothe_1id = null;
@@ -123,7 +126,7 @@ public class Ootd extends AppCompatActivity {
                             Clothes.add(new Clothe(response.body().getOutfit().get(i)));
                         }
                         taste = new Taste(null,null,Clothes);
-                        mSwipeView.addView(new TinderCard(mContext, taste, mSwipeView));
+                        mSwipeView.addView(new TinderCard(mContext, taste, mSwipeView,id));
                     }
 
                     tv3.setText("Outfit of the Day !");
