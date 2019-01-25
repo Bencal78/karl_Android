@@ -52,12 +52,14 @@ public class TinderCard{
     private SwipePlaceHolderView mSwipeView;
     private String BASE_URL = "http://18.184.156.66:8000/api/";
     private String mUsrId;
+    private TinderCallback mTtinderCallback;
 
     public TinderCard(Context context, Taste outfit, SwipePlaceHolderView swipeView, String usrId) {
         mContext = context;
         moutfit = outfit;
         mSwipeView = swipeView;
         mUsrId = usrId;
+        mTtinderCallback = (TinderCallback) context;
     }
 
     @Resolve
@@ -95,6 +97,9 @@ public class TinderCard{
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.getApplicationContext().startActivity(i);
         }
+        if((mSwipeView.getAllResolvers().size() == 1) && ( mContext instanceof Ootd)){
+            mTtinderCallback.newTinderCard();
+        }
         saveTaste();
 
         //mSwipeView.addView(this);
@@ -114,8 +119,10 @@ public class TinderCard{
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.getApplicationContext().startActivity(i);
         }
+        if((mSwipeView.getAllResolvers().size() == 1) && ( mContext instanceof Ootd)){
+            mTtinderCallback.newTinderCard();
+        }
         saveTaste();
-
     }
 
     private void saveTaste() {
@@ -145,4 +152,7 @@ public class TinderCard{
         Log.d("EVENT", "onSwipeOutState");
     }
 
+    public interface TinderCallback{
+        void newTinderCard();
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.karl.karl.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -46,7 +47,7 @@ import retrofit2.Response;
  */
 
 
-public class Ootd extends AppCompatActivity {
+public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback {
     private static String UserId = null;
     private static String Id =null ;
     private SwipePlaceHolderView mSwipeView;
@@ -77,7 +78,7 @@ public class Ootd extends AppCompatActivity {
 
 
         mSwipeView = findViewById(R.id.swipeView);
-        mContext = getApplicationContext();
+        mContext = this;
 
         mSwipeView.getBuilder()
                 .setDisplayViewCount(3)
@@ -121,8 +122,8 @@ public class Ootd extends AppCompatActivity {
         // First, we insert the username into the repo url.
         // The repo url is defined in GitHubs API docs (https://developer.github.com/v3/repos/).
 
-        //IMPORTANT//id = getId();
-        id = "5c35d55fcba93d1c8d350204";
+        id = getId();
+        //id = "5c35d55fcba93d1c8d350204";
         GetPyreqDataService service = RetrofitInstance.getRetrofitInstance().create(GetPyreqDataService.class);
         Call<Outfit> call = service.getPyreq("return_outfit",id);
         Log.e("url", call.request().url() + "");
@@ -191,5 +192,11 @@ public class Ootd extends AppCompatActivity {
     }
     public String getId() {
         return Id;
+    }
+
+    @Override
+    public void newTinderCard() {
+        Log.e("does it works?", "yes");
+        getOotd();
     }
 }
