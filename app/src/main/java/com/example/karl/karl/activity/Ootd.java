@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -56,6 +57,7 @@ public class Ootd extends AppCompatActivity {
     GridView gridView;
     ImageView imagesoleil;
     ImageView imagecal;
+    String id;
 
 
 
@@ -85,7 +87,19 @@ public class Ootd extends AppCompatActivity {
                         .setSwipeInMsgLayoutId(R.layout.tinder_swipe_in_msg_view)
                         .setSwipeOutMsgLayoutId(R.layout.tinder_swipe_out_msg_view));
 
+        findViewById(R.id.rejectBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSwipeView.doSwipe(false);
+            }
+        });
 
+        findViewById(R.id.acceptBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSwipeView.doSwipe(true);
+            }
+        });
         //tv2 = findViewById(R.id.texttest2);
         List<String> images = new ArrayList<String>();
         List<Integer> values  = new ArrayList<Integer>();
@@ -97,15 +111,18 @@ public class Ootd extends AppCompatActivity {
         assert acct != null;
         String GoogleId = String.valueOf(acct.getId());
         //Log.e("GoogleId ", GoogleId);
+        ;
         GoogleIdToId(GoogleId);
         //Log.e("Id ", Id);
 
-
     }
 
-    private void getOotd(final String id) {
+    public void getOotd() {
         // First, we insert the username into the repo url.
         // The repo url is defined in GitHubs API docs (https://developer.github.com/v3/repos/).
+
+        //IMPORTANT//id = getId();
+        id = "5c35d55fcba93d1c8d350204";
         GetPyreqDataService service = RetrofitInstance.getRetrofitInstance().create(GetPyreqDataService.class);
         Call<Outfit> call = service.getPyreq("return_outfit",id);
         Log.e("url", call.request().url() + "");
@@ -114,9 +131,7 @@ public class Ootd extends AppCompatActivity {
             @SuppressLint("ResourceAsColor")
             @Override
             public void onResponse(Call<Outfit> call, Response<Outfit> response) {
-                String clothe_1id = null;
                 try {
-                    Log.e("ddd", response.body().toString());
                     ArrayList<Clothe> Clothes = new ArrayList<Clothe>();
                     Taste taste;
                     if (response.body() != null) {
@@ -155,12 +170,13 @@ public class Ootd extends AppCompatActivity {
             try {
                 UserId = response.body().get(0).getId();
                 //getOotd(UserId);
-                getOotd("5c35d55fcba93d1c8d350204");
+                setId(UserId);
+                getOotd();
 
             }
             catch (Exception e) {
                 tv3.setText("You have an issue with your user : Lisa par default");
-                getOotd("5c35d55fcba93d1c8d350204");
+                //getOotd();
             }
             }
             @Override
@@ -169,5 +185,11 @@ public class Ootd extends AppCompatActivity {
 
             }
         });
+    }
+    public void setId(String id) {
+        Id = id;
+    }
+    public String getId() {
+        return Id;
     }
 }

@@ -7,11 +7,18 @@
     android:background="@color/blanccassé"
     android:orientation="vertical">
 
+    <com.mindorks.placeholderview.SwipePlaceHolderView
+        android:id="@+id/swipeView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/blanccassé">
+
+    </com.mindorks.placeholderview.SwipePlaceHolderView>
+
     <LinearLayout
         android:id="@+id/listofitems"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_alignParentTop="true"
         android:layout_marginStart="10dp"
 
         android:layout_marginTop="10dp"
@@ -50,17 +57,36 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@id/listofitems"
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimaryDark"
         app:itemBackground="@color/colorPrimary" />
 
-    <com.mindorks.placeholderview.SwipePlaceHolderView
-        android:id="@+id/swipeView"
+    <LinearLayout
+        android:id="@+id/boutons"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="200dp"
         android:layout_above="@id/listofitems"
         android:layout_alignParentBottom="true"
-        android:background="@color/blanccassé"
-        />
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="60dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/rejectBtn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/ic_cancel" />
+
+        <ImageButton
+            android:id="@+id/acceptBtn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="30dp"
+            android:background="@drawable/ic_heart" />
+    </LinearLayout>
+
 
 </RelativeLayout>
