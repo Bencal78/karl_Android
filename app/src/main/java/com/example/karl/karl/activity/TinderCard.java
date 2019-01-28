@@ -79,68 +79,48 @@ public class TinderCard{
                 //Load with Picasso
                 Picasso.with(mContext)
                         .load(BASE_URL + "uploads/" + moutfit.getClothes().get(0).getId() + ".png")
-                        .centerCrop()
-                        .resize(ScreenUtils.getScreenWidth(mContext) / 2, ScreenUtils.getScreenHeight(mContext) / 3)//Resize image to width half of screen and height 1/3 of screen height
                         .into(clothe1ImageView);
                 break;
             case 2:
                 //Load with Picasso
                 Picasso.with(mContext)
                         .load(BASE_URL + "uploads/" + moutfit.getClothes().get(0).getId() + ".png")
-                        .centerCrop()
-                        .resize(ScreenUtils.getScreenWidth(mContext) / 2, ScreenUtils.getScreenHeight(mContext) / 3)//Resize image to width half of screen and height 1/3 of screen height
                         .into(clothe1ImageView);
 
                 Picasso.with(mContext)
                         .load(BASE_URL + "uploads/" + moutfit.getClothes().get(1).getId() + ".png")
-                        .centerCrop()
-                        .resize(ScreenUtils.getScreenWidth(mContext) / 2, ScreenUtils.getScreenHeight(mContext) / 3)//Resize image to width half of screen and height 1/3 of screen height
                         .into(clothe2ImageView);
                 break;
             case 3:
                 //Load with Picasso
                 Picasso.with(mContext)
                         .load(BASE_URL + "uploads/" + moutfit.getClothes().get(0).getId() + ".png")
-                        .centerCrop()
-                        .resize(ScreenUtils.getScreenWidth(mContext) / 2, ScreenUtils.getScreenHeight(mContext) / 3)//Resize image to width half of screen and height 1/3 of screen height
                         .into(clothe1ImageView);
 
                 Picasso.with(mContext)
                         .load(BASE_URL + "uploads/" + moutfit.getClothes().get(1).getId() + ".png")
-                        .centerCrop()
-                        .resize(ScreenUtils.getScreenWidth(mContext) / 2, ScreenUtils.getScreenHeight(mContext) / 3)//Resize image to width half of screen and height 1/3 of screen height
                         .into(clothe2ImageView);
 
                 Picasso.with(mContext)
                         .load(BASE_URL + "uploads/" + moutfit.getClothes().get(2).getId() + ".png")
-                        .centerCrop()
-                        .resize(ScreenUtils.getScreenWidth(mContext) / 2, ScreenUtils.getScreenHeight(mContext) / 3)//Resize image to width half of screen and height 1/3 of screen height
                         .into(clothe3ImageView);
                 break;
             case 4:
                 //Load with Picasso
                 Picasso.with(mContext)
                         .load(BASE_URL + "uploads/" + moutfit.getClothes().get(0).getId() + ".png")
-                        .centerCrop()
-                        .resize(ScreenUtils.getScreenWidth(mContext) / 2, ScreenUtils.getScreenHeight(mContext) / 3)//Resize image to width half of screen and height 1/3 of screen height
                         .into(clothe1ImageView);
 
                 Picasso.with(mContext)
                         .load(BASE_URL + "uploads/" + moutfit.getClothes().get(1).getId() + ".png")
-                        .centerCrop()
-                        .resize(ScreenUtils.getScreenWidth(mContext) / 2, ScreenUtils.getScreenHeight(mContext) / 3)//Resize image to width half of screen and height 1/3 of screen height
                         .into(clothe2ImageView);
 
                 Picasso.with(mContext)
                         .load(BASE_URL + "uploads/" + moutfit.getClothes().get(2).getId() + ".png")
-                        .centerCrop()
-                        .resize(ScreenUtils.getScreenWidth(mContext) / 2, ScreenUtils.getScreenHeight(mContext) / 3)//Resize image to width half of screen and height 1/3 of screen height
                         .into(clothe3ImageView);
 
                 Picasso.with(mContext)
                         .load(BASE_URL + "uploads/" + moutfit.getClothes().get(3).getId() + ".png")
-                        .centerCrop()
-                        .resize(ScreenUtils.getScreenWidth(mContext) / 2, ScreenUtils.getScreenHeight(mContext) / 3)//Resize image to width half of screen and height 1/3 of screen height
                         .into(clothe4ImageView);
                 break;
         }
