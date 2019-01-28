@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -15,21 +14,16 @@ import com.example.karl.karl.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
-/**
- * Created by Edouard on 19/09/2018.
- */
-
 @SuppressLint("Registered")
-public class Welcome_Page extends AppCompatActivity{
+public class WelcomeQuiz extends AppCompatActivity {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.welcome_page);
+        setContentView(R.layout.welcome_quiz);
         ProgressBar spinner;
 
         spinner = (ProgressBar) findViewById(R.id.progressBar1);
@@ -39,7 +33,7 @@ public class Welcome_Page extends AppCompatActivity{
         buttonquiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(Welcome_Page.this, AddClotheList.class);
+                Intent myIntent = new Intent(WelcomeQuiz.this, QuizStart1.class);
                 startActivity(myIntent);
             }
         });
@@ -60,8 +54,8 @@ public class Welcome_Page extends AppCompatActivity{
             CircleImageView imageView = findViewById(R.id.persons_face);
 
             tv.setText("Bonjour " + personGivenName);
-            tv2.setText("Nous allons commencer par te faire ajouter quelques habits que tu aimes bien pour que j'apprenne à mieux te connaitre." +
-                    " Indique moi si les vêtements te plaisent");
+            tv2.setText("Nous allons commencer par un petit quizz pour que j'apprenne à mieux te connaitre." +
+                    " Indique moi si les tenues te plaisent");
 
             if(personPhoto != "null"){
                 new DownloadImageFromInternet(imageView,spinner)

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -51,12 +52,15 @@ public class ClotheAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         //get current Gallery Item
-        ClotheImage currentItem = galleryItems.get(position);
+        final ClotheImage currentItem = galleryItems.get(position);
         //Create file to load with Picasso lib
         //File imageViewThoumb = new File(currentItem.imageUri);
         //cast holder with gallery holder
         final GalleryItemHolder galleryItemHolder = (GalleryItemHolder) holder;
-        galleryItems.get(position).checkBox = galleryItemHolder.chkBox;
+        galleryItemHolder.chkBox.setOnCheckedChangeListener(null);
+        galleryItemHolder.chkBox.setChecked(currentItem.isSelected);
+        currentItem.checkBox = galleryItemHolder.chkBox;
+
         //Load with Picasso
         Picasso.with(context)
                 .load(currentItem.imageUri)

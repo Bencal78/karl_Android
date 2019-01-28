@@ -1,22 +1,30 @@
 package com.example.karl.karl.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
 import com.example.karl.karl.R;
 import com.example.karl.karl.adapter.ClotheAdapter;
 import com.example.karl.karl.model.Clothe;
 import com.example.karl.karl.model.User;
+import com.example.karl.karl.model.UserClothe;
+import com.example.karl.karl.model.UserTaste;
 import com.example.karl.karl.my_interface.GetClotheDataService;
 import com.example.karl.karl.my_interface.GetUserDataService;
 import com.example.karl.karl.network.RetrofitInstance;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.gson.JsonElement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +39,15 @@ public class AddClotheList extends AppCompatActivity implements ClotheAdapter.Ga
     //Read storage permission request code
     private static final int RC_READ_STORAGE = 5;
     ClotheAdapter mGalleryAdapter;
-    private ArrayList<Boolean> itemChecked;
+    private ArrayList<Clothe> clothes;
+    private String GoogleId;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_clothe_list);
+        mContext = getApplicationContext();
         //setup RecyclerView
         RecyclerView recyclerViewGallery = findViewById(R.id.addRecyclerViewGallery);
         recyclerViewGallery.setLayoutManager(new GridLayoutManager(this, 2));
@@ -48,8 +59,45 @@ public class AddClotheList extends AppCompatActivity implements ClotheAdapter.Ga
         //get images
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         assert acct != null;
-        String GoogleId = String.valueOf(acct.getId());
+        GoogleId = String.valueOf(acct.getId());
         getClohes();
+
+        Button buttonSave = findViewById(R.id.boutonSave);
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getUser(GoogleId);
+            }
+        });
+    }
+
+    private void saveClothes(User user) {
+        ArrayList<Clothe> selectedClothes = new ArrayList<>();
+        for(int i=0; i<clothes.size(); i++){
+            if(galleryItems.get(i).isSelected){
+                selectedClothes.add(clothes.get(i));
+            }
+        }
+        UserClothe userClothes = new UserClothe(user.getId(), selectedClothes);
+        GetUserDataService service = RetrofitInstance.getRetrofitInstance().create(GetUserDataService.class);
+        Call<JsonElement> call = service.updateClothe(userClothes);
+        call.enqueue(new Callback<JsonElement>() {
+            @Override
+            public void onResponse(Call<JsonElement> call, retrofit2.Response<JsonElement> response) {
+                Log.e("response", response.body().toString());
+                updateUI();
+            }
+            @Override
+            public void onFailure(Call<JsonElement> call, Throwable t) {
+                Log.e("Something went wrong", t.getMessage());
+                Toast.makeText(mContext, "Something went wrong...Error message: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updateUI() {
+        Intent myIntent = new Intent(AddClotheList.this, QuizStart1.class);
+        startActivity(myIntent);
     }
 
     private void getClohes() {
@@ -61,12 +109,10 @@ public class AddClotheList extends AppCompatActivity implements ClotheAdapter.Ga
             public void onResponse(Call<ArrayList<Clothe>> call, Response<ArrayList<Clothe>> response) {
                 try {
 
-                    ArrayList<Clothe> clothes = response.body();
+                    clothes = response.body();
                     galleryItems = new ArrayList<>();
-                    itemChecked = new ArrayList<>();
                     for(int i=0; i< clothes.size(); i++){
                         galleryItems.add(new ClotheImage(getString(R.string.base_url)+"uploads/"+clothes.get(i).getId()+".png", clothes.get(i).getName()));
-                        itemChecked.add(i, false);
                     }
                     mGalleryAdapter.addGalleryItems(galleryItems);
                 }
@@ -85,23 +131,8 @@ public class AddClotheList extends AppCompatActivity implements ClotheAdapter.Ga
 
     @Override
     public void onItemSelected(int position) {
-        //create fullscreen SlideShowFragment dialog
-        /*
-        SlideShowFragment slideShowFragment = SlideShowFragment.newInstance(position);
-        //setUp style for slide show fragment
-        slideShowFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.DialogFragmentTheme);
-        //finally show dialogue
-        slideShowFragment.show(getSupportFragmentManager(), null);
-        */
-        //Log.e("position", String.valueOf(position));
-        itemChecked.set(position, !itemChecked.get(position));
-        //Log.e("selected", String.valueOf(galleryItems.get(position).checkBox.isChecked()));
-        //galleryItems.get(position).checkBox.setChecked(itemChecked.get(posi) == null ? false : checkedState);
-
-        //galleryItems.get(position).checkBox.setChecked(itemChecked.get(position));
-        //Log.e("size gallery", String.valueOf(galleryItems.size()));
-
-        //galleryItems.get(position).checkBox.setChecked(!galleryItems.get(position).checkBox.isChecked());
+        galleryItems.get(position).isSelected = !galleryItems.get(position).isSelected;
+        galleryItems.get(position).checkBox.setChecked(galleryItems.get(position).isSelected);
     }
 
     @Override
@@ -118,5 +149,30 @@ public class AddClotheList extends AppCompatActivity implements ClotheAdapter.Ga
                 Toast.makeText(this, "Storage Permission denied", Toast.LENGTH_SHORT).show();
             }
         }*/
+    }
+
+    private void getUser(String googleId) {
+        GetUserDataService service = RetrofitInstance.getRetrofitInstance().create(GetUserDataService.class);
+        Call<ArrayList<User>> call = service.getUserByGoogleId(googleId);
+
+        call.enqueue(new Callback<ArrayList<User>>() {
+            @Override
+            public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
+                try {
+                    if(response != null && response.body() != null && response.body().get(0) != null){
+                        User usr = response.body().get(0);
+                        saveClothes(usr);
+                    }
+                }
+                catch (Exception e) {
+                    Log.e("exception in getUser", e.toString());
+                }
+            }
+            @Override
+            public void onFailure(Call<ArrayList<User>> call, Throwable t) {
+                Log.e("googleIdToId error", t.toString());
+
+            }
+        });
     }
 }

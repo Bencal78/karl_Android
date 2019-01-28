@@ -37,7 +37,7 @@ public class QuizStart1 extends AppCompatActivity {
         setContentView(R.layout.quiz_start);
 
         mSwipeView = findViewById(R.id.swipeView);
-        mContext = getApplicationContext();
+        mContext = this;
 
         mSwipeView.getBuilder()
                 .setDisplayViewCount(3)
