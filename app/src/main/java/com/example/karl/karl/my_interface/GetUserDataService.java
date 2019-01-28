@@ -2,6 +2,7 @@ package com.example.karl.karl.my_interface;
 
 import com.example.karl.karl.model.Clothe;
 import com.example.karl.karl.model.User;
+import com.example.karl.karl.model.UserClothe;
 import com.example.karl.karl.model.UserTaste;
 import com.google.gson.JsonElement;
 
@@ -49,7 +50,7 @@ public interface GetUserDataService {
     Call<JsonElement> updateTaste(@Body UserTaste body);
 
     @PUT("users/addClothe")
-    Call<User> updateClothe(@Body RequestBody body);
+    Call<JsonElement> updateClothe(@Body UserClothe body);
 
     @DELETE("users")
     Call<User> deleteUser(@Body RequestBody body);

@@ -16,6 +16,7 @@ import com.example.karl.karl.model.User;
 import com.example.karl.karl.model.UserTaste;
 import com.example.karl.karl.my_interface.GetUserDataService;
 import com.example.karl.karl.network.RetrofitInstance;
+import com.example.karl.karl.utils.ScreenUtils;
 import com.google.gson.JsonElement;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
 import com.mindorks.placeholderview.annotations.Layout;
@@ -26,6 +27,7 @@ import com.mindorks.placeholderview.annotations.swipe.SwipeIn;
 import com.mindorks.placeholderview.annotations.swipe.SwipeInState;
 import com.mindorks.placeholderview.annotations.swipe.SwipeOut;
 import com.mindorks.placeholderview.annotations.swipe.SwipeOutState;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,7 +61,13 @@ public class TinderCard{
         moutfit = outfit;
         mSwipeView = swipeView;
         mUsrId = usrId;
-        mTtinderCallback = (TinderCallback) context;
+        //Permet de ne pas avoir d'exception avec QuizStart1
+        try{
+            mTtinderCallback = (TinderCallback) context;
+        }catch(ClassCastException e){
+            mTtinderCallback = null;
+        }
+
     }
 
     @Resolve
@@ -68,22 +76,72 @@ public class TinderCard{
             case 0:
                 break;
             case 1:
-                Glide.with(mContext).load(BASE_URL + "uploads/" + moutfit.getClothes().get(0).getId() + ".png").into(clothe1ImageView);
+                //Load with Picasso
+                Picasso.with(mContext)
+                        .load(BASE_URL + "uploads/" + moutfit.getClothes().get(0).getId() + ".png")
+                        .centerCrop()
+                        .resize(ScreenUtils.getScreenWidth(mContext) / 2, ScreenUtils.getScreenHeight(mContext) / 3)//Resize image to width half of screen and height 1/3 of screen height
+                        .into(clothe1ImageView);
                 break;
             case 2:
-                Glide.with(mContext).load(BASE_URL + "uploads/" + moutfit.getClothes().get(0).getId() + ".png").into(clothe1ImageView);
-                Glide.with(mContext).load(BASE_URL + "uploads/" + moutfit.getClothes().get(1).getId() + ".png").into(clothe2ImageView);
+                //Load with Picasso
+                Picasso.with(mContext)
+                        .load(BASE_URL + "uploads/" + moutfit.getClothes().get(0).getId() + ".png")
+                        .centerCrop()
+                        .resize(ScreenUtils.getScreenWidth(mContext) / 2, ScreenUtils.getScreenHeight(mContext) / 3)//Resize image to width half of screen and height 1/3 of screen height
+                        .into(clothe1ImageView);
+
+                Picasso.with(mContext)
+                        .load(BASE_URL + "uploads/" + moutfit.getClothes().get(1).getId() + ".png")
+                        .centerCrop()
+                        .resize(ScreenUtils.getScreenWidth(mContext) / 2, ScreenUtils.getScreenHeight(mContext) / 3)//Resize image to width half of screen and height 1/3 of screen height
+                        .into(clothe2ImageView);
                 break;
             case 3:
-                Glide.with(mContext).load(BASE_URL + "uploads/" + moutfit.getClothes().get(0).getId() + ".png").into(clothe1ImageView);
-                Glide.with(mContext).load(BASE_URL + "uploads/" + moutfit.getClothes().get(1).getId() + ".png").into(clothe2ImageView);
-                Glide.with(mContext).load(BASE_URL + "uploads/" + moutfit.getClothes().get(2).getId() + ".png").into(clothe3ImageView);
+                //Load with Picasso
+                Picasso.with(mContext)
+                        .load(BASE_URL + "uploads/" + moutfit.getClothes().get(0).getId() + ".png")
+                        .centerCrop()
+                        .resize(ScreenUtils.getScreenWidth(mContext) / 2, ScreenUtils.getScreenHeight(mContext) / 3)//Resize image to width half of screen and height 1/3 of screen height
+                        .into(clothe1ImageView);
+
+                Picasso.with(mContext)
+                        .load(BASE_URL + "uploads/" + moutfit.getClothes().get(1).getId() + ".png")
+                        .centerCrop()
+                        .resize(ScreenUtils.getScreenWidth(mContext) / 2, ScreenUtils.getScreenHeight(mContext) / 3)//Resize image to width half of screen and height 1/3 of screen height
+                        .into(clothe2ImageView);
+
+                Picasso.with(mContext)
+                        .load(BASE_URL + "uploads/" + moutfit.getClothes().get(2).getId() + ".png")
+                        .centerCrop()
+                        .resize(ScreenUtils.getScreenWidth(mContext) / 2, ScreenUtils.getScreenHeight(mContext) / 3)//Resize image to width half of screen and height 1/3 of screen height
+                        .into(clothe3ImageView);
                 break;
             case 4:
-                Glide.with(mContext).load(BASE_URL + "uploads/" + moutfit.getClothes().get(0).getId() + ".png").into(clothe1ImageView);
-                Glide.with(mContext).load(BASE_URL + "uploads/" + moutfit.getClothes().get(1).getId() + ".png").into(clothe2ImageView);
-                Glide.with(mContext).load(BASE_URL + "uploads/" + moutfit.getClothes().get(2).getId() + ".png").into(clothe3ImageView);
-                Glide.with(mContext).load(BASE_URL + "uploads/" + moutfit.getClothes().get(3).getId() + ".png").into(clothe4ImageView);
+                //Load with Picasso
+                Picasso.with(mContext)
+                        .load(BASE_URL + "uploads/" + moutfit.getClothes().get(0).getId() + ".png")
+                        .centerCrop()
+                        .resize(ScreenUtils.getScreenWidth(mContext) / 2, ScreenUtils.getScreenHeight(mContext) / 3)//Resize image to width half of screen and height 1/3 of screen height
+                        .into(clothe1ImageView);
+
+                Picasso.with(mContext)
+                        .load(BASE_URL + "uploads/" + moutfit.getClothes().get(1).getId() + ".png")
+                        .centerCrop()
+                        .resize(ScreenUtils.getScreenWidth(mContext) / 2, ScreenUtils.getScreenHeight(mContext) / 3)//Resize image to width half of screen and height 1/3 of screen height
+                        .into(clothe2ImageView);
+
+                Picasso.with(mContext)
+                        .load(BASE_URL + "uploads/" + moutfit.getClothes().get(2).getId() + ".png")
+                        .centerCrop()
+                        .resize(ScreenUtils.getScreenWidth(mContext) / 2, ScreenUtils.getScreenHeight(mContext) / 3)//Resize image to width half of screen and height 1/3 of screen height
+                        .into(clothe3ImageView);
+
+                Picasso.with(mContext)
+                        .load(BASE_URL + "uploads/" + moutfit.getClothes().get(3).getId() + ".png")
+                        .centerCrop()
+                        .resize(ScreenUtils.getScreenWidth(mContext) / 2, ScreenUtils.getScreenHeight(mContext) / 3)//Resize image to width half of screen and height 1/3 of screen height
+                        .into(clothe4ImageView);
                 break;
         }
     }
