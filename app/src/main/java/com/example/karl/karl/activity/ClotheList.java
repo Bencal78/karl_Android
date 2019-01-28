@@ -1,9 +1,11 @@
 package com.example.karl.karl.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
@@ -11,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.GridView;
 
 import com.example.karl.karl.R;
@@ -38,6 +41,7 @@ public class ClotheList extends AppCompatActivity implements ClotheAdapter.Galle
     //Read storage permission request code
     private static final int RC_READ_STORAGE = 5;
     ClotheAdapter mGalleryAdapter;
+    BottomNavigationView mbotomnavcloth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,24 @@ public class ClotheList extends AppCompatActivity implements ClotheAdapter.Galle
         assert acct != null;
         String GoogleId = String.valueOf(acct.getId());
         getUser(GoogleId);
+        mbotomnavcloth = findViewById(R.id.bottom_navigationCloth);
+
+        mbotomnavcloth.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.action_ongle_2:
+                        Intent myIntent = new Intent(ClotheList.this, Ootd.class);
+                        startActivity(myIntent);
+                        break;
+                    case R.id.action_ongle_3:
+                        Intent myIntent2 = new Intent(ClotheList.this, SavedOutfits.class);
+                        startActivity(myIntent2);
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     private void getUser(String googleId) {

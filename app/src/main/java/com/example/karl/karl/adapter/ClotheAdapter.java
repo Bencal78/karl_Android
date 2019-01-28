@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.karl.karl.R;
 import com.example.karl.karl.activity.ClotheImage;
+import com.example.karl.karl.activity.ClotheList;
 import com.example.karl.karl.utils.ScreenUtils;
 import com.squareup.picasso.Picasso;
 
@@ -84,6 +85,10 @@ public class ClotheAdapter extends RecyclerView.Adapter {
                 mAdapterCallBacks.onItemSelected(position);
             }
         });
+
+        if(context instanceof ClotheList){
+            currentItem.checkBox.setVisibility(View.INVISIBLE);
+        }
 
     }
 

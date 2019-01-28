@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--Define Gallery RecyclerView-->
+<RelativeLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,6 +13,17 @@
     android:scrollbars="vertical"
     tools:context="com.example.karl.karl.activity.ClotheList"
     tools:showIn="@layout/clothe_list">
-
-
 </android.support.v7.widget.RecyclerView>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigationCloth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/recyclerViewGallery"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimaryDark"
+        app:itemIconTint="@color/blanccassé"
+        app:itemTextColor="@color/blanccassé"
+        app:menu="@menu/cloth_botom_nav"/>
+
+</RelativeLayout>

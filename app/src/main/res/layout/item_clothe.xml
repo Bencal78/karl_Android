@@ -9,7 +9,7 @@
         android:id="@+id/imageViewThumbnail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerInside" />
     <!--Textview for image name-->
     <TextView
         android:id="@+id/textViewImageName"

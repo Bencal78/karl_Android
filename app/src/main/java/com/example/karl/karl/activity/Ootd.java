@@ -10,8 +10,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -83,7 +85,7 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
     ImageView imagesoleil;
     ImageView imagecal;
     String id;
-
+    BottomNavigationView mbotomnav;
 
     public Ootd() throws IOException {
     }
@@ -98,7 +100,7 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
         tv3 = findViewById(R.id.TextNothing);
         imagesoleil = findViewById(R.id.imgsoleil);
         imagecal = findViewById(R.id.imgcal);
-
+        mbotomnav = findViewById(R.id.bottom_navigation);
 
         mSwipeView = findViewById(R.id.swipeView);
         mContext = this;
@@ -143,10 +145,27 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
         assert acct != null;
         String GoogleId = String.valueOf(acct.getId());
         //Log.e("GoogleId ", GoogleId);
-        ;
+
         GoogleIdToId(GoogleId);
         //Log.e("Id ", Id);
         getCalendar();
+
+        mbotomnav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()){
+                case R.id.action_ongle_1:
+                    Intent myIntent = new Intent(Ootd.this, ClotheList.class);
+                    startActivity(myIntent);
+                    break;
+                case R.id.action_ongle_3:
+                    Intent myIntent2 = new Intent(Ootd.this, SavedOutfits.class);
+                    startActivity(myIntent2);
+                    break;
+            }
+                return true;
+            }
+        });
 
     }
 
