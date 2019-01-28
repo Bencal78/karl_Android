@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<item android:id="@+id/action_ongle_1" android:icon="@drawable/tiroir"  android:visible="true"  android:title="Cloth" app:showAsAction="ifRoom"/>
+<item android:id="@+id/action_ongle_2" android:icon="@drawable/tenue" android:visible="true"  android:title="Ootd" app:showAsAction="always"/>
+<item android:id="@+id/action_ongle_3" android:icon="@drawable/etoile" android:visible="true" android:title="Saved" app:showAsAction="always"/>
+</menu>

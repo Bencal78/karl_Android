@@ -60,7 +60,10 @@
         android:layout_above="@id/listofitems"
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimaryDark"
-        app:itemBackground="@color/colorPrimary" />
+        app:itemBackground="@color/colorPrimary"
+        app:itemTextColor="@color/blanccassé"
+        app:itemIconTint="@color/blanccassé"
+        app:menu="@menu/bottom_navigation_items"/>
 
     <LinearLayout
         android:id="@+id/boutons"
