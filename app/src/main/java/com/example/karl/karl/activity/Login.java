@@ -54,6 +54,7 @@ import com.google.api.services.people.v1.PeopleService;
 import com.google.api.services.people.v1.model.Gender;
 import com.google.api.services.people.v1.model.Person;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.api.services.calendar.CalendarScopes;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -106,7 +107,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         //demande de l'email a l'utilisateur
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestScopes(new Scope(Scopes.PLUS_LOGIN), new Scope(Scopes.PROFILE), new Scope(Scopes.PLUS_ME))
+                .requestScopes(new Scope(Scopes.PLUS_LOGIN), new Scope(Scopes.PROFILE), new Scope(Scopes.PLUS_ME), new Scope(CalendarScopes.CALENDAR_READONLY))
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);

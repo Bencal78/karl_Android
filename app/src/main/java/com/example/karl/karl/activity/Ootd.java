@@ -1,6 +1,10 @@
 package com.example.karl.karl.activity;
 
 import android.annotation.SuppressLint;
+
+import com.example.karl.karl.my_interface.GetGoogleDataService;
+import com.example.karl.karl.network.GoogleRetrofitInstance;
+import com.google.api.client.auth.oauth2.Credential;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +30,18 @@ import com.example.karl.karl.my_interface.GetUserDataService;
 import com.example.karl.karl.network.RetrofitInstance;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
+import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
+import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.util.DateTime;
+import com.google.api.client.util.store.FileDataStoreFactory;
+import com.google.api.services.calendar.Calendar;
+import com.google.api.services.calendar.CalendarScopes;
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.Events;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -38,7 +54,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
+
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -63,7 +86,6 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
     ImageView imagecal;
     String id;
     BottomNavigationView mbotomnav;
-
 
     public Ootd() throws IOException {
     }
@@ -110,6 +132,14 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
         imagesoleil.setImageDrawable(getResources().getDrawable(R.drawable.lesoleil));
         imagecal.setImageDrawable(getResources().getDrawable(R.drawable.calendrier));
 
+        imagecal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(Ootd.this, Calendar_View.class);
+                startActivity(myIntent);
+            }
+        });
+
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         assert acct != null;
@@ -118,6 +148,7 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
 
         GoogleIdToId(GoogleId);
         //Log.e("Id ", Id);
+        getCalendar();
 
         mbotomnav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -136,6 +167,22 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
             }
         });
 
+    }
+
+    private void getCalendar() {
+        GetGoogleDataService service = GoogleRetrofitInstance.getRetrofitInstance().create(GetGoogleDataService.class);
+        Call<JsonElement> call = service.getCalendar("1vnm7qcmj1vp2jqu16fkb0vmd0sf9v63@import.calendar.google.com", getString(R.string.calendar_key));
+        call.enqueue(new Callback<JsonElement>() {
+            @Override
+            public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+                Log.e("response", response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<JsonElement> call, Throwable t) {
+
+            }
+        });
     }
 
     public void getOotd() {

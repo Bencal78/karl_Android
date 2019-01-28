@@ -10,4 +10,6 @@ import retrofit2.http.Query;
 public interface GetGoogleDataService {
     @GET("plus/v1/people/{id}")
     Call<JsonElement> getPeople(@Path("id") String id, @Query("personFields") String personFields, @Query("key") String google_api_key);
+    @GET("/calendar/v3/calendars/{id}/events")
+    Call<JsonElement> getCalendar(@Path("id") String id, @Query("key") String calendar_api_key);
 }

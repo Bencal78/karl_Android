@@ -5,4 +5,119 @@
     <string name="google_api_keys">AIzaSyCGOqBmhp9olvWjaAUP_ML5hdszEEeMDi0</string>
     <string name="server_client_id">995511954301-i27fh2a8kngnjplf5tpgdurv1qc6666l.apps.googleusercontent.com</string>
     <string name="server_secret_id">WQ3kS00kuUjdpxdCckZyTX4T</string>
+    <string name="calendar_key">AIzaSyAUNmSdTL5xgbf6XzVohMvNS-fJQbLhszI</string>
+
+    <string-array name="Monday">
+        <item>Mobile Adhoc Networks </item>
+        <item>Compiler Design</item>
+        <item>Tea Break</item>
+        <item>Computer Graphics and Visualization</item>
+        <item>Management and Entrepreneurship</item>
+        <item>Lunch Break</item>
+        <item>Batch A1-Computer graphics Lab/Batch A2-WebTechnologies Lab</item>
+    </string-array>
+
+    <string-array name="Tuesday">
+        <item>Unix shell programming</item>
+        <item>Web Technologies</item>
+        <item>Tea Break</item>
+        <item>Management and Entrepreneurship</item>
+        <item>Computer Graphics and Visualization</item>
+        <item>Lunch Break</item>
+        <item>Compiler Design</item>
+        <item>Mobile Adhoc Networks </item>
+
+    </string-array>
+
+    <string-array name="Wednesday">
+        <item>Batch A2-Computer graphics Lab/Batch A3-WebTechnologies Lab</item>
+        <item>Web Technologies</item>
+        <item>Lunch Break</item>
+        <item>Mobile Adhoc Networks</item>
+        <item>Management and Entrepreneurship</item>
+        <item>Compiler Design</item>
+
+    </string-array>
+
+    <string-array name="Thursday">
+        <item>Management and Entrepreneurship</item>
+        <item>Mobile Adhoc Networks</item>
+        <item>Tea Break</item>
+        <item>Unix shell programming</item>
+        <item>Compiler Design</item>
+        <item>Lunch Break</item>
+        <item>Web Technologies</item>
+    </string-array>
+
+    <string-array name="Friday">
+        <item>Placement Training</item>
+        <item>Tea Break</item>
+        <item>Computer Graphics and Visualization</item>
+        <item>Unix shell programming</item>
+        <item>Lunch Break</item>
+        <item>Batch A3-Computer graphics Lab/Batch A1-WebTechnologies Lab</item>
+
+
+    </string-array>
+
+    <string-array name="Saturday">
+        <item>No classes Today</item>
+
+    </string-array>
+
+    <string-array name="time1">
+        <item>9:00AM-9:55AM </item>
+        <item>9:55AM-10:50AM</item>
+        <item>10:50AM-11:10AM</item>
+        <item>11:10AM-12:05PM</item>
+        <item>12:05PM-1:00PM</item>
+        <item>1:00PM-1:45PM</item>
+        <item>1:45PM-4:30PM</item>
+    </string-array>
+
+    <string-array name="time2">
+
+        <item>9:00AM-9:55AM </item>
+        <item>9:55AM-10:50AM</item>
+        <item>10:50AM-11:10AM</item>
+        <item>11:10AM-12:05PM</item>
+        <item>12:05PM-1:00PM</item>
+        <item>1:00PM-1:45PM</item>
+        <item>1:45PM-2:40PM</item>
+        <item>2:40PM-3:35PM</item>
+    </string-array>
+
+    <string-array name="time3">
+        <item>9:OOAM-12:05PM</item>
+        <item>12:05PM-1:00PM</item>
+        <item>1:00PM-1:45PM</item>
+        <item>1:45PM-2:40PM</item>
+        <item>2:40PM-3:35PM</item>
+        <item>3:35PM-4:300M</item>
+
+    </string-array>
+
+    <string-array name="time4">
+        <item>9:00AM-9:55AM </item>
+        <item>9:55AM-10:50AM</item>
+        <item>10:50AM-11:10AM</item>
+        <item>11:10AM-12:05PM</item>
+        <item>12:05PM-1:00PM</item>
+        <item>1:00PM-1:45PM</item>
+        <item>1:45PM-2:40PM</item>
+    </string-array>
+
+    <string-array name="time5">
+        <item>9:00AM-10:50AM </item>
+        <item>10:50AM-11:10AM</item>
+        <item>11:10AM-12:05PM</item>
+        <item>12:05PM-1:00PM</item>
+        <item>1:00PM-1:45PM</item>
+        <item>1:45PM-4:30PM</item>
+    </string-array>
+
+    <string-array name="time6">
+        <item> </item>
+
+    </string-array>
 </resources>
