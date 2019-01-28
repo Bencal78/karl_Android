@@ -16,6 +16,8 @@ public class Taste {
     private Boolean decision;
     @SerializedName("clothes")
     private ArrayList<Clothe> clothes = new ArrayList<>();
+    @SerializedName("rl_used")
+    private Boolean rl_used = false;
 
     public Taste(){
         this.id = null;
