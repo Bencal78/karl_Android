@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.karl.karl.R;
@@ -80,7 +81,8 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
     private Context mContext;
     String url;
     TextView tv3;
-    TextView tv2;
+    ProgressBar progressBar;
+    TextView errortxt;
     GridView gridView;
     ImageView imagesoleil;
     ImageView imagecal;
@@ -101,9 +103,10 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
         imagesoleil = findViewById(R.id.imgsoleil);
         imagecal = findViewById(R.id.imgcal);
         mbotomnav = findViewById(R.id.bottom_navigation);
-
+        errortxt = findViewById(R.id.errortxt);
         mSwipeView = findViewById(R.id.swipeView);
         mContext = this;
+        progressBar = findViewById(R.id.progressBarootd);
 
         mSwipeView.getBuilder()
                 .setDisplayViewCount(3)
@@ -139,6 +142,8 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
                 startActivity(myIntent);
             }
         });
+        tv3.setText("Outfit of the Day !");
+
 
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
@@ -188,6 +193,7 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
     public void getOotd() {
         // First, we insert the username into the repo url.
         // The repo url is defined in GitHubs API docs (https://developer.github.com/v3/repos/).
+        progressBar.setVisibility(View.VISIBLE);
 
         id = getId();
         //id = "5c35d55fcba93d1c8d350204";
@@ -208,23 +214,26 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
 
                             Clothes.add(new Clothe(response.body().getOutfit().get(i)));
                         }
+
                         taste = new Taste(null,null,Clothes);
+                        progressBar.setVisibility(View.INVISIBLE);
                         mSwipeView.addView(new TinderCard(mContext, taste, mSwipeView,id));
                     }
 
-                    tv3.setText("Outfit of the Day !");
                 } catch (Exception e ) {
                     e.printStackTrace();
-                    tv3.setText("You have no outfits");
+                    errortxt.setText("You Don't Have enough clothe");
+                    progressBar.setVisibility(View.INVISIBLE);
+
                 }
             }
 
             @Override
             public void onFailure(Call<Outfit> call, Throwable t) {
                 Log.e("getOotd error", t.toString());
-
+                errortxt.setText("Something Went Wrong :(");
+                progressBar.setVisibility(View.INVISIBLE);
             }
-
 
         });
     }

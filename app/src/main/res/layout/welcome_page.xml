@@ -30,9 +30,9 @@
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/persons_face"
+        android:layout_below="@+id/persons_name"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="33dp" />
+        android:layout_marginTop="85dp" />
 
     <TextView
         android:id="@+id/invitation"
