@@ -88,6 +88,9 @@ public class ClotheAdapter extends RecyclerView.Adapter {
         if(context instanceof ClotheList){
             currentItem.checkBox.setVisibility(View.INVISIBLE);
         }
+        else{
+            currentItem.checkBox.setVisibility(View.VISIBLE);
+        }
 
     }
 
