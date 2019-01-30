@@ -65,7 +65,6 @@ public class ClotheAdapter extends RecyclerView.Adapter {
         //Load with Picasso
         Picasso.with(context)
                 .load(currentItem.imageUri)
-                .centerCrop()
                 .resize(ScreenUtils.getScreenWidth(context) / 2, ScreenUtils.getScreenHeight(context) / 3)//Resize image to width half of screen and height 1/3 of screen height
                 .into(galleryItemHolder.imageViewThumbnail);
         //set name of Image

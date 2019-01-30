@@ -56,6 +56,26 @@
 
     </LinearLayout>
 
+    <ProgressBar
+        android:id="@+id/progressBarootd"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/listofitems"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="100dp"
+        tools:ignore="NotSibling" />
+
+    <TextView
+        android:id="@+id/errortxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:layout_below="@id/listofitems"
+         />
+
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
@@ -71,11 +91,11 @@
     <LinearLayout
         android:id="@+id/boutons"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="180dp"
         android:layout_above="@id/listofitems"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="55dp"
         android:gravity="center"
         android:orientation="horizontal">
 

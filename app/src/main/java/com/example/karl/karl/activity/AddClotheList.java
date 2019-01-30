@@ -73,9 +73,15 @@ public class AddClotheList extends AppCompatActivity implements ClotheAdapter.Ga
 
     private void saveClothes(User user) {
         ArrayList<Clothe> selectedClothes = new ArrayList<>();
+        int b;
         for(int i=0; i<clothes.size(); i++){
-            if(galleryItems.get(i).isSelected){
-                selectedClothes.add(clothes.get(i));
+            if((galleryItems.get(i).isSelected))
+            {
+                b=0;
+                for(int j=0;j<user.getClothes().size();j++) {
+                    if(clothes.get(i).getId().equals(user.getClothes().get(j).getId())){b =1; } }
+                if(b==0) {
+                    selectedClothes.add(clothes.get(i)); }
             }
         }
         UserClothe userClothes = new UserClothe(user.getId(), selectedClothes);
@@ -112,6 +118,8 @@ public class AddClotheList extends AppCompatActivity implements ClotheAdapter.Ga
                     clothes = response.body();
                     galleryItems = new ArrayList<>();
                     for(int i=0; i< clothes.size(); i++){
+                       // galleryItems.add(new ClotheImage(getString(R.string.base_url)+"uploads/"+user.getClothes().get(i).getId()+".png", user.getClothes().get(i).getName()));
+
                         galleryItems.add(new ClotheImage(getString(R.string.base_url)+"uploads/"+clothes.get(i).getId()+".png", clothes.get(i).getName()));
                     }
                     mGalleryAdapter.addGalleryItems(galleryItems);
