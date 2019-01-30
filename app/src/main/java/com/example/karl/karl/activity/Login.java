@@ -55,6 +55,7 @@ import com.google.api.services.people.v1.model.Gender;
 import com.google.api.services.people.v1.model.Person;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.api.services.calendar.CalendarScopes;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -90,6 +91,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     GoogleApiClient mGoogleApiClient;
     Animation animation;
     ImageView logokarl;
+    private FirebaseAuth mAuth;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -107,10 +109,17 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         //demande de l'email a l'utilisateur
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestScopes(new Scope(Scopes.PLUS_LOGIN), new Scope(Scopes.PROFILE), new Scope(Scopes.PLUS_ME), new Scope(CalendarScopes.CALENDAR_READONLY))
+                //.requestIdToken(getString(R.string.web_client_id))
+                .requestScopes(new Scope(Scopes.PLUS_LOGIN), new Scope(Scopes.PROFILE),
+                        new Scope(Scopes.PLUS_ME), new Scope(CalendarScopes.CALENDAR_READONLY),
+                        new Scope(CalendarScopes.CALENDAR))
                 .requestEmail()
                 .build();
+
+        //mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        mAuth = FirebaseAuth.getInstance();
         findViewById(R.id.sign_in_button).setOnClickListener(this);
 
         animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.zoom_in);

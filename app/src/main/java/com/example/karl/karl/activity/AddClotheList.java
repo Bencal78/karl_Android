@@ -96,7 +96,7 @@ public class AddClotheList extends AppCompatActivity implements ClotheAdapter.Ga
     }
 
     private void updateUI() {
-        Intent myIntent = new Intent(AddClotheList.this, QuizStart1.class);
+        Intent myIntent = new Intent(AddClotheList.this, WelcomeQuiz.class);
         startActivity(myIntent);
     }
 

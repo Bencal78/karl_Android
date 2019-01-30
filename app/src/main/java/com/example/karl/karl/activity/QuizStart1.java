@@ -98,7 +98,7 @@ public class QuizStart1 extends AppCompatActivity {
         // The repo url is defined in GitHubs API docs (https://developer.github.com/v3/repos/).
         GetPyreqDataService service = RetrofitInstance.getRetrofitInstance().create(GetPyreqDataService.class);
         for(int i=0; i<10; i++){
-            Call<Outfit> call = service.getPyreq("return_outfit",usr.getId());
+            Call<Outfit> call = service.getOutfit(usr.getId());
             Log.e("url", call.request().url() + "");
 
             call.enqueue(new Callback<Outfit>() {
