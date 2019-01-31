@@ -39,6 +39,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.karl.karl.utils.PermissionUtils;
 import com.google.android.gms.common.ConnectionResult;
@@ -81,6 +82,7 @@ public class Weather extends AppCompatActivity implements ConnectionCallbacks,
     TextView cityField, detailsField, currentTemperatureField, humidity_field, pressure_field, weatherIcon, updatedField;
     ProgressBar loader;
     Typeface weatherFont;
+    private android.support.v7.widget.Toolbar toolbar;
 
     private static final String TAG = Weather.class.getSimpleName();
 
@@ -110,12 +112,13 @@ public class Weather extends AppCompatActivity implements ConnectionCallbacks,
         //getSupportActionBar().hide();
         setContentView(R.layout.weather);
 
+
         permissionUtils=new PermissionUtils(Weather.this);
         permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
         permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
 
         permissionUtils.check_permission(permissions,"Need GPS permission for getting your location",1);
-
+        toolbar = findViewById(R.id.Toolbarmeteo);
         loader = (ProgressBar) findViewById(R.id.loader);
         cityField = (TextView) findViewById(R.id.city_field);
         updatedField = (TextView) findViewById(R.id.updated_field);
@@ -128,6 +131,7 @@ public class Weather extends AppCompatActivity implements ConnectionCallbacks,
         weatherIcon.setTypeface(weatherFont);
 
         buildGoogleApiClient();
+        initToolbar();
 
         if (mLastLocation != null) {
             latitude = mLastLocation.getLatitude();
@@ -135,6 +139,15 @@ public class Weather extends AppCompatActivity implements ConnectionCallbacks,
         } else {
             //showToast("Couldn't get the location. Make sure location is enabled on the device");
         }
+    }
+    private void initToolbar(){
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(null);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void setSupportActionBar(Toolbar toolbar) {
+        toolbar = findViewById(R.id.Toolbarmeteo);
     }
 
     private void getWeather() {

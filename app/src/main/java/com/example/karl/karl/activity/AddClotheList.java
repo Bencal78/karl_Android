@@ -126,6 +126,7 @@ public class AddClotheList extends AppCompatActivity implements ClotheAdapter.Ga
                     Log.e("ok ici ", "ok ici paris c'est pas la");
                     int b;
                     for(int i=0; i< clothes.size(); i++){
+
                        //If the user does not have this clothes already
                         b=0;
                         for(int j=0;j<user.getClothes().size();j++) {
