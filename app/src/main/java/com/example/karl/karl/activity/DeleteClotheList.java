@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.example.karl.karl.R;
@@ -18,7 +17,6 @@ import com.example.karl.karl.adapter.ClotheAdapter;
 import com.example.karl.karl.model.Clothe;
 import com.example.karl.karl.model.User;
 import com.example.karl.karl.model.UserClothe;
-import com.example.karl.karl.model.UserTaste;
 import com.example.karl.karl.my_interface.GetClotheDataService;
 import com.example.karl.karl.my_interface.GetUserDataService;
 import com.example.karl.karl.network.RetrofitInstance;
@@ -34,14 +32,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddClotheList extends AppCompatActivity implements ClotheAdapter.GalleryAdapterCallBacks{
+public class DeleteClotheList extends AppCompatActivity implements ClotheAdapter.GalleryAdapterCallBacks {
     //Deceleration of list of  GalleryItems
     public List<ClotheImage> galleryItems;
     //Read storage permission request code
     private static final int RC_READ_STORAGE = 5;
     ClotheAdapter mGalleryAdapter;
     private ArrayList<Clothe> clothes;
-    private ArrayList<Clothe> clothes_in_gallery;
     private String GoogleId;
     private Context mContext;
     private User user;
@@ -49,7 +46,7 @@ public class AddClotheList extends AppCompatActivity implements ClotheAdapter.Ga
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_clothe_list);
+        setContentView(R.layout.delete_clothe_list);
         mContext = getApplicationContext();
         //setup RecyclerView
         RecyclerView recyclerViewGallery = findViewById(R.id.addRecyclerViewGallery);
@@ -76,15 +73,15 @@ public class AddClotheList extends AppCompatActivity implements ClotheAdapter.Ga
 
     private void saveClothes(User user) {
         ArrayList<Clothe> selectedClothes = new ArrayList<>();
-        for(int i=0; i<galleryItems.size(); i++){
+        for(int i=0; i<clothes.size(); i++){
             if((galleryItems.get(i).isSelected))
             {
-                selectedClothes.add(clothes_in_gallery.get(i));
+                selectedClothes.add(clothes.get(i));
             }
         }
         UserClothe userClothes = new UserClothe(user.getId(), selectedClothes);
         GetUserDataService service = RetrofitInstance.getRetrofitInstance().create(GetUserDataService.class);
-        Call<JsonElement> call = service.updateClothe(userClothes);
+        Call<JsonElement> call = service.deleteClothe(userClothes);
         call.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(Call<JsonElement> call, retrofit2.Response<JsonElement> response) {
@@ -101,52 +98,23 @@ public class AddClotheList extends AppCompatActivity implements ClotheAdapter.Ga
 
     private void updateUI() {
         if(user.getTastes().size() == 0){
-            Intent myIntent = new Intent(AddClotheList.this, WelcomeQuiz.class);
+            Intent myIntent = new Intent(DeleteClotheList.this, WelcomeQuiz.class);
             startActivity(myIntent);
         }
         else{
-            Intent myIntent = new Intent(AddClotheList.this, ClotheList.class);
+            Intent myIntent = new Intent(DeleteClotheList.this, ClotheList.class);
             startActivity(myIntent);
         }
 
     }
 
     private void getClohes() {
-        GetClotheDataService service = RetrofitInstance.getRetrofitInstance().create(GetClotheDataService.class);
-        Call<ArrayList<Clothe>> call = service.getClothe();
-
-        call.enqueue(new Callback<ArrayList<Clothe>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Clothe>> call, Response<ArrayList<Clothe>> response) {
-                try {
-
-                    clothes = response.body();
-                    clothes_in_gallery = new ArrayList<>();
-                    galleryItems = new ArrayList<>();
-                    Log.e("ok ici ", "ok ici paris c'est pas la");
-                    int b;
-                    for(int i=0; i< clothes.size(); i++){
-                       //If the user does not have this clothes already
-                        b=0;
-                        for(int j=0;j<user.getClothes().size();j++) {
-                            if(clothes.get(i).getId().equals(user.getClothes().get(j).getId())){b =1; } }
-                        if(b==0) {
-                            clothes_in_gallery.add(clothes.get(i));
-                            galleryItems.add(new ClotheImage(getString(R.string.base_url)+"uploads/"+clothes.get(i).getId()+".png", clothes.get(i).getName()));
-                        }
-                    }
-                    mGalleryAdapter.addGalleryItems(galleryItems);
-                }
-                catch (Exception e) {
-                    Log.e("exception in getUser", e.toString());
-                }
-            }
-            @Override
-            public void onFailure(Call<ArrayList<Clothe>> call, Throwable t) {
-                Log.e("googleIdToId error", t.toString());
-
-            }
-        });
+        clothes = user.getClothes();
+        galleryItems = new ArrayList<>();
+        for(int i=0; i<clothes.size(); i++){
+            galleryItems.add(new ClotheImage(getString(R.string.base_url)+"uploads/"+clothes.get(i).getId()+".png", clothes.get(i).getName()));
+        }
+        mGalleryAdapter.addGalleryItems(galleryItems);
     }
 
 
