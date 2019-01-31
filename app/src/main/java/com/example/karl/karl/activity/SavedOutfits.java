@@ -16,8 +16,8 @@ public class SavedOutfits extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.saved_outfits);
 
-
         mbotomnavsaved = findViewById(R.id.bottom_navigation_saved);
+
 
        mbotomnavsaved.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -37,4 +37,5 @@ public class SavedOutfits extends AppCompatActivity {
         });
 
     }
+
 }
