@@ -10,6 +10,12 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface GetPyreqDataService {
-    @GET("pyreq")
-    Call<Outfit> getPyreq(@Query("func_name") String func_name, @Query("id") String id);
+    @GET("pyreq/return_outfit")
+    Call<Outfit> getOutfit(@Query("id") String id);
+
+    @GET("pyreq/return_outfit_rl")
+    Call<Outfit> getOutfitRl(@Query("id") String id);
+
+    @GET("pyreq/return_weather")
+    Call<JsonElement> getWeather(@Query("lat") String lat, @Query("long") String longitude);
 }

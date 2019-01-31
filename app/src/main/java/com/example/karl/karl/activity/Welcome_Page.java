@@ -59,9 +59,9 @@ public class Welcome_Page extends AppCompatActivity{
             String personPhoto = String.valueOf(acct.getPhotoUrl());
             CircleImageView imageView = findViewById(R.id.persons_face);
 
-            tv.setText("Bonjour " + personGivenName);
-            tv2.setText("Nous allons commencer par te faire ajouter quelques habits que tu aimes bien pour que j'apprenne à mieux te connaitre." +
-                    " Indique moi si les vêtements te plaisent");
+            tv.setText("Hey " + personGivenName + " !");
+            tv2.setText("Let's start by adding some clothes from your closet" +
+                    ", then we will have a little a quiz so that I can get to know you better.");
 
             if(personPhoto != "null"){
                 new DownloadImageFromInternet(imageView,spinner)

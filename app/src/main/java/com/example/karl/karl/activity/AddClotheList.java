@@ -102,7 +102,7 @@ public class AddClotheList extends AppCompatActivity implements ClotheAdapter.Ga
     }
 
     private void updateUI() {
-        Intent myIntent = new Intent(AddClotheList.this, QuizStart1.class);
+        Intent myIntent = new Intent(AddClotheList.this, WelcomeQuiz.class);
         startActivity(myIntent);
     }
 
@@ -118,7 +118,6 @@ public class AddClotheList extends AppCompatActivity implements ClotheAdapter.Ga
                     clothes = response.body();
                     galleryItems = new ArrayList<>();
                     for(int i=0; i< clothes.size(); i++){
-                       // galleryItems.add(new ClotheImage(getString(R.string.base_url)+"uploads/"+user.getClothes().get(i).getId()+".png", user.getClothes().get(i).getName()));
 
                         galleryItems.add(new ClotheImage(getString(R.string.base_url)+"uploads/"+clothes.get(i).getId()+".png", clothes.get(i).getName()));
                     }

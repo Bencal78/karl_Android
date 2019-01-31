@@ -52,7 +52,7 @@
         android:id="@+id/boutonquizz"
         android:layout_alignParentBottom="true"
         android:gravity="center"
-        android:text="Ajouter mes vêtements"
+        android:text="Add your clothes"
         android:fontFamily="@font/poiret_one"
         android:background="@color/colorPrimaryDark"
         android:textColor="#Fefee2"
