@@ -18,6 +18,8 @@ public class Taste {
     private ArrayList<Clothe> clothes = new ArrayList<>();
     @SerializedName("rl_used")
     private Boolean rl_used = false;
+    @SerializedName("nb_used")
+    private Boolean nb_used = false;
 
     public Taste(){
         this.id = null;

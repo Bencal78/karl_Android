@@ -25,4 +25,12 @@
         app:itemTextColor="@color/blanccassé"
         app:menu="@menu/cloth_botom_nav"/>
 
+    <ImageView
+        android:id="@+id/settings_popup_menu"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_margin="5dp"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/menu_circles"
+         />
 </RelativeLayout>

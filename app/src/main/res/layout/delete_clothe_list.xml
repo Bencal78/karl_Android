@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context=".activity.DeleteClotheList"
+    android:background="@color/blanccassé"
+    >
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/boutonSave"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:text="Remove Clothes"
+        android:fontFamily="@font/poiret_one"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="#Fefee2"
+        android:layout_margin="5dp"/>
+    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/addRecyclerViewGallery"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        tools:context="com.example.karl.karl.activity.ClotheList">
+
+    </android.support.v7.widget.RecyclerView>
+</RelativeLayout>

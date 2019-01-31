@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/addClothes"
+        android:title="Add clothes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <item
+        android:id="@+id/deleteClothes"
+        android:title="Delete clothes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</menu>

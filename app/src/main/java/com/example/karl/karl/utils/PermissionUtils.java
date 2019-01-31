@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PermissionUtils {
+public class  PermissionUtils {
     Context context;
     Activity current_activity;
 

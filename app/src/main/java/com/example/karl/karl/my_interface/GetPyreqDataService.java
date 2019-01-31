@@ -14,7 +14,7 @@ public interface GetPyreqDataService {
     Call<Outfit> getOutfit(@Query("id") String id);
 
     @GET("pyreq/return_outfit_rl")
-    Call<Outfit> getOutfitRl(@Query("id") String id);
+    Call<Outfit> getOutfitRl(@Query("id") String id, @Query("lat") String lat, @Query("long") String longitude);
 
     @GET("pyreq/return_weather")
     Call<JsonElement> getWeather(@Query("lat") String lat, @Query("long") String longitude);

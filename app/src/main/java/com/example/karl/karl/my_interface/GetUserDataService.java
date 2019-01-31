@@ -52,6 +52,9 @@ public interface GetUserDataService {
     @PUT("users/addClothe")
     Call<JsonElement> updateClothe(@Body UserClothe body);
 
+    @PUT("users/deleteClothe")
+    Call<JsonElement> deleteClothe(@Body UserClothe body);
+
     @DELETE("users")
     Call<User> deleteUser(@Body RequestBody body);
 }

@@ -251,7 +251,7 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
         id = getId();
         //id = "5c35d55fcba93d1c8d350204";
         GetPyreqDataService service = RetrofitInstance.getRetrofitInstance().create(GetPyreqDataService.class);
-        Call<Outfit> call = service.getOutfit(id);
+        Call<Outfit> call = service.getOutfitRl(id, String.valueOf(mLastLocation.getLatitude()), String.valueOf(mLastLocation.getLongitude()));
         Log.e("url", call.request().url() + "");
 
         call.enqueue(new Callback<Outfit>() {
@@ -305,7 +305,7 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
 
             }
             catch (Exception e) {
-                tv3.setText("You have an issue with your user : Lisa par default");
+                Log.e("User Issue", e.toString());
                 //getOotd();
             }
             }
