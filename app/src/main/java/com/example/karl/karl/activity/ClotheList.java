@@ -1,6 +1,7 @@
 package com.example.karl.karl.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -10,11 +11,19 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.menu.MenuBuilder;
+import android.support.v7.view.menu.MenuPopupHelper;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.karl.karl.R;
 import com.example.karl.karl.adapter.ClotheAdapter;
@@ -42,7 +51,9 @@ public class ClotheList extends AppCompatActivity implements ClotheAdapter.Galle
     private static final int RC_READ_STORAGE = 5;
     ClotheAdapter mGalleryAdapter;
     BottomNavigationView mbotomnavcloth;
+    private ImageView settings_button;
 
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +89,37 @@ public class ClotheList extends AppCompatActivity implements ClotheAdapter.Galle
                 return true;
             }
         });
+
+        settings_button = (ImageView) findViewById(R.id.settings_popup_menu);
+        settings_button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //Creating the instance of PopupMenu
+                PopupMenu popup = new PopupMenu(ClotheList.this, settings_button);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater().inflate(R.menu.settings_popup, popup.getMenu());
+
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()){
+                            case R.id.addClothes:
+                                Intent myIntent = new Intent(ClotheList.this, AddClotheList.class);
+                                startActivity(myIntent);
+                                break;
+                            case R.id.deleteClothes:
+                                Intent myIntent2 = new Intent(ClotheList.this, DeleteClotheList.class);
+                                startActivity(myIntent2);
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+                popup.show();//showing popup menu
+            }
+        });//closing the setOnClickListener method
     }
 
     private void getUser(String googleId) {
