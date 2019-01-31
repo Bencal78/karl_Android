@@ -2,24 +2,6 @@ package com.example.karl.karl.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-
-import com.example.karl.karl.my_interface.GetGoogleDataService;
-import com.example.karl.karl.network.GoogleRetrofitInstance;
-import com.example.karl.karl.network.WeatherDownload;
-import com.example.karl.karl.utils.PermissionUtils;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResult;
-import com.google.android.gms.location.LocationSettingsStates;
-import com.google.android.gms.location.LocationSettingsStatusCodes;
-import com.google.api.client.auth.oauth2.Credential;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -42,7 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.karl.karl.R;
-import com.example.karl.karl.adapter.OotdAdapter;
 import com.example.karl.karl.model.Clothe;
 import com.example.karl.karl.model.Outfit;
 import com.example.karl.karl.model.Taste;
@@ -50,44 +31,32 @@ import com.example.karl.karl.model.User;
 import com.example.karl.karl.my_interface.GetPyreqDataService;
 import com.example.karl.karl.my_interface.GetUserDataService;
 import com.example.karl.karl.network.RetrofitInstance;
+import com.example.karl.karl.network.WeatherDownload;
+import com.example.karl.karl.utils.PermissionUtils;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.util.DateTime;
-import com.google.api.client.util.store.FileDataStoreFactory;
-import com.google.api.services.calendar.Calendar;
-import com.google.api.services.calendar.CalendarScopes;
-import com.google.api.services.calendar.model.Event;
-import com.google.api.services.calendar.model.Events;
-import com.google.gson.JsonArray;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStates;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.security.GeneralSecurityException;
-import java.text.DateFormat;
 import java.util.ArrayList;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -105,11 +74,9 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
     private static String Id =null ;
     private SwipePlaceHolderView mSwipeView;
     private Context mContext;
-    String url;
     TextView tv3;
     ProgressBar progressBar;
     TextView errortxt;
-    GridView gridView;
     TextView imagesoleil;
     ImageView imagecal;
     String id;
@@ -126,9 +93,6 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
 
     private GoogleApiClient mGoogleApiClient;
 
-    double latitude;
-    double longitude;
-
     // list of permissions
 
     ArrayList<String> permissions=new ArrayList<>();
@@ -138,7 +102,7 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
 
     Typeface weatherFont;
 
-    public Ootd() throws IOException {
+    public Ootd() {
     }
 
     ImageView iv;
@@ -153,94 +117,7 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
         permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
 
         permissionUtils.check_permission(permissions,"Need GPS permission for getting your location",1);
-
-        iv = findViewById(R.id.logo);
-        tv3 = findViewById(R.id.TextNothing);
-        imagesoleil = findViewById(R.id.weather_icon);
-        imagecal = findViewById(R.id.imgcal);
-        mbotomnav = findViewById(R.id.bottom_navigation);
-
-        weatherFont = Typeface.createFromAsset(getAssets(), "fonts/weathericons-regular-webfont.ttf");
-        imagesoleil.setTypeface(weatherFont);
-
-        errortxt = findViewById(R.id.errortxt);
-        mSwipeView = findViewById(R.id.swipeView);
-        mContext = this;
-        progressBar = findViewById(R.id.progressBarootd);
-
-        mSwipeView.getBuilder()
-                .setDisplayViewCount(3)
-                .setSwipeDecor(new SwipeDecor()
-                        .setPaddingTop(20)
-                        .setRelativeScale(0.01f)
-                        .setSwipeInMsgLayoutId(R.layout.tinder_swipe_in_msg_view)
-                        .setSwipeOutMsgLayoutId(R.layout.tinder_swipe_out_msg_view));
-
-        findViewById(R.id.rejectBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSwipeView.doSwipe(false);
-            }
-        });
-
-        findViewById(R.id.acceptBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSwipeView.doSwipe(true);
-            }
-        });
-        //tv2 = findViewById(R.id.texttest2);
-
         buildGoogleApiClient();
-
-        List<String> images = new ArrayList<String>();
-        List<Integer> values  = new ArrayList<Integer>();
-        imagecal.setImageDrawable(getResources().getDrawable(R.drawable.calendrier));
-
-        imagecal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(Ootd.this, Calendar_View.class);
-                startActivity(myIntent);
-            }
-        });
-        tv3.setText("Outfit of the Day !");
-
-
-        imagesoleil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(Ootd.this, Weather.class);
-                Ootd.this.startActivity(myIntent);
-            }
-        });
-
-
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
-        assert acct != null;
-        String GoogleId = String.valueOf(acct.getId());
-        //Log.e("GoogleId ", GoogleId);
-
-        GoogleIdToId(GoogleId);
-        //Log.e("Id ", Id);
-
-        mbotomnav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()){
-                case R.id.action_ongle_1:
-                    Intent myIntent = new Intent(Ootd.this, ClotheList.class);
-                    startActivity(myIntent);
-                    break;
-                case R.id.action_ongle_3:
-                    Intent myIntent2 = new Intent(Ootd.this, SavedOutfits.class);
-                    startActivity(myIntent2);
-                    break;
-            }
-                return true;
-            }
-        });
-
     }
 
     public void getOotd() {
@@ -257,7 +134,7 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
         call.enqueue(new Callback<Outfit>() {
             @SuppressLint("ResourceAsColor")
             @Override
-            public void onResponse(Call<Outfit> call, Response<Outfit> response) {
+            public void onResponse(@NonNull Call<Outfit> call, @NonNull Response<Outfit> response) {
                 try {
                     ArrayList<Clothe> Clothes = new ArrayList<Clothe>();
                     Taste taste;
@@ -306,6 +183,7 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
             }
             catch (Exception e) {
                 tv3.setText("You have an issue with your user : Lisa par default");
+                Log.e("e in googleIdto id", e.toString());
                 //getOotd();
             }
             }
@@ -325,7 +203,6 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
 
     @Override
     public void newTinderCard() {
-        Log.e("does it works?", "yes");
         getOotd();
     }
 
@@ -461,6 +338,97 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
         }
     }
 
+    private void setUp() {
+        iv = findViewById(R.id.logo);
+        tv3 = findViewById(R.id.TextNothing);
+        imagesoleil = findViewById(R.id.weather_icon);
+        imagecal = findViewById(R.id.imgcal);
+        mbotomnav = findViewById(R.id.bottom_navigation);
+
+        weatherFont = Typeface.createFromAsset(getAssets(), "fonts/weathericons-regular-webfont.ttf");
+        imagesoleil.setTypeface(weatherFont);
+
+        errortxt = findViewById(R.id.errortxt);
+        mSwipeView = findViewById(R.id.swipeView);
+        mContext = this;
+        progressBar = findViewById(R.id.progressBarootd);
+
+        mSwipeView.getBuilder()
+                .setDisplayViewCount(3)
+                .setSwipeDecor(new SwipeDecor()
+                        .setPaddingTop(20)
+                        .setRelativeScale(0.01f)
+                        .setSwipeInMsgLayoutId(R.layout.tinder_swipe_in_msg_view)
+                        .setSwipeOutMsgLayoutId(R.layout.tinder_swipe_out_msg_view));
+
+        findViewById(R.id.rejectBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSwipeView.doSwipe(false);
+            }
+        });
+
+        findViewById(R.id.acceptBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSwipeView.doSwipe(true);
+            }
+        });
+        //tv2 = findViewById(R.id.texttest2);
+
+        List<String> images = new ArrayList<String>();
+        List<Integer> values  = new ArrayList<Integer>();
+        imagecal.setImageDrawable(getResources().getDrawable(R.drawable.calendrier));
+
+        imagecal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(Ootd.this, Calendar_View.class);
+                startActivity(myIntent);
+            }
+        });
+        tv3.setText("Outfit of the Day !");
+
+
+        imagesoleil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(Ootd.this, Weather.class);
+                Ootd.this.startActivity(myIntent);
+            }
+        });
+
+
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+        assert acct != null;
+        String GoogleId = String.valueOf(acct.getId());
+        //Log.e("GoogleId ", GoogleId);
+
+        GoogleIdToId(GoogleId);
+        //Log.e("Id ", Id);
+
+        mbotomnav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.action_ongle_1:
+                        Intent myIntent = new Intent(Ootd.this, ClotheList.class);
+                        startActivity(myIntent);
+                        break;
+                    case R.id.action_ongle_3:
+                        Intent myIntent2 = new Intent(Ootd.this, SavedOutfits.class);
+                        startActivity(myIntent2);
+                        break;
+                }
+                return true;
+            }
+        });
+        buildGoogleApiClient();
+        //getLocation();
+
+        //getWeather();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -506,6 +474,7 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
     public void PermissionGranted(int request_code) {
         Log.i("PERMISSION","GRANTED");
         isPermissionGranted=true;
+        setUp();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.karl.karl.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -23,6 +24,7 @@ import com.example.karl.karl.my_interface.GetGoogleDataService;
 import com.example.karl.karl.my_interface.GetUserDataService;
 import com.example.karl.karl.network.GoogleRetrofitInstance;
 import com.example.karl.karl.network.RetrofitInstance;
+import com.example.karl.karl.utils.PermissionUtils;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
