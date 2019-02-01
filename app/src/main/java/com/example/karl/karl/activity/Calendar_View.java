@@ -118,7 +118,6 @@ public class Calendar_View extends AppCompatActivity {
                     ArrayList<JSONObject> res = new ArrayList<>();
                     if(response.body() != null){
                         JSONObject obj = new JSONObject(response.body().toString());
-                        Log.e("obj", obj.toString());
                         if(obj.has("items")){
                             JSONArray items = obj.getJSONArray("items");
                             Date now = new Date();
