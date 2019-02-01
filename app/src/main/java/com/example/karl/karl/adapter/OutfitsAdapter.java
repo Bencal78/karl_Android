@@ -1,11 +1,13 @@
 package com.example.karl.karl.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -25,7 +27,7 @@ import java.util.List;
 public class OutfitsAdapter extends RecyclerView.Adapter {
     private List<SavedOutfitImage> galleryItems;
     private Context context;
-    private ArrayList<Boolean> already_loaded = new ArrayList<>();
+    private Boolean isOnLongPressed = false;
     //Declare GalleryAdapterCallBacks
     /**
      * Override method On Item selected
@@ -45,10 +47,6 @@ public class OutfitsAdapter extends RecyclerView.Adapter {
         int previousSize = this.galleryItems.size();
         this.galleryItems.addAll(galleryItems);
         notifyItemRangeInserted(previousSize, galleryItems.size());
-        already_loaded = new ArrayList<>();
-        for(int i=0; i<galleryItems.size(); i++){
-            already_loaded.add(false);
-        }
 
     }
 
@@ -59,6 +57,7 @@ public class OutfitsAdapter extends RecyclerView.Adapter {
         return new OutfitsAdapter.GalleryItemHolder(row);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         //get current Gallery Item
@@ -149,10 +148,35 @@ public class OutfitsAdapter extends RecyclerView.Adapter {
                         .into(galleryItemHolder.outfit4ImageView);
                 break;
         }
-        already_loaded.set(position, true);
-        //set name of Image
-        //galleryItemHolder.textViewImageName.setText(currentItem.imageName);
-        //set on click listener on imageViewThumbnail
+
+        galleryItemHolder.cardViewThumbnail.setOnLongClickListener(new View.OnLongClickListener() {
+
+            @Override
+            public boolean onLongClick(View pView) {
+                // Do something when your hold starts here.
+                isOnLongPressed = true;
+                mAdapterCallBacks.onItemLongSelected(position);
+                return true;
+            }
+        });
+        galleryItemHolder.cardViewThumbnail.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View pView, MotionEvent pEvent) {
+                pView.onTouchEvent(pEvent);
+                // We're only interested in when the button is released.
+                if (pEvent.getAction() == MotionEvent.ACTION_UP || pEvent.getAction() == MotionEvent.ACTION_CANCEL) {
+                    // We're only interested in anything if our speak button is currently pressed.
+                    if (isOnLongPressed) {
+                        // Do something when the button is released.
+                        isOnLongPressed = false;
+                        mAdapterCallBacks.onReleaseItem(position);
+                    }
+                }
+                return false;
+            }
+        });
+
         galleryItemHolder.cardViewThumbnail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,6 +184,7 @@ public class OutfitsAdapter extends RecyclerView.Adapter {
                 mAdapterCallBacks.onItemSelected(position);
             }
         });
+
         galleryItemHolder.chkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -206,6 +231,8 @@ public class OutfitsAdapter extends RecyclerView.Adapter {
     //Interface for communication of Adapter and MainActivity
     public interface GalleryAdapterCallBacks {
         void onItemSelected(int position);
+        void onReleaseItem(int position);
+        void onItemLongSelected(int position);
     }
 
 }

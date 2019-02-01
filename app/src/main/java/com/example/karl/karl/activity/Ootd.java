@@ -102,6 +102,7 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
     ImageButton buttonOotd;
     ImageButton buttonSaved;
     ImageButton buttonParams;
+    String icon = "";
 
 
     private static final String TAG = Ootd.class.getSimpleName();
@@ -139,106 +140,6 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
         permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
 
         permissionUtils.check_permission(permissions,"Need GPS permission for getting your location",1);
-
-        iv = findViewById(R.id.logo);
-        tv3 = findViewById(R.id.TextNothing);
-        imagesoleil = findViewById(R.id.weather_icon);
-        imagecal = findViewById(R.id.imgcal);
-        //MENU BAS
-        buttonCloset = findViewById(R.id.buttonCloset);
-        buttonOotd = findViewById(R.id.buttonOotd);
-        buttonSaved = findViewById(R.id.buttonSaved);
-        buttonParams = findViewById(R.id.buttonParams);
-
-
-
-        weatherFont = Typeface.createFromAsset(getAssets(), "fonts/weathericons-regular-webfont.ttf");
-        imagesoleil.setTypeface(weatherFont);
-
-        errortxt = findViewById(R.id.errortxt);
-        mSwipeView = findViewById(R.id.swipeView);
-        mContext = this;
-        progressBar = findViewById(R.id.progressBarootd);
-
-        mSwipeView.getBuilder()
-                .setDisplayViewCount(3)
-                .setSwipeDecor(new SwipeDecor()
-                        .setPaddingTop(20)
-                        .setRelativeScale(0.01f)
-                        .setSwipeInMsgLayoutId(R.layout.tinder_swipe_in_msg_view)
-                        .setSwipeOutMsgLayoutId(R.layout.tinder_swipe_out_msg_view));
-
-        findViewById(R.id.rejectBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSwipeView.doSwipe(false);
-            }
-        });
-
-        findViewById(R.id.acceptBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSwipeView.doSwipe(true);
-            }
-        });
-        //tv2 = findViewById(R.id.texttest2);
-
-        buildGoogleApiClient();
-
-        List<String> images = new ArrayList<String>();
-        List<Integer> values  = new ArrayList<Integer>();
-        imagecal.setImageDrawable(getResources().getDrawable(R.drawable.calendrier));
-
-        imagecal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(Ootd.this, Calendar_View.class);
-                startActivity(myIntent);
-            }
-        });
-        tv3.setText("Outfit of the Day");
-
-
-        imagesoleil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(Ootd.this, Weather.class);
-                Ootd.this.startActivity(myIntent);
-            }
-        });
-
-
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
-        assert acct != null;
-        String GoogleId = String.valueOf(acct.getId());
-        //Log.e("GoogleId ", GoogleId);
-
-        GoogleIdToId(GoogleId);
-        //Log.e("Id ", Id);
-
-        buttonCloset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(Ootd.this, ClotheList.class);
-                Ootd.this.startActivity(myIntent);
-            }
-        });
-        buttonSaved.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(Ootd.this, SavedOutfits.class);
-                Ootd.this.startActivity(myIntent);
-            }
-        });
-        buttonParams.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(Ootd.this, Parameters.class);
-                Ootd.this.startActivity(myIntent);
-            }
-        });
-
-
 
         buildGoogleApiClient();
     }
@@ -336,6 +237,7 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
             @Override
             public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
                 if(response.body() != null){
+
                     JSONObject details = null;
                     try {
                         JSONObject json = new JSONObject(String.valueOf(response.body()));
@@ -343,9 +245,13 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
 
                         details = json.getJSONArray("weather").getJSONObject(0);
 
-                        imagesoleil.setText(Html.fromHtml(WeatherDownload.setWeatherIcon(details.getInt("id"),
+                        icon = WeatherDownload.setWeatherIcon(details.getInt("id"),
                                 json.getJSONObject("sys").getLong("sunrise") * 1000,
-                                json.getJSONObject("sys").getLong("sunset") * 1000)));
+                                json.getJSONObject("sys").getLong("sunset") * 1000);
+
+                        imagesoleil.setText(Html.fromHtml(icon));
+
+                        //imagesoleil.setText("ok");
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -394,6 +300,7 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
                     case LocationSettingsStatusCodes.SUCCESS:
                         // All location settings are satisfied. The client can initialize location requests here
                         getLocation();
+
                         if(mLastLocation != null){
                             getWeather();
                         }
@@ -520,13 +427,40 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
             }
         });
 
-
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         assert acct != null;
         String GoogleId = String.valueOf(acct.getId());
         //Log.e("GoogleId ", GoogleId);
 
         GoogleIdToId(GoogleId);
+
+        //MENU BAS
+        buttonCloset = findViewById(R.id.buttonCloset);
+        buttonOotd = findViewById(R.id.buttonOotd);
+        buttonSaved = findViewById(R.id.buttonSaved);
+        buttonParams = findViewById(R.id.buttonParams);
+
+        buttonCloset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(Ootd.this, ClotheList.class);
+                Ootd.this.startActivity(myIntent);
+            }
+        });
+        buttonSaved.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(Ootd.this, SavedOutfits.class);
+                Ootd.this.startActivity(myIntent);
+            }
+        });
+        buttonParams.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(Ootd.this, Parameters.class);
+                Ootd.this.startActivity(myIntent);
+            }
+        });
         //Log.e("Id ", Id);
 
 
