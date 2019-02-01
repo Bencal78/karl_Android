@@ -7,12 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.karl.karl.R;
-import com.example.karl.karl.activity.ClotheImage;
+import com.example.karl.karl.model.ClotheImage;
 import com.example.karl.karl.activity.ClotheList;
 import com.example.karl.karl.utils.ScreenUtils;
 import com.squareup.picasso.Picasso;

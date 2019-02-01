@@ -20,13 +20,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <activity android:name=".activity.QuizStart">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".activity.SavedOutfits">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
@@ -34,7 +27,14 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
         </activity>
-        <activity android:name=".activity.QuizStart1">
+        <activity android:name=".activity.DeleteSavedOutfits">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.QuizStart">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

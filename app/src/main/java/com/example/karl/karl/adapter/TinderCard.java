@@ -1,4 +1,4 @@
-package com.example.karl.karl.activity;
+package com.example.karl.karl.adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.karl.karl.R;
+import com.example.karl.karl.activity.Ootd;
+import com.example.karl.karl.activity.QuizStart;
 import com.example.karl.karl.model.Taste;
 import com.example.karl.karl.model.User;
 import com.example.karl.karl.model.UserTaste;
@@ -61,7 +63,7 @@ public class TinderCard{
         moutfit = outfit;
         mSwipeView = swipeView;
         mUsrId = usrId;
-        //Permet de ne pas avoir d'exception avec QuizStart1
+        //Permet de ne pas avoir d'exception avec QuizStart
         try{
             mTtinderCallback = (TinderCallback) context;
         }catch(ClassCastException e){
@@ -169,7 +171,7 @@ public class TinderCard{
 
     private void updateUI() {
         int tmp;
-        if((mSwipeView.getAllResolvers().size() <= 1) && ( mContext instanceof QuizStart1)){
+        if((mSwipeView.getAllResolvers().size() <= 1) && ( mContext instanceof QuizStart)){
             Intent i = new Intent(mContext, Ootd.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.getApplicationContext().startActivity(i);

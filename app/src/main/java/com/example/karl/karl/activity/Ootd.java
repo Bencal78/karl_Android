@@ -17,13 +17,13 @@ import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.karl.karl.R;
+import com.example.karl.karl.adapter.TinderCard;
 import com.example.karl.karl.model.Clothe;
 import com.example.karl.karl.model.Outfit;
 import com.example.karl.karl.model.Taste;
@@ -54,7 +54,6 @@ import com.mindorks.placeholderview.SwipePlaceHolderView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

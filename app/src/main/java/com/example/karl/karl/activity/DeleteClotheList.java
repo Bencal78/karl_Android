@@ -15,9 +15,9 @@ import android.widget.Toast;
 import com.example.karl.karl.R;
 import com.example.karl.karl.adapter.ClotheAdapter;
 import com.example.karl.karl.model.Clothe;
+import com.example.karl.karl.model.ClotheImage;
 import com.example.karl.karl.model.User;
 import com.example.karl.karl.model.UserClothe;
-import com.example.karl.karl.my_interface.GetClotheDataService;
 import com.example.karl.karl.my_interface.GetUserDataService;
 import com.example.karl.karl.network.RetrofitInstance;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -25,7 +25,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.gson.JsonElement;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;

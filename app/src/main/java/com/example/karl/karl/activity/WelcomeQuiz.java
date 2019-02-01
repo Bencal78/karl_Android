@@ -33,7 +33,7 @@ public class WelcomeQuiz extends AppCompatActivity {
         buttonquiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(WelcomeQuiz.this, QuizStart1.class);
+                Intent myIntent = new Intent(WelcomeQuiz.this, QuizStart.class);
                 startActivity(myIntent);
             }
         });
