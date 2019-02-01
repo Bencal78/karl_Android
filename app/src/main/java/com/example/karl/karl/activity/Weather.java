@@ -144,10 +144,17 @@ public class Weather extends AppCompatActivity implements ConnectionCallbacks,
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateUI();
+            }
+        });
     }
 
-    private void setSupportActionBar(Toolbar toolbar) {
-        toolbar = findViewById(R.id.Toolbarmeteo);
+    private void updateUI() {
+        Intent myIntent = new Intent(Weather.this, Ootd.class);
+        startActivity(myIntent);
     }
 
     private void getWeather() {
