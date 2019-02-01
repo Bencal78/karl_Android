@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.karl.karl.R;
@@ -46,11 +47,15 @@ public class SavedOutfits extends AppCompatActivity implements GalleryAdapterCal
     //Read storage permission request code
     private static final int RC_READ_STORAGE = 5;
     OutfitsAdapter mGalleryAdapter;
-    BottomNavigationView mbotomnavsaved;
     private ImageView settings_button;
     private Context mContext;
     private AlertDialog _dialog;
     private Boolean isSet = false;
+
+    ImageButton buttonCloset;
+    ImageButton buttonOotd;
+    ImageButton buttonSaved;
+    ImageButton buttonParams;
 
     @SuppressLint("ResourceType")
     @Override
@@ -71,22 +76,32 @@ public class SavedOutfits extends AppCompatActivity implements GalleryAdapterCal
         assert acct != null;
         String GoogleId = String.valueOf(acct.getId());
         getUser(GoogleId);
-        mbotomnavsaved = findViewById(R.id.bottom_navigation_saved);
 
-        mbotomnavsaved.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        //MENU BAS
+        buttonCloset = findViewById(R.id.buttonCloset);
+        buttonOotd = findViewById(R.id.buttonOotd);
+        buttonSaved = findViewById(R.id.buttonSaved);
+        buttonParams = findViewById(R.id.buttonParams);
+
+        buttonOotd.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.action_ongle_1:
-                        Intent myIntent = new Intent(SavedOutfits.this, ClotheList.class);
-                        startActivity(myIntent);
-                        break;
-                    case R.id.action_ongle_2:
-                        Intent myIntent2 = new Intent(SavedOutfits.this, Ootd.class);
-                        startActivity(myIntent2);
-                        break;
-                }
-                return true;
+            public void onClick(View v) {
+                Intent myIntent = new Intent(SavedOutfits.this, Ootd.class);
+                SavedOutfits.this.startActivity(myIntent);
+            }
+        });
+        buttonSaved.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(SavedOutfits.this, SavedOutfits.class);
+                SavedOutfits.this.startActivity(myIntent);
+            }
+        });
+        buttonParams.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(SavedOutfits.this, Parameters.class);
+                SavedOutfits.this.startActivity(myIntent);
             }
         });
 

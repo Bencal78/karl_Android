@@ -15,6 +15,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.karl.karl.R;
@@ -46,6 +49,10 @@ public class ClotheList extends AppCompatActivity implements ClotheAdapter.Galle
     private AlertDialog _dialog;
     private Boolean isSet = false;
     private Context mContext;
+    ImageButton buttonCloset;
+    ImageButton buttonOotd;
+    ImageButton buttonSaved;
+    ImageButton buttonParams;
 
     @SuppressLint("ResourceType")
     @Override
@@ -58,6 +65,13 @@ public class ClotheList extends AppCompatActivity implements ClotheAdapter.Galle
         recyclerViewGallery.setLayoutManager(new GridLayoutManager(this, 2));
         //Create RecyclerView Adapter
         mGalleryAdapter = new ClotheAdapter(this);
+
+        //MENU BAS
+        buttonCloset = findViewById(R.id.buttonCloset);
+        buttonOotd = findViewById(R.id.buttonOotd);
+        buttonSaved = findViewById(R.id.buttonSaved);
+        buttonParams = findViewById(R.id.buttonParams);
+
         //set adapter to RecyclerView
         recyclerViewGallery.setAdapter(mGalleryAdapter);
         //check for read storage permission
@@ -66,24 +80,29 @@ public class ClotheList extends AppCompatActivity implements ClotheAdapter.Galle
         assert acct != null;
         String GoogleId = String.valueOf(acct.getId());
         getUser(GoogleId);
-        mbotomnavcloth = findViewById(R.id.bottom_navigationCloth);
 
-        mbotomnavcloth.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        buttonOotd.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.action_ongle_2:
-                        Intent myIntent = new Intent(ClotheList.this, Ootd.class);
-                        startActivity(myIntent);
-                        break;
-                    case R.id.action_ongle_3:
-                        Intent myIntent2 = new Intent(ClotheList.this, SavedOutfits.class);
-                        startActivity(myIntent2);
-                        break;
-                }
-                return true;
+            public void onClick(View v) {
+                Intent myIntent = new Intent(ClotheList.this, Ootd.class);
+                ClotheList.this.startActivity(myIntent);
             }
         });
+        buttonSaved.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(ClotheList.this, SavedOutfits.class);
+                ClotheList.this.startActivity(myIntent);
+            }
+        });
+        buttonParams.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(ClotheList.this, Parameters.class);
+                ClotheList.this.startActivity(myIntent);
+            }
+        });
+
 
         settings_button = (ImageView) findViewById(R.id.settings_popup_menu);
         settings_button.setOnClickListener(new View.OnClickListener() {

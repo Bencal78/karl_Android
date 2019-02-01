@@ -50,8 +50,7 @@ public class AddClotheList extends AppCompatActivity implements ClotheAdapter.Ga
     private int isClicked = 0;
     private AlertDialog _dialog;
     private Boolean isSet = false;
-
-
+    public Button buttonSave;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +70,7 @@ public class AddClotheList extends AppCompatActivity implements ClotheAdapter.Ga
         GoogleId = String.valueOf(acct.getId());
         getUser(GoogleId);
 
-        Button buttonSave = findViewById(R.id.boutonSave);
+        buttonSave = findViewById(R.id.boutonSave);
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,6 +162,11 @@ public class AddClotheList extends AppCompatActivity implements ClotheAdapter.Ga
         if(isClicked % 2 == 0){
             galleryItems.get(position).isSelected = !galleryItems.get(position).isSelected;
             galleryItems.get(position).checkBox.setChecked(galleryItems.get(position).isSelected);
+            int a = 0;
+            for(int i =0;i<galleryItems.size();i++) {
+                if(galleryItems.get(i).isSelected) {a++;}
+            }
+            buttonSave.setText("Add " + a + " Clothes ");
         }
     }
 
