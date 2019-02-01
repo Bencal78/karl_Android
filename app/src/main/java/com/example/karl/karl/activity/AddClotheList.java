@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.karl.karl.R;
@@ -24,6 +27,7 @@ import com.example.karl.karl.network.RetrofitInstance;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.gson.JsonElement;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +47,10 @@ public class AddClotheList extends AppCompatActivity implements ClotheAdapter.Ga
     private String GoogleId;
     private Context mContext;
     private User user;
+    private int isClicked = 0;
+    private AlertDialog _dialog;
+    private Boolean isSet = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,8 +159,37 @@ public class AddClotheList extends AppCompatActivity implements ClotheAdapter.Ga
 
     @Override
     public void onItemSelected(int position) {
-        galleryItems.get(position).isSelected = !galleryItems.get(position).isSelected;
-        galleryItems.get(position).checkBox.setChecked(galleryItems.get(position).isSelected);
+        isClicked += 1;
+        if(isClicked % 2 == 0){
+            galleryItems.get(position).isSelected = !galleryItems.get(position).isSelected;
+            galleryItems.get(position).checkBox.setChecked(galleryItems.get(position).isSelected);
+        }
+    }
+
+    @Override
+    public void onReleaseItem(int position) {
+        _dialog.cancel();
+        isSet = false;
+    }
+
+    @Override
+    public void onItemLongSelected(int position) {
+        if(!isSet){
+            AlertDialog.Builder alertadd = new AlertDialog.Builder(this);
+            LayoutInflater factory = LayoutInflater.from(this);
+            final View view = factory.inflate(R.layout.modal_view_clothe, null);
+
+            ClotheImage clothe_image = galleryItems.get(position);
+            ImageView image = view.findViewById(R.id.image_clothe);
+            Picasso.with(mContext)
+                    .load(clothe_image.imageUri)
+                    .into(image);
+
+            alertadd.setView(view);
+
+            _dialog = alertadd.show();
+            isSet = true;
+        }
     }
 
     @Override

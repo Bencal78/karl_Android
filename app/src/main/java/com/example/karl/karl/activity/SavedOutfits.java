@@ -1,28 +1,37 @@
 package com.example.karl.karl.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.example.karl.karl.R;
 import com.example.karl.karl.adapter.OutfitsAdapter;
+import com.example.karl.karl.adapter.OutfitsAdapter.GalleryAdapterCallBacks;
 import com.example.karl.karl.model.ClotheImage;
 import com.example.karl.karl.model.SavedOutfitImage;
 import com.example.karl.karl.model.User;
+import com.example.karl.karl.model.UserOutfit;
 import com.example.karl.karl.my_interface.GetUserDataService;
 import com.example.karl.karl.network.RetrofitInstance;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +40,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SavedOutfits extends AppCompatActivity implements OutfitsAdapter.GalleryAdapterCallBacks {
+public class SavedOutfits extends AppCompatActivity implements GalleryAdapterCallBacks {
     //Deceleration of list of  GalleryItems
     public List<SavedOutfitImage> galleryItems;
     //Read storage permission request code
@@ -39,12 +48,16 @@ public class SavedOutfits extends AppCompatActivity implements OutfitsAdapter.Ga
     OutfitsAdapter mGalleryAdapter;
     BottomNavigationView mbotomnavsaved;
     private ImageView settings_button;
+    private Context mContext;
+    private AlertDialog _dialog;
+    private Boolean isSet = false;
 
     @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.saved_outfits);
+        mContext = getApplicationContext();
         //setup RecyclerView
         RecyclerView recyclerViewGallery = findViewById(R.id.recyclerViewGallery);
         recyclerViewGallery.setLayoutManager(new GridLayoutManager(this, 2));
@@ -140,16 +153,107 @@ public class SavedOutfits extends AppCompatActivity implements OutfitsAdapter.Ga
     }
 
 
+
+
     @Override
     public void onItemSelected(int position) {
-        //create fullscreen SlideShowFragment dialog
-        /*
-        SlideShowFragment slideShowFragment = SlideShowFragment.newInstance(position);
-        //setUp style for slide show fragment
-        slideShowFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.DialogFragmentTheme);
-        //finally show dialogue
-        slideShowFragment.show(getSupportFragmentManager(), null);
-        */
+
+    }
+
+    @Override
+    public void onReleaseItem(int position) {
+        _dialog.cancel();
+        isSet = false;
+    }
+
+    @Override
+    public void onItemLongSelected(int position) {
+        if(!isSet){
+            AlertDialog.Builder alertadd = new AlertDialog.Builder(this);
+            LayoutInflater factory = LayoutInflater.from(this);
+            final View view = factory.inflate(R.layout.modal_view, null);
+
+            SavedOutfitImage outfit = galleryItems.get(position);
+            ArrayList<ImageView> images = new ArrayList<>();
+
+            switch(outfit.imageUri.size()){
+                case 0:
+                    break;
+                case 1:
+                    //Load with Picasso
+                    images.add((ImageView) view.findViewById(R.id.Outfit1ImageView));
+
+                    Picasso.with(mContext)
+                            .load(outfit.imageUri.get(0))
+                            .into(images.get(0));
+
+                    break;
+                case 2:
+                    //Load with Picasso
+                    images.add((ImageView) view.findViewById(R.id.Outfit1ImageView));
+
+                    Picasso.with(mContext)
+                            .load(outfit.imageUri.get(0))
+                            .into(images.get(0));
+
+                    images.add((ImageView) view.findViewById(R.id.Outfit2ImageView));
+
+                    Picasso.with(mContext)
+                            .load(outfit.imageUri.get(1))
+                            .into(images.get(2));
+                    break;
+                case 3:
+                    //Load with Picasso
+                    images.add((ImageView) view.findViewById(R.id.Outfit1ImageView));
+
+                    Picasso.with(mContext)
+                            .load(outfit.imageUri.get(0))
+                            .into(images.get(0));
+
+                    images.add((ImageView) view.findViewById(R.id.Outfit2ImageView));
+
+                    Picasso.with(mContext)
+                            .load(outfit.imageUri.get(1))
+                            .into(images.get(1));
+
+                    images.add((ImageView) view.findViewById(R.id.Outfit3ImageView));
+
+                    Picasso.with(mContext)
+                            .load(outfit.imageUri.get(2))
+                            .into(images.get(2));
+                    break;
+                case 4:
+                    //Load with Picasso
+                    images.add((ImageView) view.findViewById(R.id.Outfit1ImageView));
+
+                    Picasso.with(mContext)
+                            .load(outfit.imageUri.get(0))
+                            .into(images.get(0));
+
+                    images.add((ImageView) view.findViewById(R.id.Outfit2ImageView));
+
+                    Picasso.with(mContext)
+                            .load(outfit.imageUri.get(1))
+                            .into(images.get(1));
+
+                    images.add((ImageView) view.findViewById(R.id.Outfit3ImageView));
+
+                    Picasso.with(mContext)
+                            .load(outfit.imageUri.get(2))
+                            .into(images.get(2));
+
+                    images.add((ImageView) view.findViewById(R.id.Outfit4ImageView));
+
+                    Picasso.with(mContext)
+                            .load(outfit.imageUri.get(3))
+                            .into(images.get(3));
+                    break;
+            }
+            alertadd.setView(view);
+
+            _dialog = alertadd.show();
+            isSet = true;
+        }
     }
 
     @Override
