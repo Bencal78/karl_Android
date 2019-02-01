@@ -1,4 +1,4 @@
-package com.example.karl.karl.activity;
+package com.example.karl.karl.adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.karl.karl.R;
+import com.example.karl.karl.activity.Ootd;
+import com.example.karl.karl.activity.QuizStart;
 import com.example.karl.karl.model.Taste;
 import com.example.karl.karl.model.User;
 import com.example.karl.karl.model.UserTaste;
@@ -61,7 +63,7 @@ public class TinderCard{
         moutfit = outfit;
         mSwipeView = swipeView;
         mUsrId = usrId;
-        //Permet de ne pas avoir d'exception avec QuizStart1
+        //Permet de ne pas avoir d'exception avec QuizStart
         try{
             mTtinderCallback = (TinderCallback) context;
         }catch(ClassCastException e){
@@ -130,14 +132,6 @@ public class TinderCard{
     private void onSwipedOut(){
         Log.d("EVENT", "onSwipedOut");
         moutfit.setDecision(false);
-        if((mSwipeView.getAllResolvers().size() == 1) && ( mContext instanceof QuizStart1)){
-            Intent i = new Intent(mContext, Ootd.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            mContext.getApplicationContext().startActivity(i);
-        }
-        if((mSwipeView.getAllResolvers().size() == 1) && ( mContext instanceof Ootd)){
-            mTtinderCallback.newTinderCard();
-        }
         saveTaste();
 
         //mSwipeView.addView(this);
@@ -152,25 +146,20 @@ public class TinderCard{
     private void onSwipeIn(){
         Log.d("EVENT", "onSwipedIn");
         moutfit.setDecision(true);
-        if((mSwipeView.getAllResolvers().size() == 1) && ( mContext instanceof QuizStart1)){
-            Intent i = new Intent(mContext, Ootd.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            mContext.getApplicationContext().startActivity(i);
-        }
-        if((mSwipeView.getAllResolvers().size() == 1) && ( mContext instanceof Ootd)){
-            mTtinderCallback.newTinderCard();
-        }
         saveTaste();
+
     }
 
     private void saveTaste() {
         UserTaste userTaste = new UserTaste(mUsrId, moutfit);
         GetUserDataService service = RetrofitInstance.getRetrofitInstance().create(GetUserDataService.class);
         Call<JsonElement> call = service.updateTaste(userTaste);
+        Log.e("url save", String.valueOf(call.request().url()));
         call.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(Call<JsonElement> call, retrofit2.Response<JsonElement> response) {
-                Log.e("response", response.body().toString());
+                Log.e("response save taste", response.body().toString());
+                updateUI();
             }
             @Override
             public void onFailure(Call<JsonElement> call, Throwable t) {
@@ -178,6 +167,18 @@ public class TinderCard{
                 Toast.makeText(mContext, "Something went wrong...Error message: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void updateUI() {
+        int tmp;
+        if((mSwipeView.getAllResolvers().size() <= 1) && ( mContext instanceof QuizStart)){
+            Intent i = new Intent(mContext, Ootd.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.getApplicationContext().startActivity(i);
+        }
+        if((mSwipeView.getAllResolvers().size() <= 1) && ( mContext instanceof Ootd)){
+            mTtinderCallback.newTinderCard();
+        }
     }
 
     @SwipeInState

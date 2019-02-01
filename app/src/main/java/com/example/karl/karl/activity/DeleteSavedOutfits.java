@@ -7,22 +7,27 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.karl.karl.R;
 import com.example.karl.karl.adapter.OutfitsAdapter;
-import com.example.karl.karl.model.ClotheImage;
+import com.example.karl.karl.model.Clothe;
 import com.example.karl.karl.model.SavedOutfitImage;
+import com.example.karl.karl.model.Taste;
 import com.example.karl.karl.model.User;
+import com.example.karl.karl.model.UserClothe;
+import com.example.karl.karl.model.UserOutfit;
 import com.example.karl.karl.my_interface.GetUserDataService;
 import com.example.karl.karl.network.RetrofitInstance;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.gson.JsonElement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,20 +36,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SavedOutfits extends AppCompatActivity implements OutfitsAdapter.GalleryAdapterCallBacks {
+public class DeleteSavedOutfits extends AppCompatActivity implements OutfitsAdapter.GalleryAdapterCallBacks {
     //Deceleration of list of  GalleryItems
     public List<SavedOutfitImage> galleryItems;
     //Read storage permission request code
     private static final int RC_READ_STORAGE = 5;
     OutfitsAdapter mGalleryAdapter;
-    BottomNavigationView mbotomnavsaved;
     private ImageView settings_button;
+    private User user;
 
     @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.saved_outfits);
+        setContentView(R.layout.delete_saved_outfits);
         //setup RecyclerView
         RecyclerView recyclerViewGallery = findViewById(R.id.recyclerViewGallery);
         recyclerViewGallery.setLayoutManager(new GridLayoutManager(this, 2));
@@ -58,51 +63,14 @@ public class SavedOutfits extends AppCompatActivity implements OutfitsAdapter.Ga
         assert acct != null;
         String GoogleId = String.valueOf(acct.getId());
         getUser(GoogleId);
-        mbotomnavsaved = findViewById(R.id.bottom_navigation_saved);
 
-        mbotomnavsaved.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.action_ongle_1:
-                        Intent myIntent = new Intent(SavedOutfits.this, ClotheList.class);
-                        startActivity(myIntent);
-                        break;
-                    case R.id.action_ongle_2:
-                        Intent myIntent2 = new Intent(SavedOutfits.this, Ootd.class);
-                        startActivity(myIntent2);
-                        break;
-                }
-                return true;
-            }
-        });
-
-        settings_button = (ImageView) findViewById(R.id.settings_popup_menu);
-        settings_button.setOnClickListener(new View.OnClickListener() {
-
+        Button buttonSave = findViewById(R.id.boutonSave);
+        buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(SavedOutfits.this, settings_button);
-                //Inflating the Popup using xml file
-                popup.getMenuInflater().inflate(R.menu.settings_popup_outfits, popup.getMenu());
-
-                //registering popup with OnMenuItemClickListener
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()){
-                            case R.id.deleteOutfits:
-                                Intent myIntent2 = new Intent(SavedOutfits.this, DeleteSavedOutfits.class);
-                                startActivity(myIntent2);
-                                break;
-                        }
-                        return true;
-                    }
-                });
-
-                popup.show();//showing popup menu
+                saveClothes(user);
             }
-        });//closing the setOnClickListener method
+        });
     }
 
     private void getUser(String googleId) {
@@ -113,7 +81,7 @@ public class SavedOutfits extends AppCompatActivity implements OutfitsAdapter.Ga
             @Override
             public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
                 try {
-                    User user = response.body().get(0);
+                    user = response.body().get(0);
                     galleryItems = new ArrayList<>();
                     for(int i=0; i< user.getTastes().size(); i++){
                         if(user.getTastes().get(i).getDecision()){
@@ -139,33 +107,76 @@ public class SavedOutfits extends AppCompatActivity implements OutfitsAdapter.Ga
         });
     }
 
+    private void saveClothes(User user) {
+        ArrayList<Taste> selectedOutfits = new ArrayList<>();
+        for(int i=0; i<galleryItems.size(); i++){
+            if((galleryItems.get(i).isSelected))
+            {
+                //Log.e("ok ", "ok ici selected");
+                for(int j=0; j<user.getTastes().size(); j++){
+                    //Log.e("user taste id", user.getTastes().get(j).getId());
+                    //Log.e("gallery taste id", galleryItems.get(i).imageName);
+                    if(user.getTastes().get(j).getId().equals(galleryItems.get(i).imageName)){
+                        selectedOutfits.add(user.getTastes().get(j));
+                    }
+                }
+            }
+        }
+        UserOutfit userOutfits = new UserOutfit(user.getId(), selectedOutfits);
+        GetUserDataService service = RetrofitInstance.getRetrofitInstance().create(GetUserDataService.class);
+        Call<JsonElement> call = service.deleteOutfit(userOutfits);
+        call.enqueue(new Callback<JsonElement>() {
+            @Override
+            public void onResponse(Call<JsonElement> call, retrofit2.Response<JsonElement> response) {
+                Log.e("response", response.body().toString());
+                updateUI();
+            }
+            @Override
+            public void onFailure(Call<JsonElement> call, Throwable t) {
+                Log.e("Something went wrong", t.getMessage());
+            }
+        });
+    }
+
+    private void updateUI() {
+        if(user.getTastes().size() == 0){
+            Intent myIntent = new Intent(DeleteSavedOutfits.this, WelcomeQuiz.class);
+            startActivity(myIntent);
+        }
+        else{
+            Intent myIntent = new Intent(DeleteSavedOutfits.this, SavedOutfits.class);
+            startActivity(myIntent);
+        }
+    }
+
 
     @Override
     public void onItemSelected(int position) {
         //create fullscreen SlideShowFragment dialog
-        /*
-        SlideShowFragment slideShowFragment = SlideShowFragment.newInstance(position);
-        //setUp style for slide show fragment
-        slideShowFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.DialogFragmentTheme);
-        //finally show dialogue
-        slideShowFragment.show(getSupportFragmentManager(), null);
-        */
+    /*
+    SlideShowFragment slideShowFragment = SlideShowFragment.newInstance(position);
+    //setUp style for slide show fragment
+    slideShowFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.DialogFragmentTheme);
+    //finally show dialogue
+    slideShowFragment.show(getSupportFragmentManager(), null);
+    */
+        galleryItems.get(position).isSelected = !galleryItems.get(position).isSelected;
+        galleryItems.get(position).checkBox.setChecked(galleryItems.get(position).isSelected);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        /*
-        if (requestCode == RC_READ_STORAGE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //Get images
-                galleryItems = GalleryUtils.getImages(this);
-                // add images to gallery recyclerview using adapter
-                mGalleryAdapter.addGalleryItems(galleryItems);
-            } else {
-                Toast.makeText(this, "Storage Permission denied", Toast.LENGTH_SHORT).show();
-            }
-        }*/
+    /*
+    if (requestCode == RC_READ_STORAGE) {
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            //Get images
+            galleryItems = GalleryUtils.getImages(this);
+            // add images to gallery recyclerview using adapter
+            mGalleryAdapter.addGalleryItems(galleryItems);
+        } else {
+            Toast.makeText(this, "Storage Permission denied", Toast.LENGTH_SHORT).show();
+        }
+    }*/
     }
-
 }

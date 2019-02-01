@@ -1,38 +1,26 @@
 package com.example.karl.karl.activity;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.menu.MenuBuilder;
-import android.support.v7.view.menu.MenuPopupHelper;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.karl.karl.R;
 import com.example.karl.karl.adapter.ClotheAdapter;
-import com.example.karl.karl.adapter.OotdAdapter;
-import com.example.karl.karl.model.Clothe;
-import com.example.karl.karl.model.Outfit;
+import com.example.karl.karl.model.ClotheImage;
 import com.example.karl.karl.model.User;
-import com.example.karl.karl.my_interface.GetPyreqDataService;
 import com.example.karl.karl.my_interface.GetUserDataService;
 import com.example.karl.karl.network.RetrofitInstance;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -115,7 +103,7 @@ public class ClotheList extends AppCompatActivity implements ClotheAdapter.Galle
                 //Creating the instance of PopupMenu
                 PopupMenu popup = new PopupMenu(ClotheList.this, settings_button);
                 //Inflating the Popup using xml file
-                popup.getMenuInflater().inflate(R.menu.settings_popup, popup.getMenu());
+                popup.getMenuInflater().inflate(R.menu.settings_popup_clothes, popup.getMenu());
 
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {

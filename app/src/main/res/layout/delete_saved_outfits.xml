@@ -13,23 +13,16 @@
         tools:showIn="@layout/saved_outfits">
     </android.support.v7.widget.RecyclerView>
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottom_navigation_saved"
+    <Button
+        android:id="@+id/boutonSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="0dp"
         android:background="@color/colorPrimaryDark"
-        app:itemBackground="@color/colorPrimary"
-        app:itemTextColor="@color/blanccassé"
-        app:itemIconTint="@color/blanccassé"
-        app:menu="@menu/bottom_navigation_items_saved"/>
-
-    <ImageView
-        android:id="@+id/settings_popup_menu"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_margin="5dp"
-        android:layout_alignParentEnd="true"
-        android:src="@drawable/menu_circles"
-        />
+        android:fontFamily="@font/poiret_one"
+        android:gravity="center"
+        android:text="Remove Outfit"
+        android:textColor="#Fefee2" />
 </RelativeLayout>

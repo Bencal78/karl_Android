@@ -1,4 +1,4 @@
-package com.example.karl.karl.activity;
+package com.example.karl.karl.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
