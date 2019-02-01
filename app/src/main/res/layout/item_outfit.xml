@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.karl.karl.layout.SquareLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+    <!--Thumbnail of gallery item-->
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardViewThumbnail"
+        android:orientation="vertical"
+        android:background="#FFFFFF"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="7dp"
+        app:cardElevation="4dp">
+        <!--
+                <ImageView
+                    android:id="@+id/Top1ImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="75dp"
+                    android:scaleType="centerCrop" /> -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/chkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignRight="@+id/Outfit1ImageView"
+                    android:layout_alignParentTop="true" />
+
+                <ImageView
+                    android:id="@+id/Outfit1ImageView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="centerInside"
+                    />
+
+
+                <ImageView
+                    android:id="@+id/Outfit2ImageView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="centerInside"
+                    />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                >
+
+
+                <ImageView
+                    android:id="@+id/Outfit3ImageView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="centerInside" />
+
+
+                <ImageView
+                    android:id="@+id/Outfit4ImageView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="centerInside" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+    <!--Textview for image name
+    <TextView
+        android:id="@+id/textViewImageName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageViewThumbnail"
+        android:background="#894d4d4d"
+        android:ellipsize="end"
+        android:lines="1"
+        android:padding="4dp"
+        android:textColor="#89FFFFFF"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+-->
+
+
+</com.example.karl.karl.layout.SquareLayout>
