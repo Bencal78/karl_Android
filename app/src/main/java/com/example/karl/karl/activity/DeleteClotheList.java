@@ -42,6 +42,7 @@ public class DeleteClotheList extends AppCompatActivity implements ClotheAdapter
     private String GoogleId;
     private Context mContext;
     private User user;
+    public Button buttonSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,7 @@ public class DeleteClotheList extends AppCompatActivity implements ClotheAdapter
         GoogleId = String.valueOf(acct.getId());
         getUser(GoogleId);
 
-        Button buttonSave = findViewById(R.id.boutonSave);
+        buttonSave = findViewById(R.id.boutonSave);
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,6 +123,11 @@ public class DeleteClotheList extends AppCompatActivity implements ClotheAdapter
     public void onItemSelected(int position) {
         galleryItems.get(position).isSelected = !galleryItems.get(position).isSelected;
         galleryItems.get(position).checkBox.setChecked(galleryItems.get(position).isSelected);
+        int a = 0;
+        for(int i =0;i<galleryItems.size();i++) {
+            if(galleryItems.get(i).isSelected) {a++;}
+        }
+        buttonSave.setText("Delete " + a + " Clothes ");
     }
 
     @Override

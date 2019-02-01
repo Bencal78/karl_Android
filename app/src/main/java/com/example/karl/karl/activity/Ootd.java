@@ -3,8 +3,6 @@ package com.example.karl.karl.activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 
-import com.example.karl.karl.my_interface.GetGoogleDataService;
-import com.example.karl.karl.network.GoogleRetrofitInstance;
 import com.example.karl.karl.network.WeatherDownload;
 import com.example.karl.karl.utils.PermissionUtils;
 import com.google.android.gms.common.ConnectionResult;
@@ -19,7 +17,7 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
-import com.google.api.client.auth.oauth2.Credential;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -28,21 +26,19 @@ import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.karl.karl.R;
-import com.example.karl.karl.adapter.OotdAdapter;
 import com.example.karl.karl.model.Clothe;
 import com.example.karl.karl.model.Outfit;
 import com.example.karl.karl.model.Taste;
@@ -52,42 +48,17 @@ import com.example.karl.karl.my_interface.GetUserDataService;
 import com.example.karl.karl.network.RetrofitInstance;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.util.DateTime;
-import com.google.api.client.util.store.FileDataStoreFactory;
-import com.google.api.services.calendar.Calendar;
-import com.google.api.services.calendar.CalendarScopes;
-import com.google.api.services.calendar.model.Event;
-import com.google.api.services.calendar.model.Events;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.security.GeneralSecurityException;
-import java.text.DateFormat;
 import java.util.ArrayList;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
 
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -113,7 +84,11 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
     TextView imagesoleil;
     ImageView imagecal;
     String id;
-    BottomNavigationView mbotomnav;
+    ImageButton buttonCloset;
+    ImageButton buttonOotd;
+    ImageButton buttonSaved;
+    ImageButton buttonParams;
+
 
     private static final String TAG = Ootd.class.getSimpleName();
 
@@ -158,7 +133,13 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
         tv3 = findViewById(R.id.TextNothing);
         imagesoleil = findViewById(R.id.weather_icon);
         imagecal = findViewById(R.id.imgcal);
-        mbotomnav = findViewById(R.id.bottom_navigation);
+        //MENU BAS
+        buttonCloset = findViewById(R.id.buttonCloset);
+        buttonOotd = findViewById(R.id.buttonOotd);
+        buttonSaved = findViewById(R.id.buttonSaved);
+        buttonParams = findViewById(R.id.buttonParams);
+
+
 
         weatherFont = Typeface.createFromAsset(getAssets(), "fonts/weathericons-regular-webfont.ttf");
         imagesoleil.setTypeface(weatherFont);
@@ -204,7 +185,7 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
                 startActivity(myIntent);
             }
         });
-        tv3.setText("Outfit of the Day !");
+        tv3.setText("Outfit of the Day");
 
 
         imagesoleil.setOnClickListener(new View.OnClickListener() {
@@ -224,22 +205,29 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
         GoogleIdToId(GoogleId);
         //Log.e("Id ", Id);
 
-        mbotomnav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        buttonCloset.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()){
-                case R.id.action_ongle_1:
-                    Intent myIntent = new Intent(Ootd.this, ClotheList.class);
-                    startActivity(myIntent);
-                    break;
-                case R.id.action_ongle_3:
-                    Intent myIntent2 = new Intent(Ootd.this, SavedOutfits.class);
-                    startActivity(myIntent2);
-                    break;
-            }
-                return true;
+            public void onClick(View v) {
+                Intent myIntent = new Intent(Ootd.this, ClotheList.class);
+                Ootd.this.startActivity(myIntent);
             }
         });
+        buttonSaved.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(Ootd.this, SavedOutfits.class);
+                Ootd.this.startActivity(myIntent);
+            }
+        });
+        buttonParams.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(Ootd.this, Parameters.class);
+                Ootd.this.startActivity(myIntent);
+            }
+        });
+
+
 
     }
 

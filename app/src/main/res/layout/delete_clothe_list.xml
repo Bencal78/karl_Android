@@ -1,33 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
     tools:context=".activity.DeleteClotheList"
     android:background="@color/blanccassé"
+    android:orientation="vertical"
     >
-    <Button
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/boutonSave"
-        android:layout_alignParentBottom="true"
+        android:layout_height="0dp"
+        android:text="Deleting Clothes"
+        android:layout_weight="1"
         android:gravity="center"
-        android:text="Remove Clothes"
         android:fontFamily="@font/poiret_one"
-        android:background="@color/colorPrimaryDark"
-        android:textColor="#Fefee2"
-        android:layout_margin="5dp"/>
+        android:textSize="30sp"
+        tools:ignore="NestedWeights" />
+
     <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/addRecyclerViewGallery"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
         android:scrollbars="vertical"
         tools:context="com.example.karl.karl.activity.ClotheList">
 
     </android.support.v7.widget.RecyclerView>
-</RelativeLayout>
+
+    <Button
+        android:id="@+id/boutonSave"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:background="@color/colorPrimaryDark"
+        android:fontFamily="@font/poiret_one"
+        android:gravity="center"
+        android:text="Delete"
+        android:textColor="#Fefee2" />
+</LinearLayout>
