@@ -169,7 +169,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                             startActivity(myIntent);
                             Log.e("ok3", "ok3");
                         }
-                        if(response.body().size() == 1 && response.body().get(0).getClothes().size() == 0){
+                        else if(response.body().size() == 1 && response.body().get(0).getClothes().size() == 0){
                             Intent myIntent = new Intent(Login.this, Welcome_Page.class);
                             startActivity(myIntent);
                             Log.e("ok2", "ok2");
