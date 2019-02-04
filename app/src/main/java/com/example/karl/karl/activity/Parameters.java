@@ -19,6 +19,7 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 
 import static com.google.android.gms.common.api.GoogleApiClient.getAllClients;
 
@@ -64,24 +65,15 @@ public class Parameters extends AppCompatActivity {
         });
 
 
-        /*signout.setOnClickListener(new View.OnClickListener() {
+        signout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-                        new ResultCallback<Status>() {
-                            @Override
-                            public void onResult(Status status) {
-                                // ...
-                                Intent i=new Intent(getApplicationContext(),Login.class);
-                                startActivity(i);
-                            }
-                        });
+                FirebaseAuth.getInstance().signOut();
+                Intent myIntent = new Intent(Parameters.this, Login.class);
+                myIntent.putExtra("caller", "Logout");
+                Parameters.this.startActivity(myIntent);
             }
-        });*/
-
-
-
+        });
     }
 
 

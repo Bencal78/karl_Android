@@ -1,6 +1,7 @@
 package com.example.karl.karl.activity;
 
 import android.Manifest;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -94,6 +95,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     Animation animation;
     ImageView logokarl;
     private FirebaseAuth mAuth;
+    String caller;
+    Class callerClass;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -118,7 +121,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 .requestEmail()
                 .build();
 
-        //mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        ActivityManager mngr = (ActivityManager) getSystemService( ACTIVITY_SERVICE );
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         mAuth = FirebaseAuth.getInstance();
@@ -127,6 +130,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.zoom_in);
 
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -139,8 +143,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        Log.e("on start", String.valueOf(account));
+
+            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+            Log.e("on start", String.valueOf(account));
+
         //updateUI(account);
     }
 
