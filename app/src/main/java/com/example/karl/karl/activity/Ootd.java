@@ -124,6 +124,7 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
     boolean isPermissionGranted;
 
     Typeface weatherFont;
+    private String GoogleId;
 
     public Ootd() {
     }
@@ -140,8 +141,6 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
         permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
 
         permissionUtils.check_permission(permissions,"Need GPS permission for getting your location",1);
-
-        buildGoogleApiClient();
     }
 
     public void getOotd() {
@@ -302,6 +301,7 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
                         getLocation();
 
                         if(mLastLocation != null){
+                            GoogleIdToId(GoogleId);
                             getWeather();
                         }
                         break;
@@ -429,10 +429,8 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         assert acct != null;
-        String GoogleId = String.valueOf(acct.getId());
+        GoogleId = String.valueOf(acct.getId());
         //Log.e("GoogleId ", GoogleId);
-
-        GoogleIdToId(GoogleId);
 
         //MENU BAS
         buttonCloset = findViewById(R.id.buttonCloset);
