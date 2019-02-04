@@ -4,8 +4,7 @@
     <color name="colorPrimaryDark">#FF3F3F</color>
     <color name="colorAccent">#FF3F3F</color>
     <color name="blanccassé">#FEFEE2</color>
-    <color name="blanc">#FFFFFF</color>
-
+    <color name="blanc">#f5f5f5</color>
     <string-array name="colors" translatable="false">
         <item>#99cc00</item>
         <item>#33b5e5</item>

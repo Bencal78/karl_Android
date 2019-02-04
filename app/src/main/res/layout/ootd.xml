@@ -104,7 +104,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:text="Closet"
-            android:fontFamily="@font/poiret_one"
+            android:fontFamily="@font/poiret_one" android:textColor="@color/blanccassé"
             android:gravity="center"
             android:textStyle="bold"
             android:layout_marginBottom="3dp"            />
@@ -132,7 +132,7 @@
                 android:layout_weight="1"
                 android:text="Ootd"
                 android:textStyle="bold"
-                android:fontFamily="@font/poiret_one"
+                android:fontFamily="@font/poiret_one" android:textColor="@color/blanccassé"
                 android:gravity="center"
                 android:layout_marginBottom="3dp"/>
 
@@ -159,7 +159,7 @@
                 android:layout_weight="1"
                 android:text="Saved"
                 android:textStyle="bold"
-                android:fontFamily="@font/poiret_one"
+                android:fontFamily="@font/poiret_one" android:textColor="@color/blanccassé"
                 android:gravity="center"
                 android:layout_marginBottom="3dp"            />
 
@@ -186,7 +186,7 @@
                 android:layout_weight="1"
                 android:textStyle="bold"
                 android:text="Params"
-                android:fontFamily="@font/poiret_one"
+                android:fontFamily="@font/poiret_one" android:textColor="@color/blanccassé"
                 android:gravity="center"
                 android:layout_marginBottom="3dp"            />
 

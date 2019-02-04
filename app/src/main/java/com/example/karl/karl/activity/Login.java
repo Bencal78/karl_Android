@@ -107,14 +107,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.login);
         Context mContext = getApplicationContext();
 
+
         //creation du bouton google+
 
         logokarl = findViewById(R.id.logo);
         SignInButton signInButton = findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
+        GoogleSignInOptions gso = null;
 
         //demande de l'email a l'utilisateur
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 //.requestIdToken(getString(R.string.web_client_id))
                 .requestScopes(new Scope(Scopes.PLUS_LOGIN), new Scope(Scopes.PROFILE),
                         new Scope(Scopes.PLUS_ME), new Scope(CalendarScopes.CALENDAR_READONLY),
@@ -124,9 +126,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         ActivityManager mngr = (ActivityManager) getSystemService( ACTIVITY_SERVICE );
 
+
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         Bundle extras = getIntent().getExtras();
-            mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
 
@@ -146,11 +149,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-        Bundle extras = getIntent().getExtras();
-        if (!(extras == null)) {
-            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-            Log.e("on start", String.valueOf(account));
-        }
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
+        Log.e("on start", String.valueOf(account));
+
 
         //updateUI(account);
     }
@@ -235,7 +237,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         Log.e("account annother", account.getId());
         GetUserDataService service = RetrofitInstance.getRetrofitInstance().create(GetUserDataService.class);
         Call<ArrayList<User>> call = service.getUserByGoogleId(account.getId());
-            getGoogleInfo(account);
 
         call.enqueue(new Callback<ArrayList<User>>() {
             @Override

@@ -1,5 +1,6 @@
 package com.example.karl.karl.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,6 +21,8 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.io.File;
 
 import static com.google.android.gms.common.api.GoogleApiClient.getAllClients;
 
@@ -69,6 +72,7 @@ public class Parameters extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
+                deleteCache(getApplicationContext());
                 Intent myIntent = new Intent(Parameters.this, Login.class);
                 myIntent.putExtra("caller", "Logout");
                 Parameters.this.startActivity(myIntent);
@@ -76,7 +80,29 @@ public class Parameters extends AppCompatActivity {
         });
     }
 
+    public static void deleteCache(Context context) {
+        try {
+            File dir = context.getCacheDir();
+            deleteDir(dir);
+        } catch (Exception e) { e.printStackTrace();}
+    }
 
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+            return dir.delete();
+        } else if(dir!= null && dir.isFile()) {
+            return dir.delete();
+        } else {
+            return false;
+        }
+    }
 
 
 
