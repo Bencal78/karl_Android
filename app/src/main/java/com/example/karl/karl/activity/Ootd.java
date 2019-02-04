@@ -206,7 +206,7 @@ public class Ootd extends AppCompatActivity implements TinderCard.TinderCallback
 
             }
             catch (Exception e) {
-                tv3.setText("You have an issue with your user : Lisa par default");
+                //tv3.setText("You have an issue with your user : Lisa par default");
                 Log.e("e in googleIdto id", e.toString());
                 //getOotd();
             }

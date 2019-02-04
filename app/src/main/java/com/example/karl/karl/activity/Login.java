@@ -79,6 +79,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -124,7 +125,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         ActivityManager mngr = (ActivityManager) getSystemService( ACTIVITY_SERVICE );
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        mAuth = FirebaseAuth.getInstance();
+        Bundle extras = getIntent().getExtras();
+            mAuth = FirebaseAuth.getInstance();
+
         findViewById(R.id.sign_in_button).setOnClickListener(this);
 
         animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.zoom_in);
@@ -143,9 +146,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-
+        Bundle extras = getIntent().getExtras();
+        if (!(extras == null)) {
             GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
             Log.e("on start", String.valueOf(account));
+        }
 
         //updateUI(account);
     }
@@ -230,6 +235,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         Log.e("account annother", account.getId());
         GetUserDataService service = RetrofitInstance.getRetrofitInstance().create(GetUserDataService.class);
         Call<ArrayList<User>> call = service.getUserByGoogleId(account.getId());
+            getGoogleInfo(account);
+
         call.enqueue(new Callback<ArrayList<User>>() {
             @Override
             public void onResponse(Call<ArrayList<User>> call, retrofit2.Response<ArrayList<User>> response) {
