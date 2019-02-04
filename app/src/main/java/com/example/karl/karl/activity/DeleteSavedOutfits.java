@@ -208,7 +208,7 @@ public class DeleteSavedOutfits extends AppCompatActivity implements OutfitsAdap
 
                     Picasso.with(mContext)
                             .load(outfit.imageUri.get(1))
-                            .into(images.get(2));
+                            .into(images.get(1));
                     break;
                 case 3:
                     //Load with Picasso
