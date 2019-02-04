@@ -1,11 +1,13 @@
 package com.example.karl.karl.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -33,10 +35,16 @@ public class Parameters extends AppCompatActivity {
     ImageButton buttonParams;
     Button signout;
     private GoogleSignInAccount mGoogleSignInClient;
+    private ParameterCallback mParameterCallback;
+    private Context mContext;
+    private Activity activity;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.parameters);
+
+
+
         mGoogleSignInClient = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         signout = findViewById(R.id.signout);
 
@@ -66,18 +74,25 @@ public class Parameters extends AppCompatActivity {
                 Parameters.this.startActivity(myIntent);
             }
         });
+        mContext = this;
+        activity = this;
+        mParameterCallback = (ParameterCallback) Login.getContext();
 
 
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                deleteCache(getApplicationContext());
-                Intent myIntent = new Intent(Parameters.this, Login.class);
-                myIntent.putExtra("caller", "Logout");
-                Parameters.this.startActivity(myIntent);
+                Log.e("click", "signout button clicked");
+                mParameterCallback.signOut();
             }
         });
+
+
+
+    }
+
+    public interface ParameterCallback{
+        void signOut();
     }
 
     public static void deleteCache(Context context) {

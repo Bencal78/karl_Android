@@ -90,10 +90,10 @@ public class SavedOutfits extends AppCompatActivity implements GalleryAdapterCal
                 SavedOutfits.this.startActivity(myIntent);
             }
         });
-        buttonSaved.setOnClickListener(new View.OnClickListener() {
+        buttonCloset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(SavedOutfits.this, SavedOutfits.class);
+                Intent myIntent = new Intent(SavedOutfits.this, ClotheList.class);
                 SavedOutfits.this.startActivity(myIntent);
             }
         });

@@ -44,6 +44,7 @@ import com.google.android.gms.common.api.Scope;
 //import com.google.android.gms.plus.Account;
 //import com.google.android.gms.plus.People;
 //import com.google.android.gms.plus.Plus;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
 import com.google.api.client.googleapis.auth.oauth2.GoogleBrowserClientRequestUrl;
@@ -88,7 +89,7 @@ import retrofit2.Callback;
  * Created by Edouard on 19/09/2018.
  */
 
-public class Login extends AppCompatActivity implements View.OnClickListener {
+public class Login extends AppCompatActivity implements View.OnClickListener, Parameters.ParameterCallback {
     private static final String TAG ="Sign In Activity " ;
     private static final int RC_SIGN_IN = 9001;
     GoogleSignInClient mGoogleSignInClient;
@@ -96,8 +97,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     Animation animation;
     ImageView logokarl;
     private FirebaseAuth mAuth;
-    String caller;
-    Class callerClass;
+    
+    private static Context mContext;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -105,7 +106,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         //String serverClientId = getResources().getString(R.string.google_server_client_id);
 
         setContentView(R.layout.login);
-        Context mContext = getApplicationContext();
+        mContext = this;
 
 
         //creation du bouton google+
@@ -128,7 +129,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        Bundle extras = getIntent().getExtras();
         mAuth = FirebaseAuth.getInstance();
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
@@ -204,6 +204,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent,RC_SIGN_IN);
     }
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -327,5 +329,26 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 Log.e("error", t.toString());
             }
         });
+    }
+
+    @Override
+    public void signOut() {
+
+        Log.e("ok", "signout in login");
+        mGoogleSignInClient.revokeAccess();
+        /*
+            .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+            }
+        });
+        */
+        Intent myIntent = new Intent(Login.this, Login.class);
+        startActivity(myIntent);
+    }
+
+    public static Context getContext() {
+        return mContext;
     }
 }

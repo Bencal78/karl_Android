@@ -42,6 +42,7 @@
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_weight="4"
+            android:fontFamily="@font/poiret_one"
             android:gravity="center"
             android:textSize="30sp" />
 
@@ -186,7 +187,8 @@
                 android:layout_weight="1"
                 android:textStyle="bold"
                 android:text="Params"
-                android:fontFamily="@font/poiret_one" android:textColor="@color/blanccassé"
+                android:fontFamily="@font/poiret_one"
+                android:textColor="@color/blanccassé"
                 android:gravity="center"
                 android:layout_marginBottom="3dp"            />
 

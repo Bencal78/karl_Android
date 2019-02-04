@@ -104,15 +104,41 @@ public class DeleteClotheList extends AppCompatActivity implements ClotheAdapter
     }
 
     private void updateUI() {
-        if(user.getTastes().size() == 0){
-            Intent myIntent = new Intent(DeleteClotheList.this, WelcomeQuiz.class);
-            startActivity(myIntent);
-        }
-        else{
-            Intent myIntent = new Intent(DeleteClotheList.this, ClotheList.class);
-            startActivity(myIntent);
-        }
+        GetUserDataService service = RetrofitInstance.getRetrofitInstance().create(GetUserDataService.class);
+        Call<ArrayList<User>> call = service.getUserByGoogleId(GoogleId);
+        call.enqueue(new Callback<ArrayList<User>>() {
+            @Override
+            public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
+                try {
+                    if(response != null && response.body() != null && response.body().get(0) != null){
+                        user = response.body().get(0);
+                        if(user.getClothes().size() == 0){
+                            Intent myIntent = new Intent(DeleteClotheList.this, Welcome_Page.class);
+                            startActivity(myIntent);
+                            Log.e("ok", "ok1");
+                        }
+                        else if(user.getTastes().size() == 0){
+                            Intent myIntent = new Intent(DeleteClotheList.this, WelcomeQuiz.class);
+                            startActivity(myIntent);
+                            Log.e("ok", "ok2");
+                        }
+                        else{
+                            Intent myIntent = new Intent(DeleteClotheList.this, ClotheList.class);
+                            startActivity(myIntent);
+                            Log.e("ok", "ok3");
+                        }
+                    }
+                }
+                catch (Exception e) {
+                    Log.e("exception in getUser", e.toString());
+                }
+            }
+            @Override
+            public void onFailure(Call<ArrayList<User>> call, Throwable t) {
+                Log.e("googleIdToId error", t.toString());
 
+            }
+        });
     }
 
     private void getClohes() {
