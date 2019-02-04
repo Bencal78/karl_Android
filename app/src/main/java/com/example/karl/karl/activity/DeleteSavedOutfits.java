@@ -1,14 +1,17 @@
 package com.example.karl.karl.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +31,7 @@ import com.example.karl.karl.network.RetrofitInstance;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.gson.JsonElement;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,12 +48,17 @@ public class DeleteSavedOutfits extends AppCompatActivity implements OutfitsAdap
     OutfitsAdapter mGalleryAdapter;
     private ImageView settings_button;
     private User user;
+    private int isClicked = 0;
+    private AlertDialog _dialog;
+    private Boolean isSet = false;
+    private Context mContext;
 
     @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.delete_saved_outfits);
+        mContext = getApplicationContext();
         //setup RecyclerView
         RecyclerView recyclerViewGallery = findViewById(R.id.recyclerViewGallery);
         recyclerViewGallery.setLayoutManager(new GridLayoutManager(this, 2));
@@ -152,16 +161,107 @@ public class DeleteSavedOutfits extends AppCompatActivity implements OutfitsAdap
 
     @Override
     public void onItemSelected(int position) {
-        //create fullscreen SlideShowFragment dialog
-    /*
-    SlideShowFragment slideShowFragment = SlideShowFragment.newInstance(position);
-    //setUp style for slide show fragment
-    slideShowFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.DialogFragmentTheme);
-    //finally show dialogue
-    slideShowFragment.show(getSupportFragmentManager(), null);
-    */
-        galleryItems.get(position).isSelected = !galleryItems.get(position).isSelected;
-        galleryItems.get(position).checkBox.setChecked(galleryItems.get(position).isSelected);
+        isClicked += 1;
+        if(isClicked % 2 == 0){
+            galleryItems.get(position).isSelected = !galleryItems.get(position).isSelected;
+            galleryItems.get(position).checkBox.setChecked(galleryItems.get(position).isSelected);
+        }
+    }
+
+    @Override
+    public void onReleaseItem(int position) {
+        _dialog.cancel();
+        isSet = false;
+    }
+
+    @Override
+    public void onItemLongSelected(int position) {
+        if(!isSet){
+            AlertDialog.Builder alertadd = new AlertDialog.Builder(this);
+            LayoutInflater factory = LayoutInflater.from(this);
+            final View view = factory.inflate(R.layout.modal_view, null);
+
+            SavedOutfitImage outfit = galleryItems.get(position);
+            ArrayList<ImageView> images = new ArrayList<>();
+
+            switch(outfit.imageUri.size()){
+                case 0:
+                    break;
+                case 1:
+                    //Load with Picasso
+                    images.add((ImageView) view.findViewById(R.id.Outfit1ImageView));
+
+                    Picasso.with(mContext)
+                            .load(outfit.imageUri.get(0))
+                            .into(images.get(0));
+
+                    break;
+                case 2:
+                    //Load with Picasso
+                    images.add((ImageView) view.findViewById(R.id.Outfit1ImageView));
+
+                    Picasso.with(mContext)
+                            .load(outfit.imageUri.get(0))
+                            .into(images.get(0));
+
+                    images.add((ImageView) view.findViewById(R.id.Outfit2ImageView));
+
+                    Picasso.with(mContext)
+                            .load(outfit.imageUri.get(1))
+                            .into(images.get(2));
+                    break;
+                case 3:
+                    //Load with Picasso
+                    images.add((ImageView) view.findViewById(R.id.Outfit1ImageView));
+
+                    Picasso.with(mContext)
+                            .load(outfit.imageUri.get(0))
+                            .into(images.get(0));
+
+                    images.add((ImageView) view.findViewById(R.id.Outfit2ImageView));
+
+                    Picasso.with(mContext)
+                            .load(outfit.imageUri.get(1))
+                            .into(images.get(1));
+
+                    images.add((ImageView) view.findViewById(R.id.Outfit3ImageView));
+
+                    Picasso.with(mContext)
+                            .load(outfit.imageUri.get(2))
+                            .into(images.get(2));
+                    break;
+                case 4:
+                    //Load with Picasso
+                    images.add((ImageView) view.findViewById(R.id.Outfit1ImageView));
+
+                    Picasso.with(mContext)
+                            .load(outfit.imageUri.get(0))
+                            .into(images.get(0));
+
+                    images.add((ImageView) view.findViewById(R.id.Outfit2ImageView));
+
+                    Picasso.with(mContext)
+                            .load(outfit.imageUri.get(1))
+                            .into(images.get(1));
+
+                    images.add((ImageView) view.findViewById(R.id.Outfit3ImageView));
+
+                    Picasso.with(mContext)
+                            .load(outfit.imageUri.get(2))
+                            .into(images.get(2));
+
+                    images.add((ImageView) view.findViewById(R.id.Outfit4ImageView));
+
+                    Picasso.with(mContext)
+                            .load(outfit.imageUri.get(3))
+                            .into(images.get(3));
+                    break;
+            }
+            alertadd.setView(view);
+
+            _dialog = alertadd.show();
+            isSet = true;
+        }
     }
 
     @Override

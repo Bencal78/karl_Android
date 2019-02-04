@@ -1,15 +1,18 @@
 package com.example.karl.karl.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -20,11 +23,13 @@ import android.widget.ImageView;
 import com.example.karl.karl.R;
 import com.example.karl.karl.adapter.ClotheAdapter;
 import com.example.karl.karl.model.ClotheImage;
+import com.example.karl.karl.model.SavedOutfitImage;
 import com.example.karl.karl.model.User;
 import com.example.karl.karl.my_interface.GetUserDataService;
 import com.example.karl.karl.network.RetrofitInstance;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +46,9 @@ public class ClotheList extends AppCompatActivity implements ClotheAdapter.Galle
     ClotheAdapter mGalleryAdapter;
     BottomNavigationView mbotomnavcloth;
     private ImageView settings_button;
+    private AlertDialog _dialog;
+    private Boolean isSet = false;
+    private Context mContext;
     ImageButton buttonCloset;
     ImageButton buttonOotd;
     ImageButton buttonSaved;
@@ -51,6 +59,7 @@ public class ClotheList extends AppCompatActivity implements ClotheAdapter.Galle
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.clothe_list);
+        mContext = getApplicationContext();
         //setup RecyclerView
         RecyclerView recyclerViewGallery = findViewById(R.id.recyclerViewGallery);
         recyclerViewGallery.setLayoutManager(new GridLayoutManager(this, 2));
@@ -157,14 +166,33 @@ public class ClotheList extends AppCompatActivity implements ClotheAdapter.Galle
 
     @Override
     public void onItemSelected(int position) {
-        //create fullscreen SlideShowFragment dialog
-        /*
-        SlideShowFragment slideShowFragment = SlideShowFragment.newInstance(position);
-        //setUp style for slide show fragment
-        slideShowFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.DialogFragmentTheme);
-        //finally show dialogue
-        slideShowFragment.show(getSupportFragmentManager(), null);
-        */
+
+    }
+
+    @Override
+    public void onReleaseItem(int position) {
+        _dialog.cancel();
+        isSet = false;
+    }
+
+    @Override
+    public void onItemLongSelected(int position) {
+        if(!isSet){
+            AlertDialog.Builder alertadd = new AlertDialog.Builder(this);
+            LayoutInflater factory = LayoutInflater.from(this);
+            final View view = factory.inflate(R.layout.modal_view_clothe, null);
+
+            ClotheImage clothe_image = galleryItems.get(position);
+            ImageView image = view.findViewById(R.id.image_clothe);
+            Picasso.with(mContext)
+                    .load(clothe_image.imageUri)
+                    .into(image);
+
+            alertadd.setView(view);
+
+            _dialog = alertadd.show();
+            isSet = true;
+        }
     }
 
     @Override

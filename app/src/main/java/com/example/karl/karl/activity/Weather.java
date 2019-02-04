@@ -118,7 +118,7 @@ public class Weather extends AppCompatActivity implements ConnectionCallbacks,
         permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
 
         permissionUtils.check_permission(permissions,"Need GPS permission for getting your location",1);
-        //toolbar = findViewById(R.id.Toolbarmeteo);
+        toolbar = findViewById(R.id.Toolbarmeteo);
         loader = (ProgressBar) findViewById(R.id.loader);
         cityField = (TextView) findViewById(R.id.city_field);
         updatedField = (TextView) findViewById(R.id.updated_field);
