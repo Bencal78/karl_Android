@@ -76,13 +76,14 @@ public class Parameters extends AppCompatActivity {
         });
         mContext = this;
         activity = this;
+        //Instantiate with Login static context
         mParameterCallback = (ParameterCallback) Login.getContext();
 
 
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("click", "signout button clicked");
+                //Callback function in Login
                 mParameterCallback.signOut();
             }
         });

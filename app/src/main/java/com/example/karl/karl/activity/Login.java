@@ -44,7 +44,10 @@ import com.google.android.gms.common.api.Scope;
 //import com.google.android.gms.plus.Account;
 //import com.google.android.gms.plus.People;
 //import com.google.android.gms.plus.Plus;
+import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
 import com.google.api.client.googleapis.auth.oauth2.GoogleBrowserClientRequestUrl;
@@ -333,19 +336,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Pa
 
     @Override
     public void signOut() {
-
-        Log.e("ok", "signout in login");
-        mGoogleSignInClient.revokeAccess();
-        /*
-            .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+        mGoogleSignInClient.signOut()
+            .addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-
+                Intent myIntent = new Intent(Login.this, Login.class);
+                startActivity(myIntent);
             }
         });
-        */
-        Intent myIntent = new Intent(Login.this, Login.class);
-        startActivity(myIntent);
     }
 
     public static Context getContext() {
