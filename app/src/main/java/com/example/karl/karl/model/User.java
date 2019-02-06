@@ -1,5 +1,7 @@
 package com.example.karl.karl.model;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONException;
@@ -28,7 +30,7 @@ public class User {
     @SerializedName("clothes")
     private ArrayList<Clothe> clothes = new ArrayList<>();
     @SerializedName("rl_cat_score")
-    private JSONObject rl_cat_score;
+    private JsonElement rl_cat_score;
 
     public User(){
         this.id = null;
@@ -42,7 +44,7 @@ public class User {
         this.clothes = new ArrayList<>();
     }
 
-    public User(String id, String idGoogle, String firstName, String lastName, String givenName, String email, String genre, ArrayList<Taste> tastes, ArrayList<Clothe> clothes, JSONObject rl_cat_score){
+    public User(String id, String idGoogle, String firstName, String lastName, String givenName, String email, String genre, ArrayList<Taste> tastes, ArrayList<Clothe> clothes, JsonElement rl_cat_score){
         this.id = id;
         this.idGoogle = idGoogle;
         this.firstName = firstName;
@@ -91,7 +93,8 @@ public class User {
                 this.genre = obj.getString("genre");
             }
             if(obj.has("rl_cat_score")){
-                this.rl_cat_score = obj.getJSONObject("rl_cat_score");
+                Gson gson = new Gson();
+                this.rl_cat_score = gson.fromJson(rl_cat_score.toString(), JsonElement.class);
             }
 
         } catch (JSONException e) {
@@ -125,10 +128,6 @@ public class User {
         return idGoogle;
     }
 
-    public void setIdGoogle(String idGoogle) {
-        this.idGoogle = idGoogle;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -157,16 +156,8 @@ public class User {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getGenre() {
         return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
     }
 
     public ArrayList<Taste> getTastes() {
@@ -185,9 +176,9 @@ public class User {
         this.clothes = clothes;
     }
 
-    public JSONObject getRl_cat_score(){return rl_cat_score;}
+    public JsonElement getRl_cat_score(){return rl_cat_score;}
 
-    public void setRl_cat_score(JSONObject rl_cat_score) {
+    public void setRl_cat_score(JsonElement rl_cat_score) {
         this.rl_cat_score = rl_cat_score;
     }
 }
